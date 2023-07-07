@@ -9,7 +9,7 @@
       system = "x86_64-linux";
     in nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
-      modules = [./configuration.nix ./hardware-configuration.nix];
+      modules = [./configuration.nix ./hardware-configuration.nix <home-manager/nixos>];
     };
   };
 }
