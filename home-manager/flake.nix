@@ -6,12 +6,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   }; 
   outputs = {nixpkgs, home-manager, ...} @ inputs: let
+    system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    "raf" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations."raf" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [ ./home-manager/users/raf/home.nix ];
-      extraSpecialArgs = {inherit inputs;};
     };
   };
 }

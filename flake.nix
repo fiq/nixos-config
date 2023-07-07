@@ -13,6 +13,9 @@
       specialArgs = {inherit inputs;};
       modules = [./configuration.nix ./hardware-configuration/hawking.nix];
     };
-    homeConfigurations = import ./home-manager;
+    homeConfigurations = {
+	modules = [./home-manager];
+    };
+    #extraSpecialArgs = [inherit inputs];
   };
 }
