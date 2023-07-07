@@ -11,7 +11,7 @@
   in {
     homeConfigurations."raf" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [ ./home-manager/users/raf/home.nix ];
+      modules = [ ./users/raf/home.nix ];
     };
   };
 }
