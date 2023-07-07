@@ -43,7 +43,6 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -53,33 +52,6 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-    ];
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    
-    open = true;
-    
-    nvidiaSettings = true;
-
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      
-      nvidiaBusId = "PCI:1:0:0";
-      amdgpuBusId = "PCI:16:0:0";
-    };
-  };
-
 
   # Docker
   virtualisation.docker.rootless = {
