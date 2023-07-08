@@ -1,22 +1,21 @@
 { home-manager, nixpkgs, inputs, ... }:
 
-{
- "raf" = let
+let
+  initUserConfig = user: homePath: {
+    home.username = user;
+    home.homeDirectory = "${homePath}/${user}";
+  };
+in {
+  "raf" = let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    homeConfig = initUserConfig "raf" "/home";
   in home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
-    modules = [
-      ./home.nix
-      {
-        home = {
-          username = "raf";
-          homeDirectory = "/home/raf";
-        };
-      }
-    ];
+    modules = [ ./home.nix homeConfig ];
   };
- "innovation" = let
+
+  "innovation" = let
     system = "darwin-aarch64";
     pkgs = nixpkgs.legacyPackages.${system};
   in home-manager.lib.homeManagerConfiguration {
