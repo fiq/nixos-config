@@ -17,5 +17,5 @@ let makeHomeManagerConfig = name: value: let
 
 in builtins.mapAttrs (makeHomeManagerConfig) {
   "raf" = { homePath = "/home"; system = "x86_64-linux"; };
-  "innovation" = { homePath = "/Users"; system = "darwin-aarch64"; };
+  "innovation" = { homePath = "/Users"; system = "aarch64-darwin"; };
 }
