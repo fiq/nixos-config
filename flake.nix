@@ -13,9 +13,13 @@
       specialArgs = {inherit inputs;};
       modules = [./configuration.nix ./hardware-configuration/hawking.nix];
     };
-    homeConfigurations = {
-	modules = [./home-manager];
-    };
-    #extraSpecialArgs = [inherit inputs];
+#    homeConfigurations = home-manager.lib.homeManagerConfiguration {
+    # homeConfigurations = {
+      # inherit pkgs;
+      # modules = [ ./home-manager/flake.nix ];
+      # extraSpecialArgs = {inherit inputs pkgs;};
+    # };
+
+    homeConfigurations = (import ./home-manager/default.nix {inherit inputs nixpkgs home-manager;});
   };
 }
