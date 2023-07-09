@@ -14,6 +14,12 @@
       modules = [./configuration.nix ./hardware-configuration/hawking.nix];
     };
 
+    nixosConfigurations."feynman" = nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit inputs;};
+      modules = [./configuration.nix ./hardware-configuration/feynman.nix];
+    };
+
+
     homeConfigurations = (import ./home-manager/default.nix {inherit inputs nixpkgs home-manager;});
   };
 }
