@@ -9,7 +9,9 @@
     [ 
       "$builtins.fetchGit {
 	url = "https://github.com/NixOS/nixos-hardware.git";
-	rev =  "03c6d154";
+        ref = "master";
+	rev =  "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c";
+        sha256 = "1lvwi82658ln08faaaickq0vhvnspazb1ixknsmrxvyb3spvjl9h";
        }/dell/xps/13-9370"
     ];
 
