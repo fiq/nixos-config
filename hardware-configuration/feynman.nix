@@ -7,11 +7,11 @@
   networking.hostName = "feynman"; # Define your hostname.
   imports =
     [ 
-      ("${builtins.fetchGit {
-	url = "https://github.com/NixOS/nixos-hardware.git"; }}/dell/xps/13-9370";
+      "$builtins.fetchGit {
+	url = "https://github.com/NixOS/nixos-hardware.git";
 	rev =  "03c6d154";
-	}
-      )
+       }/dell/xps/13-9370";
+      
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
