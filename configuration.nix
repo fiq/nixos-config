@@ -89,6 +89,7 @@
   users.users.raf = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    initialHashedPassword = "resetme";
     packages = with pkgs; [
       firefox
     ];
