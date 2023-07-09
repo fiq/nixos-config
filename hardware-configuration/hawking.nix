@@ -4,6 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  networking.hostName = "hawking"; # Define your hostname.
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];

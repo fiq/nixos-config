@@ -4,6 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  networking.hostName = "feynman"; # Define your hostname.
   imports =
     [ 
       ("${builtins.fetchGit {
