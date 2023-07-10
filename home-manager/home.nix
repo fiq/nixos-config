@@ -30,6 +30,7 @@
     # '')
     pkgs.keepassxc
     pkgs.tree
+    pkgs.vim
     pkgs.emacs
     pkgs.mc
     #pkgs.firefox-bin
@@ -48,6 +49,7 @@
     pkgs.libsndfile
     pkgs.dotnet-sdk_7
     pkgs.jdk11
+    pkgs.jdk20
     pkgs.watch
     pkgs.neovim
     pkgs.mpg123
@@ -81,6 +83,10 @@
   home.sessionVariables = {
     EDITOR = "vim";
   };
+
+
+  # Enable helix
+  programs.helix.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
