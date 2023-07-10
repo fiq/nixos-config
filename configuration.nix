@@ -91,13 +91,14 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     initialHashedPassword = "resetme";
     packages = with pkgs; [
-      firefox
+      
     ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    firefox
     inetutils
     openssh 
     git
