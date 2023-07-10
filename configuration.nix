@@ -120,6 +120,7 @@
     tmux
     waybar
     wofi
+    google-chrome
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
