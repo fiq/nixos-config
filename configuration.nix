@@ -121,6 +121,7 @@
     waybar
     wofi
     google-chrome
+    silver-searcher
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
