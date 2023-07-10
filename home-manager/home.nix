@@ -50,8 +50,7 @@
     pkgs.dotnet-sdk_7
     pkgs.jdk11
     pkgs.jdk20
-    pkgs.cargo
-    pkgs.rust
+    pkgs.rustup
     pkgs.watch
     pkgs.neovim
     pkgs.mpg123
