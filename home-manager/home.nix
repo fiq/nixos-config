@@ -36,7 +36,6 @@
     #pkgs.firefox-bin
     pkgs.cmake
     pkgs.protobuf
-    pkgs.rustc
     pkgs.python310Full
     #pkgs.python310Packages.ipython
     pkgs.python310Packages.pip
