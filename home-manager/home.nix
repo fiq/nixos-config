@@ -48,7 +48,6 @@
     pkgs.python39Packages.numpy
     pkgs.libsndfile
     pkgs.dotnet-sdk_7
-    pkgs.jdk11
     pkgs.jdk17
     pkgs.rustup
     pkgs.watch
