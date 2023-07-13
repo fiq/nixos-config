@@ -52,6 +52,7 @@
     pkgs.watch
     pkgs.neovim
     pkgs.mpg123
+    pkgs.figlet
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
