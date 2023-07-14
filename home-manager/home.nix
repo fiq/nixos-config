@@ -63,7 +63,7 @@
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     ".p10k.zsh".source = dotfiles/p10k.zsh;
-
+    ".tmux.conf".source = dotfiles/tmux.conf;
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
