@@ -71,6 +71,9 @@
   programs.hyprland.enable = true;
   
 
+  # zsh
+  programs.zsh.enable = true;
+
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e,caps:escape";
@@ -88,6 +91,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raf = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     initialHashedPassword = "resetme";
     packages = with pkgs; [
