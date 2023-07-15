@@ -98,6 +98,7 @@
   programs.zsh = {
     enable = true;
     defaultKeymap = "emacs";
+    oh-my-zsh = true;
     enableSyntaxHighlighting = true;
     enableCompletion = true;
     enableAutosuggestions = true;
