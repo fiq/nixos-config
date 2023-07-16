@@ -85,6 +85,9 @@
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     EDITOR = "vim";
+    ZSH_TMUX_AUTOSTART = "true";
+    ZSH_TMUX_AUTOCONNECT = "true";
+    ZSH_TMUX_FIXTERM = "true";
   };
 
 
@@ -98,7 +101,17 @@
   programs.zsh = {
     enable = true;
     defaultKeymap = "emacs";
-    oh-my-zsh = true;
+    plugins = [
+      {
+        name = "powerlevel10k-config";
+        src = ./dotfiles;
+        file = "p10k.zsh";
+      }
+    ];
+    oh-my-zsh = {
+      enable = true;
+      plugins = ["git" "tmux" "themes" "bundler" "dotenv" "rake" "rbenv" "ruby"]; 
+      };
     enableSyntaxHighlighting = true;
     enableCompletion = true;
     enableAutosuggestions = true;
@@ -120,21 +133,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 # prompt
-source ''${ZDOTDIR:-~}/.p10k.zsh
-
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then      # if this is an SSH session
-    if which tmux >/dev/null 2>&1; then                 # check if tmux is installed
-            if [[ -z "$TMUX" ]] ;then                   # do not allow "tmux in tmux"
-                    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )"    # get the id of a deattached session
-                    if [[ -z "$ID" ]] ;then                                 # if not available create a new one
-                            tmux new-session
-                    else
-                            tmux attach-session -t "$ID"                    # if available, attach to it
-                    fi
-            fi
-    fi
-fi
-    '';
+#source ''${ZDOTDIR:-~}/.p10k.zsh
+   '';
   };
 
   # wezterm
