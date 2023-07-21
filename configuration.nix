@@ -7,6 +7,10 @@
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Gnome-Keyring is interfering with hyprland process launcher
+  # See https://github.com/hyprwm/Hyprland/issues/1376
+  services.gnome3.gnome-keyring.enable = lib.mkForce false;
+
   # Use the systemd-boot EFI boot loader.
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport  = false;
@@ -15,6 +19,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   hardware.enableRedistributableFirmware = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -69,6 +74,8 @@
   # Tiling managers
   programs.sway.enable = true;
   programs.hyprland.enable = true;
+
+  security.polkit.enable = true;
   
 
   # zsh
