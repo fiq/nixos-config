@@ -57,6 +57,16 @@
     driSupport32Bit = true;
   };
 
+  # SANE - Scanner
+  hardware.sane = {
+    enable = true;
+    brscan4.enable = true;
+    brscan4.netDevices.home = {
+      model = "MFC-7350N";
+      ip = "192.168.5.250";
+    };
+  };
+
   # Docker
   virtualisation.docker.rootless = {
     enable = true;
@@ -99,7 +109,7 @@
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’
+    extraGroups = [ "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       
