@@ -5,6 +5,7 @@
 
 {
   networking.hostName = "hawking"; # Define your hostname.
+ 
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
@@ -30,6 +31,18 @@
     };
 
   swapDevices = [ ];
+
+
+  # SANE
+  hardware.sane = {
+    enable = true;
+    brscan4.enable = true;
+    brscan4.netDevices.home = {
+      model = "MFC-7350N";
+      ip = "192.168.5.250";
+    };
+  };
+  users.users.raf.extraGroups = [ "scanner" "lp" ]; # Enable printing and scan for the user.
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

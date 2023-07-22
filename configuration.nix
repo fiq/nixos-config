@@ -9,7 +9,7 @@
 
   # Gnome-Keyring is interfering with hyprland process launcher
   # See https://github.com/hyprwm/Hyprland/issues/1376
-  services.gnome3.gnome-keyring.enable = lib.mkForce false;
+  services.gnome.gnome-keyring.enable = lib.mkForce false;
 
   # Use the systemd-boot EFI boot loader.
   nixpkgs.config.allowUnfree = true;
@@ -99,7 +99,7 @@
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       
