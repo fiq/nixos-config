@@ -97,6 +97,11 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # Aliaes
+  home.shellAliases = {
+    pyenv-init = "nix develop github:fiq/nix-pyenv-flake --impure";
+  };
+
   # zsh
   programs.zsh = {
     enable = true;
