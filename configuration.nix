@@ -146,6 +146,8 @@
     wofi
     google-chrome
     silver-searcher
+    grim
+    slurp
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
