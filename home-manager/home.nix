@@ -100,6 +100,7 @@
   # Aliaes
   home.shellAliases = {
     pyenv-init = "nix develop github:fiq/nix-pyenv-flake --impure";
+    ns="nix search --experimental-features 'nix-command flakes' nixpkgs";
   };
 
   # zsh
