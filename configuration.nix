@@ -110,7 +110,7 @@
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
+    extraGroups = [ "plugdev" "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       

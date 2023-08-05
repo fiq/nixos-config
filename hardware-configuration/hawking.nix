@@ -5,6 +5,7 @@
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
+      ./x-rtl-sdr.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -65,10 +66,8 @@
     };
   };
 
-
-  # I use RTL-SDR on both hawking and feynman but may not do on other boxes
-  hardware.rtl-sdr.enable = true;
-
-
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # RTL SDR custom module
+  services.x-rtl-sdr.enable = true;
 }
