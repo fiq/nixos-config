@@ -87,7 +87,15 @@
   programs.hyprland.enable = true;
 
   security.polkit.enable = true;
-  
+
+  # Locate DB 
+  services.locate = {
+    enable = true;
+    locate = pkgs.mlocate;
+    interval = "hourly";
+  };
+
+ 
 
   # zsh
   programs.zsh.enable = true;
@@ -110,7 +118,7 @@
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "plugdev" "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
+    extraGroups = [ "mlocate" "plugdev" "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       
