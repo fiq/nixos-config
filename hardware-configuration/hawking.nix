@@ -1,6 +1,8 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  boot.kernelPackages = pkgs.linuxPackages_6_3;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   networking.hostName = "hawking";
  
   imports =
