@@ -118,7 +118,7 @@
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "mlocate" "plugdev" "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
+    extraGroups = [ "docker" "mlocate" "plugdev" "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       
@@ -139,6 +139,7 @@
     kitty
     fuzzel
     inputs.prismlauncher.packages.${system}.prismlauncher-qt5
+    minikube
     podman
     #docker
     cudaPackages.cudatoolkit
