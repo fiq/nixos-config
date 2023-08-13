@@ -86,6 +86,9 @@
   programs.sway.enable = true;
   programs.hyprland.enable = true;
 
+  programs.waybar.enable = true;
+  programs.waybar.package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
+
   security.polkit.enable = true;
 
   # Locate DB 
@@ -151,7 +154,6 @@
     tree
     lynx 
     tmux
-    waybar
     wofi
     google-chrome
     silver-searcher
