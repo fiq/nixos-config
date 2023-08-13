@@ -162,6 +162,8 @@
     swaybg
     gcc
     docker-compose
+    pciutils
+    lshw
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
