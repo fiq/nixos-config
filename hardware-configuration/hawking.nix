@@ -68,6 +68,10 @@
     };
   };
 
+  # hawking specific pkgs
+  environment.systemPackages = with pkgs; [
+    yuzu-early-access
+  ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # RTL SDR custom module
