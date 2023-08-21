@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, unstable, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -87,7 +87,7 @@
   programs.hyprland.enable = true;
 
   programs.waybar.enable = true;
-  programs.waybar.package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
+  programs.waybar.package = unstable.waybar;
 
   security.polkit.enable = true;
 
