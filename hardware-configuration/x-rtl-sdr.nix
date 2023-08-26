@@ -12,6 +12,7 @@ in {
     environment.systemPackages = with pkgs; [
       rtl-sdr
       gqrx
+      gpredict
     ];
   };
 }
