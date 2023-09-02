@@ -164,6 +164,7 @@
     docker-compose
     pciutils
     lshw
+    curl
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
