@@ -170,6 +170,7 @@
     lshw
     curl
     nix-index
+    elixir_1_15
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
