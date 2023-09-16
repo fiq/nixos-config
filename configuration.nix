@@ -171,6 +171,8 @@
     curl
     nix-index
     elixir_1_15
+    gdb
+    wireshark
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
