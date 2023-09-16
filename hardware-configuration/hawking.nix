@@ -74,6 +74,9 @@
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  # Steam
+  programs.steam.enable = true;
+
   # RTL SDR custom module
   services.x-rtl-sdr.enable = true;
 }
