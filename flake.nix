@@ -10,7 +10,8 @@
   outputs = {nixpkgs, unstablepkgs, home-manager, ...} @ inputs: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    unstable = unstablepkgs.legacyPackages.${system};
+    
+    unstable = import unstablepkgs { system = "${system}"; config.allowUnfree = true; };
   in {
     nixosConfigurations."hawking" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable;};
@@ -21,7 +22,6 @@
       specialArgs = {inherit inputs unstable;};
       modules = [./configuration.nix ./hardware-configuration/feynman.nix];
     };
-
 
     homeConfigurations = (import ./home-manager/default.nix {inherit inputs nixpkgs home-manager;});
   };
