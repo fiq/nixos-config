@@ -173,6 +173,7 @@
     elixir_1_15
     gdb
     wireshark
+    distrobox
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
