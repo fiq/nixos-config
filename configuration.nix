@@ -80,6 +80,7 @@
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableNvidia = true;
+  virtualisation.containers.enable = true;
   users.extraGroups.docker.members = [ "raf" ];
   
   # OpenRGB
