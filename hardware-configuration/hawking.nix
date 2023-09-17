@@ -76,6 +76,7 @@
 
   # Steam
   programs.steam.enable = true;
+  hardware.steam-hardware.enable = true;
 
   # RTL SDR custom module
   services.x-rtl-sdr.enable = true;
