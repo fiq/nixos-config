@@ -175,6 +175,8 @@
     gdb
     wireshark
     distrobox
+    android-studio
+    godot_4
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
