@@ -10,6 +10,7 @@
         rev =  "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c";
        }}/dell/xps/13-9370"
        ./x-rtl-sdr.nix
+       ./x-android-dev.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -49,4 +50,7 @@
 
   # RTL SDR custom module
   services.x-rtl-sdr.enable = true;
+
+  # Setup android dev
+  services.x-android-dev.enable = true;
 }
