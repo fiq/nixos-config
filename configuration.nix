@@ -175,6 +175,7 @@
     gdb
     wireshark
     distrobox
+    xdg-desktop-portal
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

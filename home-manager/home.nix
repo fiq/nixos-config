@@ -141,6 +141,17 @@ export NVM_DIR="$HOME/.nvm"
    '';
   };
 
+
+  # vscode
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+    dracula-theme.theme-dracula
+    vscodevim.vim
+    yzhang.markdown-all-in-one
+    ];
+  };  
+
   # wezterm
   programs.wezterm = {
     enable = true;
