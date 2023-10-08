@@ -1,9 +1,15 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "vscode"
+  ];
+  
+
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -89,8 +95,6 @@
     ZSH_TMUX_AUTOCONNECT = "true";
     ZSH_TMUX_FIXTERM = "true";
   };
-
-
   # Enable helix
   programs.helix.enable = true;
 
