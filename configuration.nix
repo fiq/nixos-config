@@ -133,6 +133,10 @@
     ];
   };
 
+  # Required for vscode (home manager managed) wayland issues
+  # See: https://github.com/NixOS/nixpkgs/issues/241337
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
