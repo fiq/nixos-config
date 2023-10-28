@@ -84,4 +84,7 @@
 
   # Setup android and godot dev tools
   services.x-android-dev.enable = true;
+
+  # Allow ports
+  networking.firewall.allowedTCPPorts = [ 22 8090 8400 ];
 }
