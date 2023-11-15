@@ -101,6 +101,7 @@
     enable = true;
     locate = pkgs.mlocate;
     interval = "hourly";
+    localuser = null;
   };
 
  
