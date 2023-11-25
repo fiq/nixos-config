@@ -1,6 +1,6 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.services.x-rtl-sdr;
+let cfg = config.services.x-android-dev;
 in {
   options.services.x-android-dev = {
     enable = mkEnableOption "custom android dev setup";
