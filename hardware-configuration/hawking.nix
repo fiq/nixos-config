@@ -9,6 +9,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
       ./x-rtl-sdr.nix
       ./x-android-dev.nix
+      ./x-pulseaudio.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -75,10 +76,6 @@
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  hardware.enableAllFirmware = true;
-  nixpkgs.config.pulseaudio = true;
-  hardware.pulseaudio.enable = true;
-
   # Steam
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
@@ -88,6 +85,9 @@
 
   # Setup android and godot dev tools
   services.x-android-dev.enable = true;
+
+  # Enable pulse audio custom module
+  services.x-pulseaudio.enable = true;
 
   # Allow ports
   networking.firewall.allowedTCPPorts = [ 22 8090 8400 ];
