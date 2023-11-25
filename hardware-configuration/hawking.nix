@@ -10,6 +10,7 @@
       ./x-rtl-sdr.nix
       ./x-android-dev.nix
       ./x-pulseaudio.nix
+      ./x-yubi.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -88,6 +89,9 @@
 
   # Enable pulse audio custom module
   services.x-pulseaudio.enable = true;
+
+  # Enable yubi module
+  services.x-yubi.enable = true;
 
   # Allow ports
   networking.firewall.allowedTCPPorts = [ 22 8090 8400 ];

@@ -8,8 +8,8 @@ in {
   
   config = mkIf cfg.enable {
     hardware.gpgSmartcards.enable = true;
-    services.udev.packages = [ pkgts.yubikey-personalization ];
-    services.pcscd.enable = false;
+    services.udev.packages = [ pkgs.yubikey-personalization ];
+    services.pcscd.enable = true;
 
     environment.systemPackages = with pkgs; [
       yubikey-manager
