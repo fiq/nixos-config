@@ -75,6 +75,10 @@
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  hardware.enableAllFirmware = true;
+  nixpkgs.config.pulseaudio = true;
+  hardware.pulseaudio.enable = true;
+
   # Steam
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
