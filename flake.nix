@@ -1,10 +1,10 @@
 { 
   inputs = { 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     unstablepkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     prismlauncher.url = "github:unmojang/prismlauncher/custom-yggdrasil";
     hyprland.url = "github:hyprwm/Hyprland";
-    home-manager.url = "github:nix-community/home-manager/release-23.05"; 
+    home-manager.url = "github:nix-community/home-manager/release-23.11"; 
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   }; 
   outputs = {nixpkgs, unstablepkgs, home-manager, ...} @ inputs: let

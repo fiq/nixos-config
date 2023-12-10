@@ -6,6 +6,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.optimise.automatic = true;
 
   # Gnome-Keyring is interfering with hyprland process launcher
   # See https://github.com/hyprwm/Hyprland/issues/1376
@@ -182,6 +183,7 @@
     distrobox
     psmisc
     xdg-desktop-portal
+    gnumake
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
