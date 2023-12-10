@@ -1,6 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
@@ -36,7 +37,7 @@
     # '')
     pkgs.keepassxc
     pkgs.tree
-    pkgs.vim
+    pkgs.vim_configurable
     pkgs.emacs
     pkgs.mc
     #pkgs.firefox-bin
