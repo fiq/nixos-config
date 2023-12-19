@@ -13,6 +13,8 @@ in {
       rtl-sdr
       gqrx
       gpredict
+      gnuradio
+      kstars
     ];
   };
 }
