@@ -15,6 +15,7 @@ in {
       gpredict
       gnuradio
       kstars
+      noaa-apt
     ];
   };
 }
