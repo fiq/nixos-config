@@ -157,8 +157,13 @@
     podman
     #docker
     cudaPackages.cudatoolkit
+    stdenv.cc.cc.lib
     python310Full
+    python311Full
+    python312Full
     python310Packages.virtualenv
+    python311Packages.virtualenv
+    python312Packages.virtualenv
     portaudio
     audacity
     keepassxc
@@ -183,6 +188,8 @@
     distrobox
     psmisc
     xdg-desktop-portal
+    xdg-desktop-portal-wlr
+    xdg-desktop-portal-hyprland
     gnumake
   ];
 
