@@ -11,6 +11,7 @@
        }}/dell/xps/13-9370"
        ./x-rtl-sdr.nix
        ./x-android-dev.nix
+       ./x-midi.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -53,4 +54,7 @@
 
   # Setup android dev
   services.x-android-dev.enable = true;
+
+  # Setup midi tools
+  services.x-midi.enable = true;
 }
