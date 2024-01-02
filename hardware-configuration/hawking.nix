@@ -17,6 +17,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" "mt7921e" ];
   boot.extraModulePackages = [ ];
+  nixpkgs.config.cudaSupport  = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/NixOS";
@@ -74,6 +75,7 @@
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
     yuzu-early-access
+    cudaPackages_12_2.cudatoolkit
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
