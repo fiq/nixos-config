@@ -43,15 +43,15 @@
     #pkgs.firefox-bin
     pkgs.cmake
     pkgs.protobuf
-    pkgs.python310Full
+#    pkgs.python310Full
     #pkgs.python310Packages.ipython
-    pkgs.python310Packages.pip
+#    pkgs.python310Packages.pip
     pkgs.wget 
     pkgs.ffmpeg
     pkgs.silver-searcher
     pkgs.mecab
-    pkgs.python310Packages.pyqt5
-    pkgs.python39Packages.numpy
+#    pkgs.python310Packages.pyqt5
+#    pkgs.python39Packages.numpy
     pkgs.libsndfile
     pkgs.dotnet-sdk_7
     pkgs.jdk17
