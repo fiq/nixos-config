@@ -193,6 +193,7 @@
     xdg-desktop-portal-wlr
     xdg-desktop-portal-hyprland
     gnumake
+    dig
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
