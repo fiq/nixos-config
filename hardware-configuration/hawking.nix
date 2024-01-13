@@ -75,7 +75,6 @@
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
     yuzu-early-access
-    cudaPackages_12_2.cudatoolkit
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
