@@ -184,6 +184,7 @@
     nix-index
     elixir_1_15
     gdb
+    wl-clipboard
     wireshark
     distrobox
     psmisc
