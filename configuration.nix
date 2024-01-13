@@ -188,6 +188,7 @@
     wireshark
     distrobox
     psmisc
+    vlc
     xdg-desktop-portal
     xdg-desktop-portal-wlr
     xdg-desktop-portal-hyprland
