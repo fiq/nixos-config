@@ -123,7 +123,7 @@
       enable = true;
       plugins = ["git" "tmux" "themes" "bundler" "dotenv" "rake" "rbenv" "ruby"]; 
       };
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     enableCompletion = true;
     enableAutosuggestions = true;
     historySubstringSearch.enable = true;
