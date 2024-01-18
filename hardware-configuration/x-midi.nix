@@ -7,7 +7,6 @@ in {
   };
   
   config = mkIf cfg.enable {
-    hardware.x-midi.enable = true;
     environment.systemPackages = with pkgs; [
       rosegarden
     ];
