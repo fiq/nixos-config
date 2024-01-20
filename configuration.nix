@@ -143,58 +143,58 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     appimage-run
-    home-manager
-    firefox
-    inetutils
-    openssh 
-    git
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    helix
-    kitty
-    fuzzel
-    inputs.prismlauncher.packages.${system}.prismlauncher-qt5
-    minikube
-    podman
-    #docker
+    audacity
     cudaPackages.cudatoolkit
-    stdenv.cc.cc.lib
+    curl
+    distrobox
+    dig
+    docker-compose
+    #docker
+    elixir_1_15
+    firefox
+    fuzzel
+    gcc
+    gdb
+    git
+    gnumake
+    google-chrome
+    grim
+    helix
+    home-manager
+    inetutils
+    inputs.prismlauncher.packages.${system}.prismlauncher-qt5
+    kitty
+    keepassxc
+    lshw
+    lynx 
+    minikube
+    nix-index
+    openssh 
+    pciutils
+    podman
+    portaudio
+    psmisc
     python310Full
     python311Full
     python312Full
     python310Packages.virtualenv
     python311Packages.virtualenv
     python312Packages.virtualenv
-    portaudio
-    audacity
-    keepassxc
-    tree
-    lynx 
-    tmux
-    wofi
-    google-chrome
     silver-searcher
-    grim
     slurp
+    stdenv.cc.cc.lib
     swaybg
-    gcc
-    docker-compose
-    pciutils
-    lshw
-    curl
-    nix-index
-    elixir_1_15
-    gdb
+    tmux
+    tree
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vlc
+    wget
+    wofi
     wl-clipboard
     wireshark
-    distrobox
-    psmisc
-    vlc
     xdg-desktop-portal
     xdg-desktop-portal-wlr
     xdg-desktop-portal-hyprland
-    gnumake
-    dig
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -226,6 +226,7 @@
 
   programs.steam.package = unstable.steam;
 
+  # Enable AppImage exec via appimage-run
   boot.binfmt.registrations.appimage = {
 	wrapInterpreterInShell = false;
 	interpreter = "${pkgs.appimage-run}/bin/appimage-run";
