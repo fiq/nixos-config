@@ -183,6 +183,7 @@
     python312Packages.virtualenv
     silver-searcher
     slurp
+    sshfs
     stdenv.cc.cc.lib
     swaybg
     tmux
