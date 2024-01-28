@@ -37,6 +37,7 @@
   # Open SSH
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = true;
+  programs.ssh.startAgent = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -188,7 +189,6 @@
     tree
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     vlc
-    vscode
     wget
     wofi
     wl-clipboard
