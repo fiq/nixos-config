@@ -106,7 +106,7 @@
   home.shellAliases = {
     pyenv-init = "nix develop github:fiq/nix-pyenv-flake --impure";
     ns="nix search --experimental-features 'nix-command flakes' nixpkgs";
-    code ="NIXOS_OZONE_WL=0 code $@";
+    code ="command code . --enable-features=UseOzonePlatform --ozone-platform=x11";
   };
 
   # zsh
