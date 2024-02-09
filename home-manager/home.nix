@@ -99,6 +99,13 @@
   # Enable helix
   programs.helix.enable = true;
 
+  # setup fzf
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
