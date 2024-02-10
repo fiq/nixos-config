@@ -35,32 +35,33 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.keepassxc
-    pkgs.tree
-    pkgs.vim_configurable
-    pkgs.emacs
-    pkgs.mc
     #pkgs.firefox-bin
     pkgs.cmake
-    pkgs.protobuf
+    pkgs.emacs
 #    pkgs.python310Full
     #pkgs.python310Packages.ipython
 #    pkgs.python310Packages.pip
-    pkgs.wget 
     pkgs.ffmpeg
-    pkgs.silver-searcher
-    pkgs.mecab
 #    pkgs.python310Packages.pyqt5
 #    pkgs.python39Packages.numpy
-    pkgs.libsndfile
     pkgs.dotnet-sdk_7
-    pkgs.jdk17
-    pkgs.rustup
-    pkgs.watch
-    pkgs.neovim
-    pkgs.mpg123
     pkgs.figlet
     pkgs.fzf
+    pkgs.gimp
+    pkgs.jdk17
+    pkgs.keepassxc
+    pkgs.libsndfile
+    pkgs.mc
+    pkgs.mecab
+    pkgs.mpg123
+    pkgs.neovim
+    pkgs.protobuf
+    pkgs.rustup
+    pkgs.silver-searcher
+    pkgs.tree
+    pkgs.vim_configurable
+    pkgs.watch
+    pkgs.wget 
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
