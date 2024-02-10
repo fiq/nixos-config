@@ -58,6 +58,7 @@
     pkgs.protobuf
     pkgs.rustup
     pkgs.silver-searcher
+    pkgs.slack
     pkgs.tree
     pkgs.vim_configurable
     pkgs.watch
