@@ -47,7 +47,9 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
+  virtualisation.docker.enable = true;
+  virtualisation.docker.enableNvidia = true;
+ 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "nvidia-x11"
@@ -74,6 +76,7 @@
 
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
+    cudaPackages.cudatoolkit
     yuzu-early-access
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
