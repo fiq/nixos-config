@@ -177,11 +177,11 @@
     psmisc
     python310Full
     python311Full
-    python312Full
+    unstable.python312Full
     python310Packages.virtualenv
     python311Packages.virtualenv
-    python312Packages.virtualenv
-    signal-desktop
+    unstable.python312Packages.virtualenv
+    unstable.signal-desktop-beta
     silver-searcher
     slurp
     sshfs
@@ -228,6 +228,7 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+  # Unstable overrides
   programs.steam.package = unstable.steam;
 
   # Enable AppImage exec via appimage-run
