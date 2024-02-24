@@ -2,11 +2,11 @@
 with lib;
 let cfg = config.services;
 in {
-  options.services.x-guitar = {
-    enable = mkEnableOption "custom guitar setup";
+  options.services.x-musician = {
+    enable = mkEnableOption "custom guitar and midi setup";
   };
 
-  config = mkIf cfg.x-guitar.enable {
+  config = mkIf cfg.x-musician.enable {
     musnix = { enable = true; };
     boot.kernelModules = [ "snd-seq" "snd-rawmidi" ];
     # Kernel configuration
@@ -33,6 +33,8 @@ in {
     # JACK configuration
     environment.systemPackages = with pkgs; [
       guitarix
+      rosegarden
+      ardour
     ];
 
   };
