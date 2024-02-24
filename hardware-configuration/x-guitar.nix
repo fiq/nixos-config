@@ -22,35 +22,21 @@ in {
         });
       })
     ];
-
-    # jackd
-    services.jack = {
-      jackd.enable = true;
-      alsa.enable = true;
-      #loopback.enable = true;
-    };
-
-    # Enable user `raf` to use realtime audio
-    users.users.raf.extraGroups = [ "audio" "jackaudio" "realtime" ];
-
-    # Enable the RealtimeKit system service,
+    hardware.pulseaudio.enable = false;
     # which hands out realtime scheduling priority to user processes on demand.
     security.rtkit.enable = true;
 
     # Use an appropriate CPU performance governor
     # Often used values: "ondemand", "powersave", "performance"
-    #powerManagement.cpuFreqGovernor = "performance";
+    powerManagement.cpuFreqGovernor = "performance";
 
     # JACK configuration
-    hardware.pulseaudio.package =
-      pkgs.pulseaudio.override { jackaudioSupport = true; };
-    hardware.pulseaudio.enable = true;
     environment.systemPackages = with pkgs; [
-      libjack2
-      jack2
-      qjackctl
-      jack2Full
-      jack_capture
+#      libjack2
+##      jack2
+#      qjackctl
+##      jack2Full
+#     jack_capture
       guitarix
     ];
 

@@ -9,11 +9,11 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
       ./x-android-dev.nix
       ./x-guitar.nix
-      ./x-pulseaudio.nix
       ./x-rtl-sdr.nix
       ./x-yubi.nix
     ];
 
+#      ./x-pulseaudio.nix
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.kernelModules = [ "kvm-amd" "mt7921e" ];
   boot.extraModulePackages = [ ];
@@ -95,7 +95,7 @@
   services.x-android-dev.enable = true;
 
   # Enable pulse audio custom module
-  services.x-pulseaudio.enable = true;
+#  services.x-pulseaudio.enable = true;
 
   # Enable yubi module
   services.x-yubi.enable = true;
