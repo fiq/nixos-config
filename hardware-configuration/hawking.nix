@@ -8,7 +8,7 @@
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
       ./x-android-dev.nix
-      ./x-guitar.nix
+      ./x-musician.nix
       ./x-rtl-sdr.nix
       ./x-yubi.nix
     ];
@@ -85,8 +85,8 @@
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
 
-  # Enable Guitar Kit
-  services.x-guitar.enable = true;
+  # Enable Guitar and midi Kit
+  services.x-musician.enable = true;
 
   # RTL SDR custom module
   services.x-rtl-sdr.enable = true;
