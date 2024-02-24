@@ -32,11 +32,6 @@ in {
 
     # JACK configuration
     environment.systemPackages = with pkgs; [
-#      libjack2
-##      jack2
-#      qjackctl
-##      jack2Full
-#     jack_capture
       guitarix
     ];
 
