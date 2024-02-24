@@ -161,8 +161,10 @@
     home-manager
     inetutils
     inputs.prismlauncher.packages.${system}.prismlauncher-qt5
+    jdk21
     kitty
     keepassxc
+    kotlin
     lshw
     lynx 
     minikube
@@ -181,6 +183,7 @@
     unstable.signal-desktop-beta
     silver-searcher
     slurp
+    spring-boot-cli
     sshfs
     stdenv.cc.cc.lib
     swaybg
