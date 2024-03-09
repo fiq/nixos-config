@@ -200,6 +200,7 @@
     stdenv.cc.cc.lib
     swaybg
     tmux
+    toybox # file and other goodies I'm sick of specifically nix-shelling
     tree
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     vlc
