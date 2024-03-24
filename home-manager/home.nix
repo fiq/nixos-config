@@ -49,6 +49,7 @@
     pkgs.fzf
     pkgs.gimp
     pkgs.jdk17
+    pkgs.jq
     pkgs.keepassxc
     pkgs.libsndfile
     pkgs.mc
@@ -61,6 +62,7 @@
     pkgs.slack
     pkgs.tree
     pkgs.vim_configurable
+    pkgs.vimPlugins.vim-colorschemes
     pkgs.watch
     pkgs.wget 
   ];
