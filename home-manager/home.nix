@@ -10,7 +10,8 @@
   ];
   
 
-
+  programs.java.enable = true;
+  programs.java.package = pkgs.jdk21;
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -48,7 +49,6 @@
     pkgs.figlet
     pkgs.fzf
     pkgs.gimp
-    pkgs.jdk17
     pkgs.jq
     pkgs.keepassxc
     pkgs.libsndfile
@@ -117,7 +117,6 @@
   home.shellAliases = {
     pyenv-init = "nix develop github:fiq/nix-pyenv-flake --impure";
     ns="nix search --experimental-features 'nix-command flakes' nixpkgs";
-    code ="command code . --enable-features=UseOzonePlatform --ozone-platform=x11";
   };
 
   # zsh
