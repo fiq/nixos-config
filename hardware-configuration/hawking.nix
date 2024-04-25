@@ -1,7 +1,7 @@
-{ config, lib, pkgs, inputs, musnix, modulesPath, ... }:
+{ config, lib, pkgs, unstable, inputs, musnix, modulesPath, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_6_5;
+  boot.kernelPackages = pkgs.linuxPackages_6_8;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   networking.hostName = "hawking";
  
@@ -18,6 +18,12 @@
   boot.kernelModules = [ "kvm-amd" "mt7921e" ];
   boot.extraModulePackages = [ ];
   nixpkgs.config.cudaSupport  = true;
+
+  # Llama
+  services.ollama.enable = true;
+  services.ollama.acceleration = "cuda";
+  services.ollama.package = unstable.ollama;
+
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/NixOS";
@@ -59,7 +65,8 @@
   hardware.nvidia = {
     modesetting.enable = true;
     
-    open = true;
+ #   open = true;
+    open = false;
     
     nvidiaSettings = true;
 
@@ -77,7 +84,6 @@
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
     cudaPackages.cudatoolkit
-    yuzu-early-access
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
