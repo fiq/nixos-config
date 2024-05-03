@@ -192,6 +192,7 @@
     python310Packages.virtualenv
     python311Packages.virtualenv
     unstable.python312Packages.virtualenv
+    unstable.ripgrep
     unstable.signal-desktop-beta
     silver-searcher
     slurp
