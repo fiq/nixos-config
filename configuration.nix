@@ -172,7 +172,7 @@
     helix
     home-manager
     inetutils
-    inputs.prismlauncher.packages.${system}.prismlauncher-qt5
+    prismlauncher
     jdk21
     kitty
     keepassxc
