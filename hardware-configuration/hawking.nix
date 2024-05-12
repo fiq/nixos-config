@@ -84,6 +84,7 @@
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
     cudaPackages.cudatoolkit
+    mumble
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
