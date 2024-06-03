@@ -1,7 +1,7 @@
 { config, lib, pkgs, unstable, inputs, musnix, modulesPath, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_6_8;
+  #boot.kernelPackages = pkgs.linuxPackages_6_8;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   networking.hostName = "hawking";
  
