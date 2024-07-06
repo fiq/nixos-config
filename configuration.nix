@@ -24,7 +24,10 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   # Mulvad
-  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
 
 
   # Pick only one of the below networking options.
