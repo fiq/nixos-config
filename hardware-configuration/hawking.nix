@@ -20,9 +20,9 @@
   nixpkgs.config.cudaSupport  = true;
 
   # Llama
-  services.ollama.enable = true;
+  services.ollama.enable = false;
   services.ollama.acceleration = "cuda";
-  services.ollama.package = unstable.ollama;
+  services.ollama.package = unstable.ollama-cuda;
 
 
   fileSystems."/" =
@@ -85,6 +85,7 @@
   environment.systemPackages = with pkgs; [
     cudaPackages.cudatoolkit
     mumble
+    sidequest
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
