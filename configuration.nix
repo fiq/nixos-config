@@ -104,10 +104,16 @@
 
   # Tiling managers
   programs.sway.enable = true;
-  programs.hyprland.enable = true;
 
-  programs.waybar.enable = true;
-  programs.waybar.package = unstable.waybar;
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  programs.waybar = {
+    enable = true;
+    package = unstable.waybar;
+  };
 
   security.polkit.enable = true;
 
