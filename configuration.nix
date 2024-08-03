@@ -124,6 +124,11 @@
     enable = true;
     package = unstable.waybar;
   };
+  # only start waybar on hyprland
+  systemd.user.services.waybar = {
+    unitConfig.PartOf = lib.mkForce "hyprland-session.target";
+    wantedBy = lib.mkForce [ "hyprland-session.target" ];
+  };
 
   security.polkit.enable = true;
 
