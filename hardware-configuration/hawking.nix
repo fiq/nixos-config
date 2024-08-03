@@ -20,9 +20,17 @@
   nixpkgs.config.cudaSupport  = true;
 
   # Llama
-  services.ollama.enable = false;
+  services.ollama.enable = true;
   services.ollama.acceleration = "cuda";
-  services.ollama.package = unstable.ollama-cuda;
+  services.ollama.package = unstable.ollama-cuda.overrideAttrs {
+    src = unstable.fetchFromGitHub {
+      owner = "ollama";
+      repo = "ollama";
+      rev = "v0.3.1";
+      hash = "sha256-ctz9xh1wisG0YUxglygKHIvU9bMgMLkGqDoknb8qSAU=";
+      fetchSubmodules = true;
+    };
+  };
 
 
   fileSystems."/" =
@@ -55,7 +63,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   virtualisation.docker.enable = true;
   virtualisation.docker.enableNvidia = true;
- 
+
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "nvidia-x11"
