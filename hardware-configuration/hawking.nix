@@ -61,8 +61,10 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # Docker and nvidia container support
   virtualisation.docker.enable = true;
-  virtualisation.docker.enableNvidia = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
