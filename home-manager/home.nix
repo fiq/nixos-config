@@ -48,6 +48,7 @@
     pkgs.dotnet-sdk_7
     pkgs.figlet
     pkgs.fzf
+    pkgs.jetbrains.idea-community
     pkgs.gimp
     pkgs.jq
     pkgs.keepassxc
