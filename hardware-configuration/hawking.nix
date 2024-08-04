@@ -33,20 +33,30 @@
   };
 
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/NixOS";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NixOS";
+    fsType = "ext4";
+  };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-label/Home";
-      fsType = "ext4";
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/Home";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-    };
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-label/ESP";
+    fsType = "vfat";
+  };
+
+  fileSystems."/mnt/ml-data" = {
+    device = "/dev/disk/by-label/MINION";
+    fsType = "vfat";
+    options = [
+      "users"
+      "nofail"
+     ];
+  };
+
 
   swapDevices = [ ];
 
