@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, unstable, inputs, musnix, modulesPath, ... }:
 
 {
   networking.hostName = "feynman";
@@ -12,6 +12,7 @@
        ./x-rtl-sdr.nix
        ./x-android-dev.nix
        ./x-musician.nix
+       ./x-yubi.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -49,12 +50,15 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   boot.loader.grub.useOSProber = true;
 
+  # Enable Guitar and midi Kit
+  services.x-musician.enable = true;
+
   # RTL SDR custom module
   services.x-rtl-sdr.enable = true;
 
   # Setup android dev
   services.x-android-dev.enable = true;
 
-  # Setup midi tools
-  services.x-musician.enable = true;
+  # Enable yubi module
+  services.x-yubi.enable = true;
 }

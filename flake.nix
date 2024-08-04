@@ -20,7 +20,7 @@
 
     nixosConfigurations."feynman" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
-      modules = [./configuration.nix ./hardware-configuration/feynman.nix];
+      modules = [./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
     };
 
     homeConfigurations = (import ./home-manager/default.nix {inherit inputs nixpkgs unstablepkgs home-manager;});
