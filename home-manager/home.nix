@@ -137,7 +137,7 @@
       };
     syntaxHighlighting.enable = true;
     enableCompletion = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     historySubstringSearch.enable = true;
     zplug = {
       enable = true;
