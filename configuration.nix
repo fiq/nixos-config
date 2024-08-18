@@ -72,7 +72,7 @@
     brscan4.enable = true;
     brscan4.netDevices.home = {
       model = "MFC-7350N";
-      ip = "192.168.5.250";
+      ip = "192.168.50.251";
     };
   };
 
