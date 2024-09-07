@@ -128,7 +128,8 @@
   # Enable yubi module
   services.x-yubi.enable = true;
 
-  # Allow ports
-  networking.firewall.allowedTCPPorts = [ 22 8090 8400 ];
+  # Allow ports: ssh 
+  # To audit: 8090, 8400
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
 }
