@@ -57,7 +57,7 @@
   services.x-rtl-sdr.enable = true;
 
   # Setup android dev
-  services.x-android-dev.enable = true;
+  services.x-android-dev.enable = false;
 
   # Enable yubi module
   services.x-yubi.enable = true;
