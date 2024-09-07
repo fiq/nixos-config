@@ -205,7 +205,8 @@
     lynx 
     minikube
     nix-index
-    openssh 
+    openssh
+    pavucontrol
     pciutils
     podman
     portaudio
