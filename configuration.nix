@@ -258,6 +258,7 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
   services.resolved.enable = true;
+  services.resolved.fallbackDns = [ "192.168.50.1" "fdce:298d:d11e::1" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
