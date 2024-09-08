@@ -22,16 +22,6 @@
   # Llama
   services.ollama.enable = true;
   services.ollama.acceleration = "cuda";
-  services.ollama.package = unstable.ollama-cuda.overrideAttrs {
-    src = unstable.fetchFromGitHub {
-      owner = "ollama";
-      repo = "ollama";
-      rev = "v0.3.1";
-      hash = "sha256-ctz9xh1wisG0YUxglygKHIvU9bMgMLkGqDoknb8qSAU=";
-      fetchSubmodules = true;
-    };
-  };
-
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NixOS";
