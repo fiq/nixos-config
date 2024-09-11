@@ -186,6 +186,7 @@
     #docker
     elixir_1_15
     firefox
+    inputs.fjordlauncher.packages.${system}.fjordlauncher
     fuzzel
     gcc
     gdb

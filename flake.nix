@@ -6,6 +6,8 @@
     musnix.url = "github:musnix/musnix";    
     home-manager.url = "github:nix-community/home-manager/release-24.05"; 
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    fjordlauncher.url = "github:unmojang/FjordLauncher";
+    fjordlauncher.inputs.nixpkgs.follows = "nixpkgs";
   }; 
   outputs = {nixpkgs, unstablepkgs, home-manager, musnix, ...} @ inputs: let
     system = "x86_64-linux";
