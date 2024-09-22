@@ -79,7 +79,8 @@
   # Docker
   virtualisation.docker.rootless = {
     enable = true;
-    setSocketVariable = true;
+    # disabled as this prevents rootless nvidia
+    # setSocketVariable = true;
   };
 
   virtualisation.containers.enable = true;
