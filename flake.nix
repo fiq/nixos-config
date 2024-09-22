@@ -25,6 +25,11 @@
       modules = [./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
     };
 
+    nixosConfigurations."galileo" = nixpkgs.lib.nixosSystem {
+      modules = [./configuration.nix ./hardware-configuration/galileo.nix];
+    };
+
+
     homeConfigurations = (import ./home-manager/default.nix {inherit inputs nixpkgs unstablepkgs home-manager;});
   };
 }
