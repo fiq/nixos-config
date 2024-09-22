@@ -8,6 +8,7 @@
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
       ./capabilities/x-android-dev.nix
+      ./capabilities/x-btrfs.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-yubi.nix
@@ -114,6 +115,10 @@
   # Steam
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
+
+  # Enable btrfs tools
+  services.x-btrfs.enable = true;
+
 
   # Enable Guitar and midi Kit
   services.x-musician.enable = true;
