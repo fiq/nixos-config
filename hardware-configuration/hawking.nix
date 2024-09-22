@@ -7,10 +7,10 @@
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
-      ./x-android-dev.nix
-      ./x-musician.nix
-      ./x-rtl-sdr.nix
-      ./x-yubi.nix
+      ./capabilities/x-android-dev.nix
+      ./capabilities/x-musician.nix
+      ./capabilities/x-rtl-sdr.nix
+      ./capabilities/x-yubi.nix
     ];
 
 #      ./x-pulseaudio.nix

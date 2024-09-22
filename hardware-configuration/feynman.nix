@@ -9,10 +9,10 @@
         ref = "master";
         rev =  "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c";
        }}/dell/xps/13-9370"
-       ./x-rtl-sdr.nix
-       ./x-android-dev.nix
-       ./x-musician.nix
-       ./x-yubi.nix
+       ./capabilities/x-rtl-sdr.nix
+       ./capabilities/x-android-dev.nix
+       ./capabilities/x-musician.nix
+       ./capabilities/x-yubi.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
