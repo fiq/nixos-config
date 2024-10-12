@@ -4,8 +4,9 @@
   networking.hostName = "galileo";
   imports =
     [ 
-       ./x-btrfs.nix
-       ./x-yubi.nix
+       ./capabilities/x-home-assistant.nix
+       ./capabilities/x-btrfs.nix
+       ./capabilities/x-yubi.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
@@ -37,6 +38,29 @@
       fsType = "btrfs";
     };
 
+  fileSystems."/archive/media" =
+    { device = "/dev/disk/by-label/archive";
+      options = [ "subvol=@media" "compress=zstd:1" "noatime" ]; 
+      fsType = "btrfs";
+    };
+
+ 
+  fileSystems."/archive/backup" =
+    { device = "/dev/disk/by-label/archive";
+      options = [ "subvol=@backup" "compress=zstd:1" "noatime" ]; 
+      fsType = "btrfs";
+    };
+ 
+  fileSystems."/space" =
+    { device = "/dev/disk/by-label/archive";
+      options = [ "subvol=@space" "compress=zstd:1" "noatime" ]; 
+      fsType = "btrfs";
+    };
+
+  services.x-home-assistant.enable = true;
+  services.x-btrfs.enable = true;
+  services.x-yubi.enable = true;
+  
   services.btrfs.autoScrub.enable = true;
 
   swapDevices = [ ];
