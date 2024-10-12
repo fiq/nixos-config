@@ -107,6 +107,7 @@
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
     cudaPackages.cudatoolkit
+    llama-cpp
     mumble
     sidequest
   ];
