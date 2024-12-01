@@ -29,10 +29,17 @@
     fsType = "ext4";
   };
 
+#  fileSystems."/home" = {
+#    device = "/dev/disk/by-label/Home";
+#    fsType = "ext4";
+#  };
+
   fileSystems."/home" = {
-    device = "/dev/disk/by-label/Home";
-    fsType = "ext4";
+    device = "/dev/disk/by-label/ExtendedMounts";
+    options = [ "subvol=@home" "compress=zstd:3" ];
+    fsType = "btrfs";
   };
+
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-label/ESP";
