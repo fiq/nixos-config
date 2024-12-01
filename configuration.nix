@@ -221,7 +221,7 @@
     python311Packages.virtualenv
     unstable.python312Packages.virtualenv
     unstable.ripgrep
-    unstable.signal-desktop-beta
+    unstable.signal-desktop
     silver-searcher
     slurp
     spring-boot-cli
