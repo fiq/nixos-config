@@ -135,7 +135,7 @@
   services.x-rtl-sdr.enable = true;
 
   # Setup android and godot dev tools
-  services.x-android-dev.enable = false;
+  services.x-android-dev.enable = true;
 
   # Enable pulse audio custom module
 #  services.x-pulseaudio.enable = true;
