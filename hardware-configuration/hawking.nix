@@ -11,6 +11,7 @@
       ./capabilities/x-btrfs.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-rtl-sdr.nix
+      ./capabilities/x-security-dev.nix
       ./capabilities/x-yubi.nix
     ];
 
@@ -142,6 +143,10 @@
 
   # Enable yubi module
   services.x-yubi.enable = true;
+
+
+  # Setup android and godot dev tools
+  services.x-security-dev.enable = true;
 
   # Allow ports: ssh 
   # To audit: 8090, 8400
