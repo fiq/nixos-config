@@ -188,7 +188,7 @@
     #docker
     elixir_1_15
     firefox
-    #inputs.fjordlauncher.packages.${system}.fjordlauncher
+    inputs.fjordlauncher.packages.${system}.fjordlauncher
     fuzzel
     gcc
     gdb
@@ -199,7 +199,7 @@
     helix
     home-manager
     inetutils
-  #  prismlauncher
+    prismlauncher
     jdk21
     kitty
     keepassxc
