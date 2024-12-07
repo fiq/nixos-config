@@ -231,6 +231,7 @@
     tmux
     toybox # file and other goodies I'm sick of specifically nix-shelling
     tree
+    usbutils # avoids using the busy box lsusb etc
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     vlc
     wget
