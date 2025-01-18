@@ -20,6 +20,13 @@
   boot.kernelModules = [ "kvm-amd" "mt7921e" ];
   boot.extraModulePackages = [ ];
   nixpkgs.config.cudaSupport  = true;
+  boot.loader.systemd-boot.extraEntries = {
+    "freebsd.conf" = ''
+      title FreeBSD
+      efi /efi/FreeBSD/loader.efi
+      sort-key z_freebsd
+    '';
+  };
 
   # Llama
   services.ollama.enable = true;
