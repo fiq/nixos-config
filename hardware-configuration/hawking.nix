@@ -7,6 +7,7 @@
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
+      ./capabilities/x-authoring.nix
       ./capabilities/x-android-dev.nix
       ./capabilities/x-btrfs.nix
       ./capabilities/x-musician.nix
@@ -131,6 +132,10 @@
   # Steam
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
+
+  # Enable authoring and writing tools
+  services.x-authoring.enable = true;
+
 
   # Enable btrfs tools
   services.x-btrfs.enable = true;
