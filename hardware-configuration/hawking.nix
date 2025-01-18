@@ -4,6 +4,8 @@
   #boot.kernelPackages = pkgs.linuxPackages_6_8;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   networking.hostName = "hawking";
+  # FIXME - bump raf for tcpdump
+  users.extraGroups.root.members = [ "raf" ];
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
