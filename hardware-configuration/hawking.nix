@@ -11,6 +11,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
       ./capabilities/x-authoring.nix
       ./capabilities/x-android-dev.nix
+      ./capabilities/x-bt.nix
       ./capabilities/x-btrfs.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-rtl-sdr.nix
@@ -139,6 +140,9 @@
   # Enable authoring and writing tools
   services.x-authoring.enable = true;
 
+
+  # Enable bluetooth tools
+  services.x-bt.enable = true;
 
   # Enable btrfs tools
   services.x-btrfs.enable = true;
