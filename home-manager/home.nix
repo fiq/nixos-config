@@ -45,7 +45,7 @@
     pkgs.ffmpeg
 #    pkgs.python310Packages.pyqt5
 #    pkgs.python39Packages.numpy
-    pkgs.dotnet-sdk_7
+#    pkgs.dotnet-sdk_7
     pkgs.figlet
     pkgs.fzf
     pkgs.jetbrains.idea-community
