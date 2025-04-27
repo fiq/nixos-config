@@ -1,6 +1,7 @@
 { 
   inputs = { 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-home-assistant.url = "github:NixOS/nixpkgs/nixos-24.05";
     unstablepkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hyprland.url = "github:hyprwm/Hyprland";
     musnix.url = "github:musnix/musnix";    
@@ -27,7 +28,15 @@
 
     nixosConfigurations."ada" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
-      modules = [./configuration.nix ./hardware-configuration/ada.nix];
+      modules = [
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [
+            (final: prev: {
+              home-assistant = inputs.nixpkgs-home-assistant.legacyPackages.${final.system}.home-assistant;
+            })
+          ];
+        })
+        ./configuration.nix ./hardware-configuration/ada.nix];
     };
 
 

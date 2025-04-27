@@ -6,6 +6,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "raf" ];
   nix.optimise.automatic = true;
 
   # Gnome-Keyring is interfering with hyprland process launcher

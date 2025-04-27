@@ -5,14 +5,13 @@ in {
   options.services.x-home-assistant = {
     enable = mkEnableOption "custom home-assistant setup";
   };
-  
   config = mkIf cfg.enable {
     services.home-assistant = {
       enable = true;
       extraComponents = [
         # Components required to complete the onboarding
         "esphome"
-#        "fronius"
+        "fronius"
         "geonetnz_quakes"
         "geonetnz_volcano"
         "google"

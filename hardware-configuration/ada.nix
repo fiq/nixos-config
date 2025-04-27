@@ -4,6 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  nixpkgs.config.allowBroken = true;
   imports =
     [
        (modulesPath + "/installer/scan/not-detected.nix")
