@@ -12,7 +12,7 @@ in {
       extraComponents = [
         # Components required to complete the onboarding
         "esphome"
-        "fronius"
+#        "fronius"
         "geonetnz_quakes"
         "geonetnz_volcano"
         "google"
