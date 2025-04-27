@@ -14,6 +14,7 @@
       ./capabilities/x-bt.nix
       ./capabilities/x-btrfs.nix
       ./capabilities/x-musician.nix
+      ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-security-dev.nix
       ./capabilities/x-yubi.nix
@@ -159,6 +160,10 @@
 
   # Enable pulse audio custom module
 #  services.x-pulseaudio.enable = true;
+
+  # Enable cups
+  services.x-printing.enable = true;
+
 
   # Enable yubi module
   services.x-yubi.enable = true;
