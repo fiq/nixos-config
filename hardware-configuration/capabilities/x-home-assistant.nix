@@ -1,18 +1,19 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.services
+let cfg = config.services.x-home-assistant;
 in {
-  options.services.x-home-assistan = {
+  options.services.x-home-assistant = {
     enable = mkEnableOption "custom home-assistant setup";
   };
   
-  config = mkIf cfg.x-home-assistant.enable {
+  config = mkIf cfg.enable {
     services.home-assistant = {
       enable = true;
       extraComponents = [
         # Components required to complete the onboarding
         "esphome"
-        "geonetnz_quakes",
+        "fronius"
+        "geonetnz_quakes"
         "geonetnz_volcano"
         "google"
         "google_assistant"

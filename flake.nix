@@ -25,8 +25,9 @@
       modules = [./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
     };
 
-    nixosConfigurations."galileo" = nixpkgs.lib.nixosSystem {
-      modules = [./configuration.nix ./hardware-configuration/galileo.nix];
+    nixosConfigurations."ada" = nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit inputs unstable musnix;};
+      modules = [./configuration.nix ./hardware-configuration/ada.nix];
     };
 
 
