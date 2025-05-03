@@ -6,6 +6,7 @@
   networking.hostName = "hawking";
   # FIXME - bump raf for tcpdump
   users.extraGroups.root.members = [ "raf" ];
+  users.extraGroups.docker.members = [ "raf" ];
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -87,6 +88,7 @@
   virtualisation.docker = {
     enable = true;
     enableOnBoot = false;
+    enableNvidia = true;
     rootless = {
       enable = true;
       setSocketVariable = false;
