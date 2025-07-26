@@ -22,9 +22,25 @@ in {
         });
       })
     ];
-    hardware.pulseaudio.enable = false;
+    #services.pulseaudio.enable = false;
     # which hands out realtime scheduling priority to user processes on demand.
     security.rtkit.enable = true;
+
+    services.pipewire = {
+      enable = true;
+      jack.enable = true;
+    };
+
+    security.pam.loginLimits = [
+      { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+      { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
+    ];
+
+    users.users.raf.extraGroups = [ "audio" "rtkit" ];
+    services.udev.extraRules = ''
+      SUBSYSTEM=="sound", ATTRS{idVendor}=="12ba", ATTRS{idProduct}=="00ff", MODE="0666", GROUP="audio"
+      '';
+
 
     # Use an appropriate CPU performance governor
     # Often used values: "ondemand", "powersave", "performance"
@@ -36,6 +52,10 @@ in {
       rosegarden
       ardour
       carla
+      protonup-qt # for rockband
+      qpwgraph
+      rtaudio
+      unzip
     ];
 
   };

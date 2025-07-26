@@ -87,17 +87,28 @@
   # Docker and nvidia container support
   virtualisation.docker = {
     enable = true;
-    enableOnBoot = false;
-    enableNvidia = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = false;
-      daemon.settings = {
-        runtimes = {
-          nvidia.path = "${pkgs.nvidia-docker}/bin/nvidia-container-runtime";
-        };
-      };
-    };
+    enableOnBoot = true;
+#    daemon.settings = {
+#      features.cdi = true;
+#      runtimes = {};
+#      runtimes = {
+#        nvidia = {
+#          path = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+#          runtimeArgs = [];
+#        };
+#      };
+#    };
+#    rootless = {
+#      enable = true;
+#      setSocketVariable = false;
+#      daemon.settings = {
+#	daemon.settings.features.cdi = true;
+#        runtimes = {
+#          nvidia.path = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+#          runtimeArgs = [];
+#        };
+#      };
+#    };
   };
   hardware.nvidia-container-toolkit.enable = true;
 
@@ -109,9 +120,8 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    
- #   open = true;
-    open = false;
+    powerManagement.enable = false;
+    open = true;
     
     nvidiaSettings = true;
 
@@ -132,12 +142,22 @@
     libcap 
     llama-cpp
     mumble
+    nvidia-container-toolkit
+    nvidia-docker
     sidequest
+    wine
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Steam
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    package = pkgs.steam.override {
+      extraEnv.STEAM_FORCE_DESKTOPUI_SCALING = "1.75";
+      extraLibraries = pkgs: [ pkgs.pkgsi686Linux.pipewire.jack pkgs.alsa-lib pkgs.libpulseaudio ]; # Adds pipewire jack (32-bit)
+      extraPkgs = pkgs: [ pkgs.wineasio ]; # Adds wineasio
+    };
+  };
   hardware.steam-hardware.enable = true;
 
   # Enable authoring and writing tools

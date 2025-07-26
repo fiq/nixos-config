@@ -17,6 +17,6 @@ in {
 
     hardware.enableAllFirmware = true;
     nixpkgs.config.pulseaudio = true;
-    hardware.pulseaudio.enable = true;
+    services.pulseaudio.enable = true;
   };
 }
