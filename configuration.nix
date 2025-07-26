@@ -98,12 +98,7 @@
   # services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  hardware.opengl = {
-    enable = true;
-    # Disabled for 24.11 upgrade
-    #driSupport = true;
-    #driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;
 
   # Plasma
   services.displayManager.sddm.enable = true;
@@ -140,7 +135,7 @@
     enable = true;
     package = pkgs.mlocate;
     interval = "hourly";
-    localuser = null;
+#    localuser = null;
   };
 
  
@@ -187,7 +182,7 @@
     dig
     docker-compose
     #docker
-    elixir_1_15
+    elixir
     firefox
     inputs.fjordlauncher.packages.${system}.fjordlauncher
     fuzzel
@@ -272,9 +267,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
-  # Unstable overrides
-  programs.steam.package = unstable.steam;
 
   # Enable AppImage exec via appimage-run
   boot.binfmt.registrations.appimage = {
