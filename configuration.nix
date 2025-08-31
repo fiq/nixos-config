@@ -213,8 +213,8 @@
     python310Full
     python311Full
     unstable.python312Full
-    python310Packages.virtualenv
-    python311Packages.virtualenv
+#    python310Packages.virtualenv
+#    python311Packages.virtualenv
     unstable.python312Packages.virtualenv
     unstable.ripgrep
     unstable.signal-desktop
