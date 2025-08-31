@@ -51,7 +51,7 @@ in {
       guitarix
       rosegarden
       ardour
-      carla
+#     carla
       protonup-qt # for rockband
       qpwgraph
       rtaudio
