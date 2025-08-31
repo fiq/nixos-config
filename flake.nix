@@ -6,7 +6,7 @@
     unstablepkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hyprland.url = "github:hyprwm/Hyprland";
     musnix.url = "github:musnix/musnix";    
-    home-manager.url = "github:nix-community/home-manager/release-24.11"; 
+    home-manager.url = "github:nix-community/home-manager/master"; 
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     fjordlauncher.url = "github:unmojang/FjordLauncher";
     fjordlauncher.inputs.nixpkgs.follows = "nixpkgs";
