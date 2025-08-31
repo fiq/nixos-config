@@ -53,7 +53,7 @@
   # Open SSH
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = true;
-  programs.ssh.startAgent = true;
+  #programs.ssh.startAgent = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
