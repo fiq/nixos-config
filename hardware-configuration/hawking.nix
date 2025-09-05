@@ -18,6 +18,7 @@
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-security-dev.nix
+      ./capabilities/x-vrdesktop.nix
       ./capabilities/x-yubi.nix
     ];
 
@@ -149,6 +150,9 @@
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  # Niri
+  programs.niri.enable = true;
+
   # Steam
   programs.steam = {
     enable = true;
@@ -186,6 +190,8 @@
   # Enable cups
   services.x-printing.enable = true;
 
+  # wivrn
+  services.x-vrdesktop.enable = true;
 
   # Enable yubi module
   services.x-yubi.enable = true;
