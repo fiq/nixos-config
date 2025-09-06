@@ -9,10 +9,6 @@
   nix.settings.trusted-users = [ "raf" ];
   nix.optimise.automatic = true;
 
-  # Gnome-Keyring is interfering with hyprland process launcher
-  # See https://github.com/hyprwm/Hyprland/issues/1376
-  services.gnome.gnome-keyring.enable = lib.mkForce false;
-
   # Use the systemd-boot EFI boot loader.
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport  = false;
@@ -109,25 +105,6 @@
 
   # start sddm in Wayland
   services.displayManager.sddm.wayland.enable = true; 
-
-  # Tiling managers
-  programs.sway.enable = true;
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  programs.waybar = {
-    enable = true;
-    package = unstable.waybar;
-  };
-  # only start waybar on hyprland
-  systemd.user.services.waybar = {
-    unitConfig.PartOf = lib.mkForce "hyprland-session.target";
-    wantedBy = lib.mkForce [ "hyprland-session.target" ];
-  };
-
   security.polkit.enable = true;
 
   # Locate DB 
@@ -138,7 +115,6 @@
 #    localuser = null;
   };
 
- 
 
   # zsh
   programs.zsh.enable = true;
@@ -223,7 +199,6 @@
     spring-boot-cli
     sshfs
     stdenv.cc.cc.lib
-    swaybg
     tmux
     toybox # file and other goodies I'm sick of specifically nix-shelling
     tree
@@ -231,12 +206,10 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     vlc
     wget
-    wofi
     wl-clipboard
     wireshark
     xdg-desktop-portal
     xdg-desktop-portal-wlr
-    xdg-desktop-portal-hyprland
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

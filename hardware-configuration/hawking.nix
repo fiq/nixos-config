@@ -18,6 +18,7 @@
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-security-dev.nix
+      ./capabilities/x-tiling-desktop.nix
       ./capabilities/x-vrdesktop.nix
       ./capabilities/x-yubi.nix
     ];
@@ -150,9 +151,6 @@
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # Niri
-  programs.niri.enable = true;
-
   # Steam
   programs.steam = {
     enable = true;
@@ -185,13 +183,17 @@
   services.x-android-dev.enable = true;
 
   # Enable pulse audio custom module
-#  services.x-pulseaudio.enable = true;
+  #  services.x-pulseaudio.enable = true;
 
   # Enable cups
   services.x-printing.enable = true;
 
   # wivrn
   services.x-vrdesktop.enable = true;
+
+  # Setup sway and niri
+  services.x-tiling-desktop.enable = true;
+
 
   # Enable yubi module
   services.x-yubi.enable = true;

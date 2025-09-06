@@ -9,9 +9,10 @@
         ref = "master";
         rev =  "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c";
        }}/dell/xps/13-9370"
-       ./capabilities/x-rtl-sdr.nix
        ./capabilities/x-android-dev.nix
        ./capabilities/x-musician.nix
+       ./capabilities/x-rtl-sdr.nix
+       ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-yubi.nix
     ];
 
@@ -58,6 +59,9 @@
 
   # Setup android dev
   services.x-android-dev.enable = false;
+
+  # Setup sway and niri
+  services.x-tiling-desktop.enable = true;
 
   # Enable yubi module
   services.x-yubi.enable = true;
