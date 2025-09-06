@@ -37,9 +37,15 @@ in {
 
       swww-daemon = {
         description = "SWWW Daemon for Niri and Hyprland";
-        wantedBy = [ "niri-session.target" "hyprland-session.target" "sway-session.target" ];
-        after = [ "niri-session.target" "hyprland-session.target" "sway-session.target" ];
+        enable = true;
+        wantedBy = [ "graphical-session.target" "niri-session.target" "hyprland-session.target" "sway-session.target" ];
+        after = [ "graphical-session.target" "niri-session.target" "hyprland-session.target" "sway-session.target" ];
+
+        # only start for wayland
+        unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
+
         serviceConfig = {
+          Type = "simple";
           ExecStart = "${pkgs.swww}/bin/swww-daemon";
           Restart = "on-failure";
         };
