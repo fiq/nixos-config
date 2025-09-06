@@ -144,74 +144,80 @@
     ];
   };
 
-  # Required for vscode (home manager managed) wayland issues
-  # See: https://github.com/NixOS/nixpkgs/issues/241337
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # dictionary
+  services.dictd.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    appimage-run
-    audacity
-    curl
-    distrobox
-    dig
-    docker-compose
-    #docker
-    elixir
-    firefox
-    inputs.fjordlauncher.packages.${system}.fjordlauncher
-    fuzzel
-    gcc
-    gdb
-    git
-    gnumake
-    google-chrome
-    grim
-    helix
-    home-manager
-    inetutils
-    prismlauncher
-    jdk21
-    kitty
-    keepassxc
-    kotlin
-    lshw
-    lynx 
-    minikube
-    nix-index
-    openssh
-    pavucontrol
-    pciutils
-    podman
-    portaudio
-    psmisc
-    python310Full
-    python311Full
-    python312Full
-#    python310Packages.virtualenv
-#    python311Packages.virtualenv
-    python312Packages.virtualenv
-    ripgrep
-    signal-desktop
-    silver-searcher
-    slurp
-    spring-boot-cli
-    sshfs
-    stdenv.cc.cc.lib
-    tmux
-    toybox # file and other goodies I'm sick of specifically nix-shelling
-    tree
-    usbutils # avoids using the busy box lsusb etc
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    vlc
-    wget
-    wl-clipboard
-    wireshark
-    xdg-desktop-portal
-    xdg-desktop-portal-wlr
-  ];
+  environment = {
 
+    # Required for vscode (home manager managed) wayland issues
+    # See: https://github.com/NixOS/nixpkgs/issues/241337
+    sessionVariables.NIXOS_OZONE_WL = "1";
+    #etc."dict.conf".text = "server dict.org";
+
+    systemPackages = with pkgs; [
+      appimage-run
+      audacity
+      curl
+      dig
+      distrobox
+      docker-compose
+      #docker
+      elixir
+      firefox
+      inputs.fjordlauncher.packages.${system}.fjordlauncher
+      fuzzel
+      gcc
+      gdb
+      git
+      gnumake
+      google-chrome
+      grim
+      helix
+      home-manager
+      inetutils
+      prismlauncher
+      jdk21
+      kitty
+      keepassxc
+      kotlin
+      lshw
+      lynx 
+      minikube
+      nix-index
+      openssh
+      pavucontrol
+      pciutils
+      podman
+      portaudio
+      psmisc
+      python310Full
+      python311Full
+      python312Full
+  #    python310Packages.virtualenv
+  #    python311Packages.virtualenv
+      python312Packages.virtualenv
+      ripgrep
+      signal-desktop
+      silver-searcher
+      slurp
+      spring-boot-cli
+      sshfs
+      stdenv.cc.cc.lib
+      tmux
+      toybox # file and other goodies I'm sick of specifically nix-shelling
+      tree
+      usbutils # avoids using the busy box lsusb etc
+      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      vlc
+      wget
+      wireshark
+      wl-clipboard
+      xdg-desktop-portal
+      xdg-desktop-portal-wlr
+    ];
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
