@@ -8,10 +8,10 @@ in {
  
   config = mkIf cfg.enable {
     services.wivrn = {
-			enable = true;
-  		openFirewall = true;
-			defaultRuntime = true;
-  		autoStart = true;
+      enable = true;
+      openFirewall = true;
+      defaultRuntime = true;
+      autoStart = true;
     };
     environment.systemPackages = with pkgs; [
       wlx-overlay-s
