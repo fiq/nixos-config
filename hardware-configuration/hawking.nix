@@ -25,6 +25,7 @@
 #      ./x-pulseaudio.nix
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.kernelModules = [ "kvm-amd" "mt7921e" ];
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   boot.extraModulePackages = [ ];
   nixpkgs.config.cudaSupport  = true;
   boot.loader.systemd-boot.extraEntries = {
@@ -125,7 +126,6 @@
     open = true;
     
     nvidiaSettings = true;
-
     prime = {
       offload = {
         enable = true;
