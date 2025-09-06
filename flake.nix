@@ -1,9 +1,9 @@
 { 
   inputs = { 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # default to unstable
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-home-assistant.url = "github:NixOS/nixpkgs/nixos-24.05";
-    unstablepkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    unstablepkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # always pegged to unstable
     hyprland.url = "github:hyprwm/Hyprland";
     musnix.url = "github:musnix/musnix";    
     home-manager.url = "github:nix-community/home-manager/master"; 

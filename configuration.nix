@@ -188,12 +188,12 @@
     psmisc
     python310Full
     python311Full
-    unstable.python312Full
+    python312Full
 #    python310Packages.virtualenv
 #    python311Packages.virtualenv
-    unstable.python312Packages.virtualenv
-    unstable.ripgrep
-    unstable.signal-desktop
+    python312Packages.virtualenv
+    ripgrep
+    signal-desktop
     silver-searcher
     slurp
     spring-boot-cli
