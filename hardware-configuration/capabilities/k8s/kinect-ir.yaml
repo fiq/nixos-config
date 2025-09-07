@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kinect-ir
+  labels:
+    app: kinect-ir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kinect-ir
+  template:
+    metadata:
+      labels:
+        app: kinect-ir
+    spec:
+      containers:
+        - name: kinect-ir
+          image: your-dockerhub-user/kinect-ir:latest
+          securityContext:
+            privileged: true  # required to access USB devices
+          devices:
+            - hostPath: /dev/bus/usb
+              containerPath: /dev/bus/usb
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/kinect
+      volumes:
+        - name: data
+          emptyDir: {}
+

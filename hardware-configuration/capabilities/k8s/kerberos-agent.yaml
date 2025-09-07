@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kerberos-agent
+  labels:
+    app: kerberos-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kerberos-agent
+  template:
+    metadata:
+      labels:
+        app: kerberos-agent
+    spec:
+      containers:
+        - name: agent
+          image: kerberos/agent:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/kerberos
+          env:
+            - name: KRB_SERVER
+              value: "http://kerberos-ui:8080"
+      volumes:
+        - name: data
+          emptyDir: {}
+

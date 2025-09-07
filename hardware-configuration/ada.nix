@@ -9,6 +9,7 @@
     [
        (modulesPath + "/installer/scan/not-detected.nix")
        ./capabilities/x-home-assistant.nix
+       ./capabilities/x-kerberos.nix
        ./capabilities/x-network-storage.nix
        ./capabilities/x-yubi.nix
     ];
@@ -53,5 +54,6 @@
 
   services.x-home-assistant.enable = true;
   services.x-network-storage.enable = true;
+  services.x-kerberos.enable = true;
   services.x-yubi.enable = true;
 }
