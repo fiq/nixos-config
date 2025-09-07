@@ -16,14 +16,29 @@ spec:
     spec:
       containers:
         - name: kinect-ir
-          image: your-kinect-image
+          image: your-kinect-image:latest   # replace with your Kinect processing image
+          securityContext:
+            privileged: true                # needed to access /dev/video0
           volumeMounts:
-            - name: dev-video0
+            - name: video0
               mountPath: /dev/video0
               readOnly: false
       volumes:
-        - name: dev-video0
+        - name: video0
           hostPath:
             path: /dev/video0
             type: CharDevice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kinect-ir
+spec:
+  selector:
+    app: kinect-ir
+  ports:
+    - protocol: TCP
+      port: 8081       # adjust if your app serves on a different port
+      targetPort: 8081
+  type: ClusterIP
 
