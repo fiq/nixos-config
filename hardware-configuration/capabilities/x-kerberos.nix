@@ -14,13 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.k3s = {
-      enable = true;
-      server = {
-        enable = true;
-        extraArgs = [ "--no-deploy=traefik" ];
-      };
-    };
+    services.k3s.enable = true;
 
     environment.systemPackages = with pkgs; [
       kubectl
@@ -30,17 +24,17 @@ in
 
     environment.etc."k8s/kerberos".source = cfg.manifestsPath;
 
-    # Systemd service to apply manifests automatically
-    systemd.services."k8s-kerberos-apply" = {
-      description = "Apply Kerberos manifests to local k3s cluster";
-      after = [ "k3s-server.service" ];  # waits for server
-      wants = [ "k3s-server.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.kubectl}/bin/kubectl apply -f /etc/k8s/kerberos";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
+		systemd.services."k8s-kerberos-apply" = {
+			description = "Apply Kerberos manifests to k3s cluster";
+			after = [ "k3s.service" ];
+			wants = [ "k3s.service" ];
+			serviceConfig = {
+				Type = "oneshot";
+				Environment = "KUBECONFIG=/etc/rancher/k3s/k3s.yaml";
+				ExecStart = "${pkgs.kubectl}/bin/kubectl apply -f /etc/k8s/kerberos/ --recursive";
+			};
+			wantedBy = [ "multi-user.target" ];
+		};
   };
 }
 

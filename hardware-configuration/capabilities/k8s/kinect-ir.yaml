@@ -16,16 +16,14 @@ spec:
     spec:
       containers:
         - name: kinect-ir
-          image: your-dockerhub-user/kinect-ir:latest
-          securityContext:
-            privileged: true  # required to access USB devices
-          devices:
-            - hostPath: /dev/bus/usb
-              containerPath: /dev/bus/usb
+          image: your-kinect-image
           volumeMounts:
-            - name: data
-              mountPath: /var/lib/kinect
+            - name: dev-video0
+              mountPath: /dev/video0
+              readOnly: false
       volumes:
-        - name: data
-          emptyDir: {}
+        - name: dev-video0
+          hostPath:
+            path: /dev/video0
+            type: CharDevice
 
