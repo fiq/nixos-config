@@ -15,24 +15,24 @@ spec:
         app: kerberos-ui
     spec:
       containers:
-        - name: ui
-          image: kerberos/ui:latest
+        - name: kerberos-ui
+          image: kerberos/kerberos:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           env:
-            - name: AGENT_URL
-              value: "http://kerberos-agent:8080"
+            - name: SOME_ENV_VAR
+              value: "value"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: kerberos-ui
 spec:
+  type: NodePort
   selector:
     app: kerberos-ui
   ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: NodePort
+    - port: 8080          # internal port for service
+      targetPort: 80      # pod container port
+      nodePort: 30080     # external port on all nodes
 

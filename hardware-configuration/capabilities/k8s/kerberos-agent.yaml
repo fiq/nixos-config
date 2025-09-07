@@ -15,17 +15,27 @@ spec:
         app: kerberos-agent
     spec:
       containers:
-        - name: agent
+        - name: kerberos-agent
           image: kerberos/agent:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           volumeMounts:
-            - name: data
-              mountPath: /var/lib/kerberos
-          env:
-            - name: KRB_SERVER
-              value: "http://kerberos-ui:8080"
+            - name: recordings
+              mountPath: /recordings   # Kerberos default storage path
       volumes:
-        - name: data
-          emptyDir: {}
-
+        - name: recordings
+          persistentVolumeClaim:
+            claimName: kerberos-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kerberos-agent
+spec:
+  selector:
+    app: kerberos-agent
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+  type: ClusterIP
