@@ -32,7 +32,7 @@ spec:
   selector:
     app: kerberos-ui
   ports:
-    - port: 8080          # internal port for service
-      targetPort: 80      # pod container port
-      nodePort: 30080     # external port on all nodes
+    - port: 8080
+      targetPort: 80
+      nodePort: 30080
 

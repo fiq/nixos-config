@@ -1,44 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kinect-ir
+  name: kinect-laptop
   labels:
-    app: kinect-ir
+    app: kinect-laptop
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kinect-ir
+      app: kinect-laptop
   template:
     metadata:
       labels:
-        app: kinect-ir
+        app: kinect-laptop
     spec:
       containers:
-        - name: kinect-ir
-          image: your-kinect-image:latest   # replace with your Kinect processing image
+        - name: kinect-laptop
+          image: ghcr.io/rafgem/kinect-webcam:latest
           securityContext:
-            privileged: true                # needed to access /dev/video0
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
           volumeMounts:
-            - name: video0
-              mountPath: /dev/video0
+            - name: laptop-video
+              mountPath: /dev/video2
               readOnly: false
       volumes:
-        - name: video0
+        - name: laptop-video
           hostPath:
-            path: /dev/video0
+            path: /dev/video2
             type: CharDevice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: kinect-ir
+  name: kinect-laptop
 spec:
   selector:
-    app: kinect-ir
+    app: kinect-laptop
   ports:
     - protocol: TCP
-      port: 8081       # adjust if your app serves on a different port
+      port: 8081
       targetPort: 8081
   type: ClusterIP
-

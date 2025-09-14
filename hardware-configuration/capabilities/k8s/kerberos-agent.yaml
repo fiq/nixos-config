@@ -21,7 +21,7 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: recordings
-              mountPath: /recordings   # Kerberos default storage path
+              mountPath: /recordings
       volumes:
         - name: recordings
           persistentVolumeClaim:
@@ -39,3 +39,4 @@ spec:
       port: 8080
       targetPort: 80
   type: ClusterIP
+

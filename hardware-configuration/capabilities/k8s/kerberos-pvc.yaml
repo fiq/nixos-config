@@ -7,5 +7,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi   # adjust size depending on how much video you want to store
-
+      storage: 10Gi
