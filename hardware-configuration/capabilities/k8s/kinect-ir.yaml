@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: kinect-laptop
-          image: ghcr.io/rafgem/kinect-webcam:latest
+          image: kinect-webcam:latest
+          imagePullPolicy: IfNotPresent
           securityContext:
             runAsNonRoot: true
             readOnlyRootFilesystem: true
