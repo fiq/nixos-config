@@ -39,8 +39,10 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     #pkgs.firefox-bin
+    pkgs.claude-code
     pkgs.cmake
     pkgs.emacs
+    pkgs.gpt-cli
 #    pkgs.python310Full
     #pkgs.python310Packages.ipython
 #    pkgs.python310Packages.pip
