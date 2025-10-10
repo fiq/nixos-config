@@ -68,6 +68,7 @@
     pkgs.tree
     pkgs.vim_configurable
     pkgs.vimPlugins.vim-colorschemes
+    pkgs.warp-terminal
     pkgs.watch
     pkgs.wget 
   ];
