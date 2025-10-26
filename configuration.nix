@@ -192,9 +192,9 @@
       podman
       portaudio
       psmisc
-      python310Full
-      python311Full
-      python312Full
+      python310
+      python311
+      python312
   #    python310Packages.virtualenv
   #    python311Packages.virtualenv
       python312Packages.virtualenv
