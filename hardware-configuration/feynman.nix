@@ -7,7 +7,7 @@
       "${builtins.fetchGit {
         url = "https://github.com/NixOS/nixos-hardware.git";
         ref = "master";
-        rev =  "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c";
+        rev =  "d6645c340ef7d821602fd2cd199e8d1eed10afbc";
        }}/dell/xps/13-9370"
        ./capabilities/x-android-dev.nix
        ./capabilities/x-musician.nix
@@ -55,7 +55,7 @@
   services.x-musician.enable = true;
 
   # RTL SDR custom module
-  services.x-rtl-sdr.enable = true;
+  services.x-rtl-sdr.enable = false;
 
   # Setup android dev
   services.x-android-dev.enable = false;
