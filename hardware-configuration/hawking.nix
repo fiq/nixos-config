@@ -19,6 +19,7 @@
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-security-dev.nix
       ./capabilities/x-tiling-desktop.nix
+      ./capabilities/x-video.nix
       ./capabilities/x-vrdesktop.nix
       ./capabilities/x-yubi.nix
     ];
@@ -194,6 +195,8 @@
   # Setup sway and niri
   services.x-tiling-desktop.enable = true;
 
+  # Video Editing
+  services.x-video.enable = true;
 
   # Enable yubi module
   services.x-yubi.enable = true;
