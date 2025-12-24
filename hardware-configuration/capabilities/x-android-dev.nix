@@ -10,8 +10,12 @@ in {
     # I use android on both hawking and feynman but may not do on other boxes
     programs.adb.enable = true;
     services.udev.packages = [
-      pkgs.android-udev-rules
     ];
+
+    # TODO - Rescope
+    services.udev.extraRules = ''
+      SUBSYSTEM=="usb", TAG+="uaccess"
+    '';
     environment.systemPackages = with pkgs; [
       godot_4
       android-studio
