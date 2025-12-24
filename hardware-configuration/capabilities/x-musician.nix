@@ -55,6 +55,7 @@ in {
       protonup-qt # for rockband
       qpwgraph
       rtaudio
+      sox
       unzip
     ];
 
