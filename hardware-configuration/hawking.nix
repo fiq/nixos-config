@@ -40,7 +40,7 @@
 
   # Llama
   services.ollama.enable = true;
-  services.ollama.acceleration = "cuda";
+  services.ollama.package = pkgs.ollama-cuda;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NixOS";
