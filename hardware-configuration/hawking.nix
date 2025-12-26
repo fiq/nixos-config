@@ -14,6 +14,7 @@
       ./capabilities/x-android-dev.nix
       ./capabilities/x-bt.nix
       ./capabilities/x-btrfs.nix
+      ./capabilities/x-geneology.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
@@ -183,6 +184,9 @@
 
   # Setup android and godot dev tools
   services.x-android-dev.enable = true;
+
+  # Setup gramps
+  services.x-geneology.enable = true;
 
   # Enable pulse audio custom module
   #  services.x-pulseaudio.enable = true;
