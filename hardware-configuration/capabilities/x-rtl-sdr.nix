@@ -10,12 +10,14 @@ in {
     # I use RTL-SDR on both hawking and feynman but may not do on other boxes
     hardware.rtl-sdr.enable = true;
     environment.systemPackages = with pkgs; [
-      rtl-sdr
+      dump1090-fa 
       gqrx
       gpredict
       gnuradio
       kstars
       noaa-apt
+      readsb
+      rtl-sdr
       satdump
       sdrpp
     ];
