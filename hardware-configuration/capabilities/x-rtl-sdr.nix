@@ -12,7 +12,7 @@ in {
     environment.systemPackages = with pkgs; [
       rtl-sdr
       gqrx
-#      gpredict
+      gpredict
       gnuradio
       kstars
       noaa-apt
