@@ -16,6 +16,7 @@ in {
       gnuradio
       kstars
       noaa-apt
+      satdump
       sdrpp
     ];
   };
