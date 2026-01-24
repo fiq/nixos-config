@@ -24,10 +24,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
     #(pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; })
     pkgs.nerd-fonts._0xproto
     pkgs.nerd-fonts.fira-code
@@ -38,18 +34,11 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    #pkgs.firefox-bin
     pkgs.claude-code
     pkgs.cmake
     pkgs.emacs
     pkgs.gpt-cli
-#    pkgs.python310Full
-    #pkgs.python310Packages.ipython
-#    pkgs.python310Packages.pip
     pkgs.ffmpeg
-#    pkgs.python310Packages.pyqt5
-#    pkgs.python39Packages.numpy
-#    pkgs.dotnet-sdk_7
     pkgs.figlet
     pkgs.fzf
     pkgs.jetbrains.idea-community
@@ -66,7 +55,7 @@
     pkgs.silver-searcher
     pkgs.slack
     pkgs.tree
-    pkgs.vim_configurable
+    pkgs.vim-full
     pkgs.vimPlugins.vim-colorschemes
     pkgs.warp-terminal
     pkgs.watch
@@ -160,6 +149,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # prompt
 #source ''${ZDOTDIR:-~}/.p10k.zsh
+[ -s "$HOME/.zshrc-mutable" ] && \. "$HOME/.zshrc-mutable" # local overrides
    '';
   };
 
@@ -167,12 +157,15 @@ export NVM_DIR="$HOME/.nvm"
   # vscode
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-    dracula-theme.theme-dracula
-    vscodevim.vim
-    yzhang.markdown-all-in-one
-    ];
-  };  
+    profiles.default.extensions = (with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      vscodevim.vim
+      yzhang.markdown-all-in-one
+      vscjava.vscode-java-pack
+      anthropic.claude-code
+      genieai.chatgpt-vscode
+    ]);
+  };
 
   # wezterm
   programs.wezterm = {
