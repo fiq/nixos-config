@@ -8,6 +8,10 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "vscode"
   ];
+
+  nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+  ];
   
 
   programs.java.enable = true;
@@ -162,8 +166,10 @@ export NVM_DIR="$HOME/.nvm"
       vscodevim.vim
       yzhang.markdown-all-in-one
       vscjava.vscode-java-pack
-      anthropic.claude-code
       genieai.chatgpt-vscode
+    ]) ++ (with pkgs.vscode-marketplace; [
+      anthropic.claude-code
+      openai.chatgpt
     ]);
   };
 
