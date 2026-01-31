@@ -13,10 +13,16 @@ in {
   config = mkIf cfg.enable {
     services.minidlna = {
        enable = true;
-       settings.media_dir = [ cfg.media_dir ];
+       settings.media_dir = [ cfg.media_dir /mnt/backups ];
     };
     services.samba = {
        enable = true;
+       extraConfig = ''
+         [global]
+         wide links = yes
+         follow symlinks = yes
+         unix extensions = no
+       ''
        settings = {
          global = {
            security = "user";           
@@ -26,7 +32,8 @@ in {
            public = "yes";
            path = cfg.media_dir;
            "read only" = "yes";
-           browseable = "yes";  
+           browseable = "yes";
+           "wide links" = "yes";
          };
          homes = {
            browseable = "no";

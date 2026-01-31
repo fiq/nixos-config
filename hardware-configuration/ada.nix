@@ -21,6 +21,15 @@
   boot.extraModulePackages = [ ];
   boot.loader.efi.efiSysMountPoint = lib.mkForce "/boot";
 
+  fileSystems."/mnt/backups" = {
+    device = "/dev/disk/by-label/Files";
+    fsType = "ext4";
+    options = [
+      "users"
+      "nofail"
+     ];
+  };
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/a8220418-2d42-46ba-b908-c3de38f3acaf";
       fsType = "ext4";
