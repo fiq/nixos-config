@@ -22,7 +22,7 @@ in {
          wide links = yes
          follow symlinks = yes
          unix extensions = no
-       ''
+       '';
        settings = {
          global = {
            security = "user";           
