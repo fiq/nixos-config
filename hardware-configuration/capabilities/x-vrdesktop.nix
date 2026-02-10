@@ -12,9 +12,10 @@ in {
       openFirewall = true;
       defaultRuntime = true;
       autoStart = true;
+      package = (pkgs.wivrn.override { cudaSupport = true; });
     };
     environment.systemPackages = with pkgs; [
-      wlx-overlay-s
+      wayvr
     ];
   };
 }
