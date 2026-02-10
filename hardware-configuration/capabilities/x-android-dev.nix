@@ -8,15 +8,13 @@ in {
   
   config = mkIf cfg.enable {
     # I use android on both hawking and feynman but may not do on other boxes
-    programs.adb.enable = true;
-    services.udev.packages = [
-    ];
-
     # TODO - Rescope
     services.udev.extraRules = ''
       SUBSYSTEM=="usb", TAG+="uaccess"
     '';
+
     environment.systemPackages = with pkgs; [
+      android-tools
       godot_4
       android-studio
     ];
