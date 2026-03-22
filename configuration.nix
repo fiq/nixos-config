@@ -5,6 +5,13 @@
 { config, pkgs, lib, inputs, unstable, ... }:
 
 {
+  # Unstable Fixes
+  # FIXME - reenable later: March 2026 - pydoc issues in unstable.
+  documentation.doc.enable = false;
+  documentation.man.enable = true;
+  documentation.info.enable = true;
+
+  # Config
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "raf" ];
   nix.optimise.automatic = true;
@@ -192,7 +199,7 @@
       podman
       portaudio
       psmisc
-      python310
+#      python310
       python311
       python312
   #    python310Packages.virtualenv
@@ -232,12 +239,13 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 8080 ];
+  networking.firewall.allowedTCPPorts = [ 22 8080 5173 3000 ];
   #networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
+  #@networking.firewall.enable = true;
   networking.firewall.enable = false;
   services.resolved.enable = true;
-  services.resolved.fallbackDns = [ "192.168.50.1" "fdce:298d:d11e::1" ];
+  services.resolved.settings.Resolve.FallbackDNS = [ "192.168.50.1" "fdce:298d:d11e::1" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
