@@ -1,5 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
-
+let
+  claude = import ./claude.nix { inherit pkgs; };
+in
 {
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -38,7 +40,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.claude-code
+  ] ++ claude.packages ++ [
     pkgs.cmake
     pkgs.emacs
     pkgs.gpt-cli
@@ -54,7 +56,6 @@
     pkgs.mecab
     pkgs.mpg123
     pkgs.neovim
-    pkgs.nodejs_20
     pkgs.protobuf
     pkgs.rustup
     pkgs.silver-searcher
@@ -76,20 +77,7 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".p10k.zsh".source = dotfiles/p10k.zsh;
     ".tmux.conf".source = dotfiles/tmux.conf;
-    ".claudeignore".text = ''
-      ~/.ssh
-      ~/.aws
-      ~/.config
-      ~/.gnupg
-      ~/.kube
-      ~/.local/share/keyrings
-      ~/.pki
-      **/*.env
-      **/*.pem
-      **/*.key
-      **/*secret*
-      **/*token*
-    '';
+    ".claudeignore".text = claude.ignoreText;
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
@@ -137,13 +125,7 @@
   programs.zsh = {
     enable = true;
     defaultKeymap = "emacs";
-    shellAliases = {
-      claude-latest = ''"$HOME/.claude-npm/bin/claude"'';
-      # Claude Code has full filesystem access. Avoid running it from $HOME root.
-      claude-latest-safe = ''cd "$HOME/Code" && "$HOME/.claude-npm/bin/claude"'';
-      claude-latest-install = ''NPM_CONFIG_PREFIX="$HOME/.claude-npm" ${pkgs.nodejs_20}/bin/npm install -g @anthropic-ai/claude-code'';
-      claude-latest-update = ''current="$("$HOME/.claude-npm/bin/claude" --version 2>/dev/null || echo not-installed)"; latest="$(${pkgs.nodejs_20}/bin/npm show @anthropic-ai/claude-code version)"; printf "Current: %s\nLatest: %s\n" "$current" "$latest"; read -q "REPLY?Install update? [y/N] " && echo && NPM_CONFIG_PREFIX="$HOME/.claude-npm" ${pkgs.nodejs_20}/bin/npm install -g @anthropic-ai/claude-code || { echo; echo "Cancelled."; }'';
-    };
+    shellAliases = claude.shellAliases;
     plugins = [
       {
         name = "powerlevel10k-config";
@@ -189,10 +171,7 @@ export NVM_DIR="$HOME/.nvm"
       yzhang.markdown-all-in-one
       vscjava.vscode-java-pack
       genieai.chatgpt-vscode
-    ]) ++ (with pkgs.vscode-marketplace; [
-      anthropic.claude-code
-      openai.chatgpt
-    ]);
+    ]) ++ claude.vscodeExtensions;
   };
 
   # wezterm

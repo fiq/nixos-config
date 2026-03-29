@@ -15,6 +15,7 @@
       ./capabilities/x-bt.nix
       ./capabilities/x-btrfs.nix
       ./capabilities/x-geneology.nix
+      ./capabilities/x-genai.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
@@ -38,10 +39,6 @@
       sort-key z_freebsd
     '';
   };
-
-  # Llama
-  services.ollama.enable = true;
-  services.ollama.package = pkgs.ollama-cuda;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NixOS";
@@ -142,9 +139,7 @@
 
   # hawking specific pkgs
   environment.systemPackages = with pkgs; [
-    cudaPackages.cudatoolkit
     libcap 
-    llama-cpp
     mumble
     nvidia-container-toolkit
     nvidia-docker
@@ -186,6 +181,13 @@
 
   # Setup gramps
   services.x-geneology.enable = true;
+
+  # Local GenAI tooling
+  services.x-genai = {
+    enable = true;
+    cuda.enable = true;
+    ollama.enable = true;
+  };
 
   # Enable pulse audio custom module
   #  services.x-pulseaudio.enable = true;
