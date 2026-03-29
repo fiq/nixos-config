@@ -42,7 +42,7 @@
         ({ pkgs, ... }: {
           nixpkgs.overlays = [
             (final: prev: {
-              home-assistant = inputs.nixpkgs-home-assistant.legacyPackages.${final.system}.home-assistant;
+              home-assistant = inputs.nixpkgs-home-assistant.legacyPackages.${final.stdenv.hostPlatform.system}.home-assistant;
             })
           ];
         })
