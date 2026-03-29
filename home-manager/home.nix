@@ -54,6 +54,7 @@
     pkgs.mecab
     pkgs.mpg123
     pkgs.neovim
+    pkgs.nodejs_20
     pkgs.protobuf
     pkgs.rustup
     pkgs.silver-searcher
@@ -75,6 +76,20 @@
     # ".screenrc".source = dotfiles/screenrc;
     ".p10k.zsh".source = dotfiles/p10k.zsh;
     ".tmux.conf".source = dotfiles/tmux.conf;
+    ".claudeignore".text = ''
+      ~/.ssh
+      ~/.aws
+      ~/.config
+      ~/.gnupg
+      ~/.kube
+      ~/.local/share/keyrings
+      ~/.pki
+      **/*.env
+      **/*.pem
+      **/*.key
+      **/*secret*
+      **/*token*
+    '';
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
@@ -122,6 +137,13 @@
   programs.zsh = {
     enable = true;
     defaultKeymap = "emacs";
+    shellAliases = {
+      claude-latest = ''"$HOME/.claude-npm/bin/claude"'';
+      # Claude Code has full filesystem access. Avoid running it from $HOME root.
+      claude-latest-safe = ''cd "$HOME/Code" && "$HOME/.claude-npm/bin/claude"'';
+      claude-latest-install = ''NPM_CONFIG_PREFIX="$HOME/.claude-npm" ${pkgs.nodejs_20}/bin/npm install -g @anthropic-ai/claude-code'';
+      claude-latest-update = ''current="$("$HOME/.claude-npm/bin/claude" --version 2>/dev/null || echo not-installed)"; latest="$(${pkgs.nodejs_20}/bin/npm show @anthropic-ai/claude-code version)"; printf "Current: %s\nLatest: %s\n" "$current" "$latest"; read -q "REPLY?Install update? [y/N] " && echo && NPM_CONFIG_PREFIX="$HOME/.claude-npm" ${pkgs.nodejs_20}/bin/npm install -g @anthropic-ai/claude-code || { echo; echo "Cancelled."; }'';
+    };
     plugins = [
       {
         name = "powerlevel10k-config";
