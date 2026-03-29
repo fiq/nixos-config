@@ -165,13 +165,21 @@ export NVM_DIR="$HOME/.nvm"
   # vscode
   programs.vscode = {
     enable = true;
-    profiles.default.extensions = (with pkgs.vscode-extensions; [
-      dracula-theme.theme-dracula
-      vscodevim.vim
-      yzhang.markdown-all-in-one
-      vscjava.vscode-java-pack
-      genieai.chatgpt-vscode
-    ]) ++ claude.vscodeExtensions;
+    profiles.default = {
+      extensions = (with pkgs.vscode-extensions; [
+        dracula-theme.theme-dracula
+        vscodevim.vim
+        yzhang.markdown-all-in-one
+        vscjava.vscode-java-pack
+        genieai.chatgpt-vscode
+      ]) ++ claude.vscodeExtensions;
+
+      userSettings = {
+        # Use a stable wrapper path for VS Code that prefers the npm-installed
+        # Claude CLI when present and otherwise falls back to the system one.
+        "claudeCode.claudeProcessWrapper" = "/home/raf/.nix-profile/bin/claude-vscode-wrapper";
+      };
+    };
   };
 
   # wezterm

@@ -1,8 +1,18 @@
 { pkgs }:
 
+let
+  claudeVscodeWrapper = pkgs.writeShellScriptBin "claude-vscode-wrapper" ''
+    if [ -x "$HOME/.claude-npm/bin/claude" ]; then
+      exec "$HOME/.claude-npm/bin/claude" "$@"
+    fi
+
+    exec /run/current-system/sw/bin/claude "$@"
+  '';
+in
 {
   packages = [
     pkgs.nodejs_20
+    claudeVscodeWrapper
   ];
 
   ignoreText = ''
@@ -21,6 +31,7 @@
   '';
 
   shellAliases = {
+    claude-local = ''"$HOME/.nix-profile/bin/claude-vscode-wrapper"'';
     claude-latest = ''"$HOME/.claude-npm/bin/claude"'';
     # Claude Code has full filesystem access. Avoid running it from $HOME root.
     claude-latest-safe = ''cd "$HOME/Code" && "$HOME/.claude-npm/bin/claude"'';
