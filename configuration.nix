@@ -233,6 +233,10 @@
   #   enableSSHSupport = true;
   # };
 
+  # Allow VS Code extensions that ship generic dynamically linked Linux
+  # binaries, such as Claude Code, to run on NixOS.
+  programs.nix-ld.enable = true;
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
@@ -265,4 +269,3 @@
 	magicOrExtension = ''\x7fELF....AI\x02'';
   };
 }
-
