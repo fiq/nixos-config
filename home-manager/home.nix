@@ -45,7 +45,7 @@
     pkgs.ffmpeg
     pkgs.figlet
     pkgs.fzf
-    pkgs.jetbrains.idea-community
+    pkgs.jetbrains.idea
     pkgs.gimp3
     pkgs.jq
     pkgs.keepassxc
