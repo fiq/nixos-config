@@ -1,33 +1,35 @@
-# What
+# nixos-config
 
-Provisions:
+Flake-based NixOS config for three hosts and two Home Manager users.
+See [AGENTS.md](AGENTS.md) for full layout, conventions, and agent instructions.
 
-* 1 x Linux PC with nvida
-* 1 x Linux PC without nvida
-* 1 x Home Manager user 'innovation' on darwin\aarch64
-* 1 x Home Manager user 'raf' on x86\_64
+## Hosts
 
-# Running
+| Host | Role |
+|------|------|
+| `hawking` | Primary workstation — AMD/NVIDIA, CUDA, GenAI |
+| `feynman` | Laptop — Dell XPS 13 |
+| `ada` | Home server — Home Assistant, Kerberos, NAS |
 
-## Installation
+## Rebuild
 
-```
-# install hawking
+```bash
+nixos-rebuild switch --flake .#hawking
+nixos-rebuild switch --flake .#feynman
+nixos-rebuild switch --flake .#ada
 
-nixos-install --flake .#hawking
-
-# install feynman
-
-nixos-install --flake .#feynman
-
-```
-
-## Home Manager Only
-
-```
-mkdir -p ~/.config/nixpkgs
-cd !$
-git clone git@github.com/fiq/nix-config
-home-manager switch
+home-manager switch --flake .#raf
+home-manager switch --flake .#innovation
 ```
 
+## Fresh Install
+
+```bash
+nixos-install --flake .#<host>
+```
+
+## Skills
+
+| Command | What it does |
+|---------|-------------|
+| `/check-sensitive` | Scan staged/unstaged changes for secrets and prompt injection before committing |
