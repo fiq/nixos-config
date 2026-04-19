@@ -65,4 +65,6 @@
 
   # Enable yubi module
   services.x-yubi.enable = true;
+
+  networking.firewall.allowedTCPPorts = [ 22 9999 8765 8080 3000 5173 ];
 }
