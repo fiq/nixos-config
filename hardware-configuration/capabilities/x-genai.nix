@@ -18,7 +18,7 @@ in {
     environment.systemPackages =
       (with pkgs; [
         claude-code
-        claude-code-acp
+        claude-agent-acp
         claude-code-router
         claude-monitor
         llama-cpp

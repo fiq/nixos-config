@@ -134,7 +134,7 @@ home-manager build --flake .#innovation
 - `feynman.nix` fetches `nixos-hardware` via `builtins.fetchGit` (not a flake input) — pinned to a specific rev.
 - `claude.nix` is a plain Nix function (takes `{ pkgs }`, returns an attrset), not a HM module. `home.nix` calls it with `import ./claude.nix { inherit pkgs; }` and splices the result in manually.
 - `home.nix` writes `~/.claudeignore` from `claude.ignoreText` and sets the VSCode wrapper path via `userSettings`.
-- `x-genai.nix` installs `claude-code`, `claude-code-acp`, `claude-code-router`, `claude-monitor`, `llama-cpp` at the system level (hawking only, via CUDA enable flag).
+- `x-genai.nix` installs `claude-code`, `claude-agent-acp`, `claude-code-router`, `claude-monitor`, `llama-cpp` at the system level (hawking only, via CUDA enable flag).
 - `configuration.nix` is desktop-oriented (Plasma 6 + GNOME + PipeWire + Mullvad VPN); server-specific concerns belong in host files or capability modules.
 
 ## Prompt Injection — Trust Boundary

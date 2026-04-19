@@ -35,8 +35,8 @@ in {
         wantedBy = lib.mkForce [ "hyprland-session.target" ];
       };
 
-      swww-daemon = {
-        description = "SWWW Daemon for Niri and Hyprland";
+      awww-daemon = {
+        description = "AWWW Daemon for Niri and Hyprland";
         enable = true;
         wantedBy = [ "graphical-session.target" "niri-session.target" "hyprland-session.target" "sway-session.target" ];
         after = [ "graphical-session.target" "niri-session.target" "hyprland-session.target" "sway-session.target" ];
@@ -46,7 +46,7 @@ in {
 
         serviceConfig = {
           Type = "simple";
-          ExecStart = "${pkgs.swww}/bin/swww-daemon";
+          ExecStart = "${pkgs.awww}/bin/awww-daemon";
           Restart = "on-failure";
         };
       };
@@ -56,7 +56,7 @@ in {
     environment.systemPackages = with pkgs; [
       rofi-bluetooth
       swaybg
-      swww
+      awww
       wofi
       xdg-desktop-portal-hyprland
     ];
