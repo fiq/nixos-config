@@ -19,9 +19,9 @@ in {
       '';
     };
     environment.systemPackages = with pkgs; [
-       
       davinci-resolve
       ffmpeg
+      guvcview
       obs-studio
       scrcpy
       v4l-utils
