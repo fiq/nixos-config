@@ -181,6 +181,8 @@ export NVM_DIR="$HOME/.nvm"
       };
     };
   };
+  
+  home.file.".config/Code/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/raf/.config/vscode-mutable/settings.json";
 
   # wezterm
   programs.wezterm = {
