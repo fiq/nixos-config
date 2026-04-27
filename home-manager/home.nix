@@ -184,6 +184,9 @@ export NVM_DIR="$HOME/.nvm"
         "ollamaAgent.enableProjectIndex" = "true";
         "ollamaAgent.model" = "qwen3-coder-30b-16k";
 
+        "ollamaAgentChat.model" = "qwen3-coder-30b-16k";
+        "ollamaAgentChat.provider" = "ollama";
+        "ollamaAgentChat.capabilities" = ["tool_use"];
       };
     };
   };
