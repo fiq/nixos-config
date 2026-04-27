@@ -178,11 +178,16 @@ export NVM_DIR="$HOME/.nvm"
         # Use a stable wrapper path for VS Code that prefers the npm-installed
         # Claude CLI when present and otherwise falls back to the system one.
         "claudeCode.claudeProcessWrapper" = "/home/raf/.nix-profile/bin/claude-vscode-wrapper";
+
+        "ollamaAgent.host" = "localhost";
+        "ollamaAgent.port" = "11434";
+        "ollamaAgent.enableProjectIndex" = "true";
+        "ollamaAgent.model" = "qwen3-coder-30b-16k";
+
       };
     };
   };
   
-  home.file.".config/Code/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/raf/.config/vscode-mutable/settings.json";
 
   # wezterm
   programs.wezterm = {
