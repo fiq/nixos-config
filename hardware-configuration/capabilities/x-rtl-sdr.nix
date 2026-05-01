@@ -13,7 +13,7 @@ in {
 #      dump1090-fa 
       gqrx
       gpredict
-      gnuradio
+#      gnuradio
       kstars
       noaa-apt
       readsb
