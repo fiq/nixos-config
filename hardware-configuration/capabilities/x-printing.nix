@@ -9,7 +9,7 @@ in {
   config = mkIf cfg.enable {
     services.printing = {
        enable = true;
-       drivers = [ pkgs.brlaser ];
+       drivers = [ pkgs.brlaser pkgs.cnijfilter2 ];
     };
   };
 }
