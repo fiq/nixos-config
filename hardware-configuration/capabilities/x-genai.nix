@@ -17,6 +17,7 @@ in {
 
     environment.systemPackages =
       (with pkgs; [
+        codex
         claude-code
         claude-agent-acp
         claude-code-router
