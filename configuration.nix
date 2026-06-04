@@ -204,7 +204,9 @@
       python312
   #    python310Packages.virtualenv
   #    python311Packages.virtualenv
+      python311Packages.uv
       python312Packages.virtualenv
+      python312Packages.uv
       ripgrep
       signal-desktop
       silver-searcher
