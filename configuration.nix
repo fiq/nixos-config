@@ -164,6 +164,7 @@
     #etc."dict.conf".text = "server dict.org";
 
     systemPackages = with pkgs; [
+      age
       appimage-run
       audacity
       curl
@@ -211,6 +212,7 @@
       signal-desktop
       silver-searcher
       slurp
+      sops
       spring-boot-cli
       sshfs
       stdenv.cc.cc.lib
