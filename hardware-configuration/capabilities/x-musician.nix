@@ -51,11 +51,13 @@ in {
       guitarix
       rosegarden
       ardour
-#     carla
+      carla
+      musescore
       protonup-qt # for rockband
       qpwgraph
       rtaudio
       sox
+      tuxguitar
       unzip
     ];
 
