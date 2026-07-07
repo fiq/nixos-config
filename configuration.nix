@@ -178,6 +178,7 @@
       fuzzel
       gcc
       gdb
+      gh
       git
       gnumake
       google-chrome
