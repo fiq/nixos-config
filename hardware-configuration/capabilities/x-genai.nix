@@ -19,6 +19,9 @@ in {
       (with pkgs; [
         codex
         claude-code
+        opencode
+        opencode-claude-auth
+        opencode-desktop
         claude-agent-acp
         claude-code-router
         claude-monitor
