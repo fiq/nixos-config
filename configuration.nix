@@ -180,6 +180,7 @@
       gdb
       gh
       git
+      gnupg
       gnumake
       google-chrome
       grim
