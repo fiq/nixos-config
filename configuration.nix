@@ -33,8 +33,13 @@
     package = pkgs.mullvad-vpn;
   };
 
+  # ivpn
+  services.ivpn.enable = true;
+  networking.firewall.extraInputRules = ''
+    iifname "wgivpn" drop
+  '';
 
-  # Pick only one of the below networking options.
+# Pick only one of the below networking options.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
@@ -260,7 +265,7 @@
   #networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   #@networking.firewall.enable = true;
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
   services.resolved.enable = true;
   services.resolved.settings.Resolve.FallbackDNS = [ "192.168.50.1" "fdce:298d:d11e::1" ];
 
