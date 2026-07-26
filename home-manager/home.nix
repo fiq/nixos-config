@@ -189,8 +189,8 @@ export NVM_DIR="$HOME/.nvm"
         "ollamaAgentChat.provider" = "ollama";
         "ollamaAgentChat.capabilities" = ["tool_use"];
       };
-      mutableExtensionsDir = true;
     };
+    mutableExtensionsDir = true;
   };
   
 
