@@ -38,6 +38,7 @@
   networking.firewall.extraInputRules = ''
     iifname "wgivpn" drop
   '';
+  networking.firewall.filterForward = false;
 
 # Pick only one of the below networking options.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
