@@ -58,7 +58,7 @@ in
     pkgs.neovim
     pkgs.protobuf
     pkgs.rustup
-    pkgs.silver-searcher
+    pkgs.silver-searcher-ng
     pkgs.slack
     pkgs.tree
     pkgs.vim-full

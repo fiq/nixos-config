@@ -178,7 +178,7 @@
       distrobox
       docker-compose
       #docker
-      elixir
+      beamPackages.elixir
       firefox
       inputs.fjordlauncher.packages.${stdenv.hostPlatform.system}.fjordlauncher
       fuzzel
@@ -218,7 +218,7 @@
       python312Packages.uv
       ripgrep
       signal-desktop
-      silver-searcher
+      silver-searcher-ng
       slurp
       sops
       spring-boot-cli
