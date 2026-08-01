@@ -58,6 +58,7 @@ in {
 
 
     environment.systemPackages = with pkgs; [
+      libdisplay-info
       rofi-bluetooth
       swaybg
       awww
