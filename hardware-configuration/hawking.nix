@@ -2,7 +2,17 @@
 
 {
   #boot.kernelPackages = pkgs.linuxPackages_6_8;
+  # Deliberately the new-feature branch (`latest` == `bleeding_edge`, 610.x):
+  # NVIDIA's Wayland work lands here first, which matters for the niri session.
+  # Trade-off: regressions land here first, and after any rebuild that bumps
+  # this you must REBOOT. A userspace/module mismatch breaks EGL, which pushes
+  # GTK onto the software renderer — that is what leaked 18.7G of wl_shm
+  # buffers into waybar on 2026-08-01.
+  #
+  # Swap the two lines below to fall back to NVIDIA's production branch
+  # (== `stable`, 595.x) if `latest` ships a regression. Reboot after either.
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
   networking.hostName = "hawking";
   # FIXME - bump raf for tcpdump
   users.extraGroups.root.members = [ "raf" ];
