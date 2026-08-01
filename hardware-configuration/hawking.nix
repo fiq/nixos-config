@@ -164,7 +164,11 @@
 
 
   # Enable bluetooth tools
-  services.x-bt.enable = true;
+  services.x-bt = {
+    enable = true;
+    # Keep avahi off docker0/br-* — see x-bt.nix for why.
+    avahiInterfaces = [ "enp7s0" "wlp6s0" ];
+  };
 
   # Enable btrfs tools
   services.x-btrfs.enable = true;
