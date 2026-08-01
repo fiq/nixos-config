@@ -237,6 +237,20 @@
       xdg-desktop-portal-wlr
     ];
   };
+  # No host has a swap partition, so the kernel has nothing to reclaim to and
+  # goes straight from pressure to the OOM killer. zram gives it compressed
+  # headroom without touching the disk layout.
+  #
+  # vm.swappiness is left alone on purpose: musnix pins it to 10 for low-latency
+  # audio, and that matters more on hawking than eager zram use.
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 25;
+  };
+  # zram reads are memcpy, so don't fault in 8 pages when 1 was asked for.
+  boot.kernel.sysctl."vm.page-cluster" = 0;
+
   # GC
   nix.gc = {
     automatic = true;
