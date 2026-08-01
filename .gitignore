@@ -37,3 +37,7 @@ wg*.nix
 *.age.key
 agenix-key*
 sops-age-key*
+
+# nix build output symlinks
+result
+result-*
