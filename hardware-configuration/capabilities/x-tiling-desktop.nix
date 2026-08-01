@@ -28,11 +28,20 @@ in {
       enable = true;
     };
 
-    # only start waybar on hyprland
+    # Declarative bar config. /etc/xdg is ahead of /run/current-system/sw/etc/xdg
+    # in XDG_CONFIG_DIRS, so this overrides the sway-oriented config.jsonc shipped
+    # by the waybar package. A stale ~/.config/waybar/ still shadows both.
+    environment.etc = {
+      "xdg/waybar/config.jsonc".source = ./waybar/config.jsonc;
+      "xdg/waybar/style.css".source = "${pkgs.waybar}/etc/xdg/waybar/style.css";
+    };
+
     systemd.user.services = {
+      # waybar.service upstream is already PartOf/WantedBy graphical-session.target,
+      # which niri, sway and hyprland all bind to — it does not need a target
+      # override, and pinning it to hyprland-session.target left it dead under niri.
       waybar = {
-        unitConfig.PartOf = lib.mkForce "hyprland-session.target";
-        wantedBy = lib.mkForce [ "hyprland-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
       };
 
       awww-daemon = {
