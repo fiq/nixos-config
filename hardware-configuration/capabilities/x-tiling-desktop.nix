@@ -24,36 +24,48 @@ in {
     programs.niri.enable = true;
 
 
-    programs.waybar = {
-      enable = true;
-    };
-
-    # Declarative bar config. /etc/xdg is ahead of /run/current-system/sw/etc/xdg
-    # in XDG_CONFIG_DIRS, so this overrides the sway-oriented config.jsonc shipped
-    # by the waybar package. A stale ~/.config/waybar/ still shadows both.
+    # ironbar reads a single config file pointed at by IRONBAR_CONFIG and looks
+    # for style.css alongside it, so both live in /etc/xdg/ironbar.
     environment.etc = {
-      "xdg/waybar/config.jsonc".source = ./waybar/config.jsonc;
-      "xdg/waybar/style.css".source = "${pkgs.waybar}/etc/xdg/waybar/style.css";
+      "xdg/ironbar/config.json".source = ./ironbar/config.json;
+      "xdg/ironbar/style.css".source = ./ironbar/style.css;
     };
 
     systemd.user.services = {
-      # waybar.service upstream is already PartOf/WantedBy graphical-session.target,
-      # which niri, sway and hyprland all bind to — it does not need a target
-      # override, and pinning it to hyprland-session.target left it dead under niri.
+      # ironbar ships no unit of its own. graphical-session.target is what niri,
+      # sway and hyprland all bind to, so it is the correct anchor for all three.
       #
-      # MemoryMax is a backstop: on 2026-08-01 waybar leaked 18.7G of wl_shm
-      # buffers over 32h (broken EGL -> GTK software renderer) and triggered a
-      # global OOM. Capped, the cgroup OOM kills just the bar and systemd restarts it.
-      waybar = {
+      # MemoryMax is a backstop, not a fix: on 2026-08-01 the previous bar
+      # (waybar) leaked 18.7G of wl_shm buffers over 32h because an nvidia
+      # userspace/module mismatch broke EGL and pushed GTK onto the software
+      # renderer. ironbar is GTK too and would leak the same way. Capped, the
+      # cgroup OOM killer takes the bar alone instead of the whole session.
+      ironbar = {
+        description = "ironbar status bar";
+        documentation = [ "https://github.com/JakeStanger/ironbar" ];
+        partOf = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
         wantedBy = [ "graphical-session.target" ];
+
+        # Don't try to start under a non-wayland session (plasma/x11).
         unitConfig = {
+          ConditionEnvironment = "WAYLAND_DISPLAY";
           StartLimitIntervalSec = 300;
           StartLimitBurst = 5;
         };
+
+        environment = {
+          IRONBAR_CONFIG = "/etc/xdg/ironbar/config.json";
+          IRONBAR_CSS = "/etc/xdg/ironbar/style.css";
+        };
+
         serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.ironbar}/bin/ironbar";
+          Restart = "on-failure";
+          RestartSec = 5;
           MemoryHigh = "512M";
           MemoryMax = "1G";
-          RestartSec = 5;
         };
       };
 

@@ -1,0 +1,24 @@
+{
+  "position": "top",
+  "height": 32,
+  "start": [
+    { "type": "workspaces" },
+    { "type": "focused", "show_icon": true, "show_title": true, "truncate": { "mode": "end", "max_length": 60 } }
+  ],
+  "center": [
+    { "type": "clock", "format": "%a %d %b  %H:%M" }
+  ],
+  "end": [
+    {
+      "type": "sys_info",
+      "interval": { "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
+      "format": [
+        " {cpu_percent}%",
+        " {memory_percent}%",
+        " {temp_c:k10temp-Tctl}°C"
+      ]
+    },
+    { "type": "volume", "format": "{icon} {percentage}%", "max_volume": 100 },
+    { "type": "tray" }
+  ]
+}
