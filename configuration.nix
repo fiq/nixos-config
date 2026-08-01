@@ -251,6 +251,16 @@
   # zram reads are memcpy, so don't fault in 8 pages when 1 was asked for.
   boot.kernel.sysctl."vm.page-cluster" = 0;
 
+  # A 17.9G process dumping core stalled the desktop for minutes while
+  # systemd-coredump compressed it. Bail out early on huge cores and cap the
+  # store; backtraces are still journalled.
+  systemd.coredump.settings.Coredump = {
+    ProcessSizeMax = "512M";
+    ExternalSizeMax = "512M";
+    MaxUse = "1G";
+    KeepFree = "2G";
+  };
+
   # GC
   nix.gc = {
     automatic = true;
