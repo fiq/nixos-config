@@ -40,8 +40,21 @@ in {
       # waybar.service upstream is already PartOf/WantedBy graphical-session.target,
       # which niri, sway and hyprland all bind to — it does not need a target
       # override, and pinning it to hyprland-session.target left it dead under niri.
+      #
+      # MemoryMax is a backstop: on 2026-08-01 waybar leaked 18.7G of wl_shm
+      # buffers over 32h (broken EGL -> GTK software renderer) and triggered a
+      # global OOM. Capped, the cgroup OOM kills just the bar and systemd restarts it.
       waybar = {
         wantedBy = [ "graphical-session.target" ];
+        unitConfig = {
+          StartLimitIntervalSec = 300;
+          StartLimitBurst = 5;
+        };
+        serviceConfig = {
+          MemoryHigh = "512M";
+          MemoryMax = "1G";
+          RestartSec = 5;
+        };
       };
 
       awww-daemon = {
