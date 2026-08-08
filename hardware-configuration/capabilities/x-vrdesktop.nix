@@ -16,5 +16,14 @@ in {
     environment.systemPackages = with pkgs; [
       wayvr
     ];
+
+    # WayVR needs UINPUT to inject keyboard/mouse into niri,
+    # because niri does not implement zwp_virtual_keyboard (WayVR's WL_VIRTUAL mode).
+    services.udev.extraRules = ''
+      KERNEL=="uinput", GROUP="input", MODE="0660"
+    '';
+
+    # Merge 'input' group into raf's groups (defined in configuration.nix).
+    users.users.raf.extraGroups = [ "input" ];
   };
 }
