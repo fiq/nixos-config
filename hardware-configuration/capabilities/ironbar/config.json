@@ -11,11 +11,12 @@
   "end": [
     {
       "type": "sys_info",
-      "interval": { "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
+      "interval": { "battery": 1, "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
       "format": [
-        " {cpu_percent}%",
-        " {memory_percent}%",
-        " {temp_c:k10temp-Tctl}°C"
+        "🔋 {battery_percent}%",
+        "💪 {cpu_percent}%",
+        "🧠 {memory_percent}%",
+        "{icon} {temp_c:k10temp-Tctl}°C"
       ]
     },
     { "type": "volume", "format": "{icon} {percentage}%", "max_volume": 100 },
