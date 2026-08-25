@@ -14,9 +14,9 @@
       "interval": { "battery": 1, "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
       "format": [
         "🔋 {battery_percent}%",
-        "💪 {cpu_percent}%",
+        "🏋 {cpu_percent}%",
         "🧠 {memory_percent}%",
-        "{icon} {temp_c:k10temp-Tctl}°C"
+        "🌡️ {temp_c}°C"
       ]
     },
     { "type": "volume", "format": "{icon} {percentage}%", "max_volume": 100 },

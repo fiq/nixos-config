@@ -98,6 +98,7 @@ in {
       awww
       wofi
       xdg-desktop-portal-hyprland
+      xwayland-satellite
     ];
   };
 }
