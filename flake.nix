@@ -13,7 +13,7 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   }; 
   outputs = {nixpkgs, unstablepkgs, home-manager, musnix, ...} @ inputs: let
-    system = "x86_64-linux";
+     system = "x86_64-linux";
 #    pkgs = nixpkgs.legacyPackages.${system};
 
     pkgs = import nixpkgs {
@@ -50,6 +50,6 @@
     };
 
 
-    homeConfigurations = (import ./home-manager/default.nix {inherit inputs nixpkgs unstablepkgs home-manager;});
+    homeConfigurations = import ./home-manager/default.nix {inherit inputs nixpkgs unstablepkgs home-manager;};
   };
 }

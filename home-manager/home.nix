@@ -48,7 +48,6 @@ in
     pkgs.figlet
     pkgs.fzf
     pkgs.jetbrains.idea
-    pkgs.gimp3
     pkgs.jq
     pkgs.keepassxc
     pkgs.libsndfile
@@ -57,6 +56,7 @@ in
     pkgs.mpg123
     pkgs.neovim
     pkgs.protobuf
+    pkgs.ripgrep
     pkgs.rustup
     pkgs.silver-searcher-ng
     pkgs.slack
@@ -66,6 +66,8 @@ in
     pkgs.warp-terminal
     pkgs.watch
     pkgs.wget 
+  ] ++ lib.optionals (pkgs.stdenv.hostPlatform.system != "aarch64-darwin") [
+    pkgs.gimp3
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -93,7 +95,7 @@ in
   #
   # or
   #
-  #  /etc/profiles/per-user/innovation/etc/profile.d/hm-session-vars.sh
+  #  /etc/profiles/per-user/(raf|innovation)/etc/profile.d/hm-session-vars.sh
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
