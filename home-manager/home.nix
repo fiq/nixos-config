@@ -14,7 +14,6 @@ in
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
   ];
-  
 
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21;
@@ -31,8 +30,8 @@ in
   # environment.
   home.packages = [
     #(pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; })
-    pkgs.nerd-fonts._0xproto
-    pkgs.nerd-fonts.fira-code
+    #pkgs.nerd-fonts._0xproto
+    #pkgs.nerd-fonts.fira-code
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -43,13 +42,17 @@ in
   ] ++ claude.packages ++ [
     pkgs.cmake
     pkgs.emacs
+    pkgs.git
     pkgs.gpt-cli
+    pkgs.google-chrome
     pkgs.ffmpeg
     pkgs.figlet
+    pkgs.firefox-unwrapped
     pkgs.fzf
     pkgs.jetbrains.idea
     pkgs.jq
     pkgs.keepassxc
+    pkgs.kitty
     pkgs.libsndfile
     pkgs.mc
     pkgs.mecab
@@ -60,6 +63,7 @@ in
     pkgs.rustup
     pkgs.silver-searcher-ng
     pkgs.slack
+    pkgs.tmux
     pkgs.tree
     pkgs.vim-full
     pkgs.vimPlugins.vim-colorschemes
