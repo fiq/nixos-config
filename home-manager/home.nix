@@ -227,27 +227,32 @@ return {
     '';
   };
 
-  # Spotlight does not follow symlinks, so apps linked under
-  # ~/Applications/Home Manager Apps/ (which point into /nix/store) are
-  # invisible to Spotlight. Indexing all of /nix/store is a bad trade
-  # (every stale version of every binary shows up and lingers after GC).
-  # Instead, after every activation resolve the symlink targets of the
-  # currently-linked apps and mdimport only those store paths. When a
-  # generation is removed and GC'd, the path no longer resolves so the
-  # entry naturally drops out of the Spotlight index.
+  # Spotlight does not see apps linked under
+  # ~/Applications/Home Manager Apps/ because they are symlinks into
+  # /nix/store (Spotlight doesn't follow symlinks and /nix/store is on
+  # the exclusion list by default). Indexing /nix/store wholesale is a
+  # bad trade: every stale version of every binary shows up and lingers
+  # even after GC.
+  #
+  # Instead, register each currently-linked app bundle with LaunchServices
+  # via lsregister. Spotlight surfaces apps from the LaunchServices
+  # database, so registered apps appear regardless of symlink/index state.
+  # When a generation is removed and GC deletes the store path, the old
+  # bundle stops resolving and is de-listed on the next lsregister reset
+  # (`lsregister -kill -r`); in practice re-registering the new path is
+  # enough since LaunchServices rewrites the entry to the new path.
   #
   # Darwin-only; gated so Linux activations skip it entirely.
-  home.activation.spotlightIndexApps = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+  home.activation.registerApps = lib.hm.dag.entryAfter [ "linkGeneration" ] (
     lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
       ${pkgs.runtimeShell} -lc '
         set -eu
         app_dir="$HOME/Applications/Home Manager Apps"
+        lsregister="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister"
         [ -d "$app_dir" ] || exit 0
-        for link in "$app_dir"/*.app; do
-          [ -L "$link" ] || continue
-          resolved="$(readlink -f "$link" 2>/dev/null)" || continue
-          [ -e "$resolved" ] || continue
-          /usr/bin/mdimport "$resolved" 2>/dev/null || true
+        for app in "$app_dir"/*.app; do
+          [ -e "$app" ] || continue
+          "$lsregister" -f "$app" 2>/dev/null || true
         done
       '
     ''
