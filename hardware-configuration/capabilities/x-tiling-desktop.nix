@@ -49,7 +49,7 @@ in {
 
         # Don't try to start under a non-wayland session (plasma/x11).
         unitConfig = {
-          ConditionEnvironment = "WAYLAND_DISPLAY";
+          ConditionEnvironment = "NIRI_SOCKET";
           StartLimitIntervalSec = 300;
           StartLimitBurst = 5;
         };
