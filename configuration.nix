@@ -20,7 +20,7 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport  = false;
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = lib.elem pkgs.stdenv.hostPlatform.system pkgs.memtest86plus.meta.platforms;
   boot.loader.systemd-boot.consoleMode = "2";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
@@ -79,7 +79,6 @@
   # SANE - Scanner
   hardware.sane = {
     enable = true;
-    brscan4.enable = true;
     brscan4.netDevices.home = {
       model = "MFC-7350N";
       ip = "192.168.50.251";

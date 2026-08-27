@@ -169,6 +169,8 @@
   };
   hardware.steam-hardware.enable = true;
 
+  hardware.sane.brscan4.enable = true;
+
   # Enable authoring and writing tools
   services.x-authoring.enable = true;
 
