@@ -92,6 +92,11 @@ in
     # '';
   };
 
+  home.language = {
+    base = "en_US.UTF-8";
+    collate = "C";
+  };
+
   # You can also manage environment variables but you will have to manually
   # source
   #
@@ -107,6 +112,7 @@ in
     ZSH_TMUX_AUTOSTART = "true";
     ZSH_TMUX_AUTOCONNECT = "true";
     ZSH_TMUX_FIXTERM = "true";
+    TERMINFO_DIRS = "${pkgs.ncurses}/share/terminfo";
   };
   # Enable helix
   programs.helix.enable = true;
@@ -220,4 +226,30 @@ return {
 
     '';
   };
+
+  # Spotlight does not follow symlinks, so apps linked under
+  # ~/Applications/Home Manager Apps/ (which point into /nix/store) are
+  # invisible to Spotlight. Indexing all of /nix/store is a bad trade
+  # (every stale version of every binary shows up and lingers after GC).
+  # Instead, after every activation resolve the symlink targets of the
+  # currently-linked apps and mdimport only those store paths. When a
+  # generation is removed and GC'd, the path no longer resolves so the
+  # entry naturally drops out of the Spotlight index.
+  #
+  # Darwin-only; gated so Linux activations skip it entirely.
+  home.activation.spotlightIndexApps = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+    lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+      ${pkgs.runtimeShell} -lc '
+        set -eu
+        app_dir="$HOME/Applications/Home Manager Apps"
+        [ -d "$app_dir" ] || exit 0
+        for link in "$app_dir"/*.app; do
+          [ -L "$link" ] || continue
+          resolved="$(readlink -f "$link" 2>/dev/null)" || continue
+          [ -e "$resolved" ] || continue
+          /usr/bin/mdimport "$resolved" 2>/dev/null || true
+        done
+      '
+    ''
+  );
 }
