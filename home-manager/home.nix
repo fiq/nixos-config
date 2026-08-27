@@ -235,12 +235,12 @@ return {
   # even after GC.
   #
   # Instead, register each currently-linked app bundle with LaunchServices
-  # via lsregister. Spotlight surfaces apps from the LaunchServices
+  # via `lsregister -f`. Spotlight surfaces apps from the LaunchServices
   # database, so registered apps appear regardless of symlink/index state.
   # When a generation is removed and GC deletes the store path, the old
-  # bundle stops resolving and is de-listed on the next lsregister reset
-  # (`lsregister -kill -r`); in practice re-registering the new path is
-  # enough since LaunchServices rewrites the entry to the new path.
+  # bundle stops resolving; re-registering the new path on the next switch
+  # is enough since LaunchServices overwrites the entry for the app's
+  # bundle ID. (Do NOT use `lsregister -kill`: removed by Apple as unsafe.)
   #
   # Darwin-only; gated so Linux activations skip it entirely.
   home.activation.registerApps = lib.hm.dag.entryAfter [ "linkGeneration" ] (
