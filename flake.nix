@@ -11,6 +11,7 @@
     fjordlauncher.url = "github:unmojang/FjordLauncher";
     fjordlauncher.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nixos-apple-silicon.url = "github:nix-community/nixos-apple-silicon";
   }; 
   outputs = {nixpkgs, unstablepkgs, home-manager, musnix, ...} @ inputs: let
      system = "x86_64-linux";
@@ -36,6 +37,10 @@
       modules = [./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
     };
 
+    nixosConfigurations."curie" = nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit inputs unstable musnix;};
+      modules = [./configuration.nix ./hardware-configuration/curie.nix inputs.nixos-apple-silicon.nixosModules.default inputs.musnix.nixosModules.musnix];
+    };
     nixosConfigurations."ada" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
       modules = [
