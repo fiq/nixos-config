@@ -227,34 +227,14 @@ return {
     '';
   };
 
-  # Spotlight does not see apps linked under
-  # ~/Applications/Home Manager Apps/ because they are symlinks into
-  # /nix/store (Spotlight doesn't follow symlinks and /nix/store is on
-  # the exclusion list by default). Indexing /nix/store wholesale is a
-  # bad trade: every stale version of every binary shows up and lingers
-  # even after GC.
+  # macOS: copy app bundles into ~/Applications/Home Manager Apps/ instead
+  # of symlinking them. Spotlight does not follow symlinks into /nix/store,
+  # so linked apps are invisible to Spotlight/Launchpad. Copying resolves
+  # the bundles to real directories that Spotlight indexes natively.
+  # Upstream option (PR nix-community/home-manager#8031). Conflicts with
+  # the default linkApps behaviour, so disable that.
   #
-  # Instead, register each currently-linked app bundle with LaunchServices
-  # via `lsregister -f`. Spotlight surfaces apps from the LaunchServices
-  # database, so registered apps appear regardless of symlink/index state.
-  # When a generation is removed and GC deletes the store path, the old
-  # bundle stops resolving; re-registering the new path on the next switch
-  # is enough since LaunchServices overwrites the entry for the app's
-  # bundle ID. (Do NOT use `lsregister -kill`: removed by Apple as unsafe.)
-  #
-  # Darwin-only; gated so Linux activations skip it entirely.
-  home.activation.registerApps = lib.hm.dag.entryAfter [ "linkGeneration" ] (
-    lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
-      ${pkgs.runtimeShell} -lc '
-        set -eu
-        app_dir="$HOME/Applications/Home Manager Apps"
-        lsregister="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister"
-        [ -d "$app_dir" ] || exit 0
-        for app in "$app_dir"/*.app; do
-          [ -e "$app" ] || continue
-          "$lsregister" -f "$app" 2>/dev/null || true
-        done
-      '
-    ''
-  );
+  # Darwin-only; the option itself asserts platform.
+  targets.darwin.linkApps.enable = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin false;
+  targets.darwin.copyApps.enable = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin true;
 }
