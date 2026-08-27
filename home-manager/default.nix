@@ -39,6 +39,7 @@ in
 builtins.mapAttrs makeHomeManagerConfig {
   "raf" = { user = "raf"; homePath = "/home"; system = "x86_64-linux"; };
 #  "raf@curie" = { user = "raf"; homePath = "/Users"; system = "aarch64-darwin"; };
-  "raf@curie" = { user = "raf"; homePath = "/Users"; system = "aarch64-darwin"; };
+  "raf@curie.mac" = { user = "raf"; homePath = "/Users"; system = "aarch64-darwin"; };
+  "raf@curie.linux" = { user = "raf"; homePath = "/home"; system = "aarch64-linux"; };
 }
 
