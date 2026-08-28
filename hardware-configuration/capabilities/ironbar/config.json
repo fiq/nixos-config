@@ -11,15 +11,43 @@
   "end": [
     {
       "type": "sys_info",
-      "interval": { "battery": 1, "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
+      "interval": { "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
       "format": [
-        "🔋 {battery_percent}%",
         "🏋 {cpu_percent}%",
         "🧠 {memory_percent}%",
         "🌡️ {temp_c}°C"
       ]
     },
-    { "type": "volume", "format": "{icon} {percentage}%", "max_volume": 100 },
-    { "type": "tray" }
+    {
+      "type": "battery", 
+      "format": "🔋 {percentage}%"
+    },
+    {
+      "type": "volume",
+      "format": "{icon} {percentage}%",
+      "sink_slider_orientation": "vertical",
+      "max_volume": 100,
+      "truncate": "end",
+      "truncate_popup": "end",
+      "icons": {
+        "volume": "🔊",
+        "muted": "🔇"
+      },
+      "profiles": {
+        "medium": {
+          "when": 66.66,
+          "icons": {
+            "volume": "🔉"
+          }
+        },
+        "low": {
+          "when": 33.33,
+          "icons": {
+            "volume": "🔈"
+          }
+        }
+      }
+    },
+    { "type": "tray", "format": "📤", "icon": "📤" }
   ]
 }
