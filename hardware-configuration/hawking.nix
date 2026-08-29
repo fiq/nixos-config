@@ -213,6 +213,7 @@
 
   # wivrn
   services.x-vrdesktop.enable = true;
+  services.x-vrdesktop.enableCuda= true;
 
   # Setup sway and niri
   services.x-tiling-desktop.enable = true;

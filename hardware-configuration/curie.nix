@@ -5,6 +5,7 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
        ./capabilities/x-tiling-desktop.nix
+       ./capabilities/x-vrdesktop.nix
     ];
 
   networking.hostName = "curie";
@@ -36,6 +37,8 @@
   networking.useDHCP = lib.mkDefault true;
   # Setup sway and niri
   services.x-tiling-desktop.enable = true;
+  services.x-vrdesktop.enable = true;
+  services.x-vrdesktop.enableCuda = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
