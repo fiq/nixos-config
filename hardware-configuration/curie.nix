@@ -12,6 +12,10 @@
   hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./apple-silicon-firmware;
 
+  # resolved's own mDNS responder fights avahi on wlan0 -- endless
+  # curie -> curie-2 -> curie-3 renaming. Avahi stays sole responder.
+  services.resolved.settings.Resolve.MulticastDNS = false;
+
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
   boot.loader.efi.efiSysMountPoint = lib.mkForce "/boot";
   boot.initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];

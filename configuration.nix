@@ -178,8 +178,8 @@
       docker-compose
       #docker
       beamPackages.elixir
-      firefox
       inputs.fjordlauncher.packages.${stdenv.hostPlatform.system}.fjordlauncher
+      firefox
       fuzzel
       gcc
       gdb

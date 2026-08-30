@@ -1,9 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, isArm, isDarwin, isAsahi, ... }:
 let
   claude = import ./claude.nix { inherit pkgs; };
+  isAarch64Darwin = isArm && isDarwin;
+  isAarch64Linux = isArm && !isDarwin;
 in
 {
-
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
@@ -14,6 +15,28 @@ in
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
   ];
+
+  # Firefox chooses its audio backend (cubeb) by probing at startup. On Linux,
+  # services.pipewire.jack.enable puts pipewire's libjack on the global
+  # LD_LIBRARY_PATH and cubeb picks JACK: Firefox then registers as a JACK DSP
+  # client, emits no audible sound, and never appears in pavucontrol. Pin it to
+  # PulseAudio. Status "default" leaves it overridable in about:config.
+  #
+  # Darwin has no JACK and uses the audiounit backend, so the pin must not
+  # apply there -- forcing "pulse" on macOS would break audio outright.
+  #
+  # No profiles are declared, so home-manager does not manage profiles.ini and
+  # existing profiles are left alone.
+  programs.firefox = {
+    enable = true;
+    configPath = ".mozilla/firefox";
+    policies.Preferences = lib.optionalAttrs (!isDarwin) {
+      "media.cubeb.backend" = {
+        Value = "pulse";
+        Status = "default";
+      };
+    };
+  };
 
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21;
@@ -47,7 +70,6 @@ in
     pkgs.google-chrome
     pkgs.ffmpeg
     pkgs.figlet
-    pkgs.firefox-unwrapped
     pkgs.fzf
     pkgs.jetbrains.idea
     pkgs.jq
@@ -70,9 +92,14 @@ in
     pkgs.warp-terminal
     pkgs.watch
     pkgs.wget 
-  ] ++ lib.optionals (pkgs.stdenv.hostPlatform.system != "aarch64-darwin") [
+  ] ++ lib.optionals (!isAarch64Darwin) [
     pkgs.gimp3
-  ];
+  ] ++ lib.optionals (isAsahi || isDarwin) [
+    # asahi does not have my genai config enabled 
+    pkgs.codex
+  ]; 
+
+#  ++ lib.optionals (!isAarch64Linux) [ pkgs.slack ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -235,6 +262,6 @@ return {
   # the default linkApps behaviour, so disable that.
   #
   # Darwin-only; the option itself asserts platform.
-  targets.darwin.linkApps.enable = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin false;
-  targets.darwin.copyApps.enable = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin true;
+  targets.darwin.linkApps.enable = lib.mkIf isDarwin false;
+  targets.darwin.copyApps.enable = lib.mkIf isDarwin true;
 }

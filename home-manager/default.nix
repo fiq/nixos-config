@@ -21,6 +21,10 @@ let
         config.allowUnfree = true;
       };
 
+      isArm = nixpkgs.lib.hasPrefix "aarch64-" system;
+      isDarwin = nixpkgs.lib.hasSuffix "-darwin" system;
+      isAsahi = system == "aarch64-linux";
+
     in
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
@@ -32,7 +36,7 @@ let
         }
       ];
       # Pass inputs and system-specific unstable pkgs down to modules
-      extraSpecialArgs = { inherit inputs unstable; };
+      extraSpecialArgs = { inherit inputs unstable isArm isDarwin isAsahi; };
     };
 
 in
