@@ -51,18 +51,7 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    #(pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; })
-    #pkgs.nerd-fonts._0xproto
-    #pkgs.nerd-fonts.fira-code
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ] ++ claude.packages ++ [
+  home.packages = claude.packages ++ [
     pkgs.cmake
     pkgs.emacs
     pkgs.git
