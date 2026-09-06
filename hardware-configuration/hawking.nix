@@ -96,6 +96,27 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # The AD104 card runs the pro-audio profile, and PipeWire numbers its sinks
+  # pro-output-N by codec discovery order, which shuffles between boots — so
+  # WirePlumber's saved default lands on the wrong monitor after a reboot.
+  # node.nick comes from the display ELD and is stable, so pin the U2718Q as
+  # default via a priority boost instead of the shuffling node name.
+  services.pipewire.wireplumber.extraConfig."10-hdmi-default-sink" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          {
+            "node.name" = "~alsa_output\\.pci-0000_01_00\\.1\\.pro-output-.*";
+            "node.nick" = "DELL U2718Q";
+          }
+        ];
+        actions."update-props" = {
+          "node.priority.session" = 1500;
+        };
+      }
+    ];
+  };
+
   # Docker and nvidia container support
   virtualisation.docker = {
     enable = true;
