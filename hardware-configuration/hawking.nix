@@ -55,6 +55,18 @@
     fsType = "ext4";
   };
 
+  # tailscale - TODO: move into capability
+  services.tailscale.enable = true;
+  networking.nftables.enable = true;
+  networking.firewall = {
+    enable = true;
+    interfaces."${config.services.tailscale.interfaceName}".allowedTCPPorts = [ 4444 23469 ];
+    # Allow ports: ssh 
+    # To audit: 8090, 8400
+    interfaces."enp7s0".allowedTCPPorts = [ 22 9999 8765 8080 3000 5173 8010 8765 8010 9999 ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
+ 
 #  fileSystems."/home" = {
 #    device = "/dev/disk/by-label/Home";
 #    fsType = "ext4";
@@ -248,9 +260,5 @@
 
   # Setup android and godot dev tools
   services.x-security-dev.enable = true;
-
-  # Allow ports: ssh 
-  # To audit: 8090, 8400
-  networking.firewall.interfaces."enp7s0".allowedTCPPorts = [ 22 9999 8765 8080 3000 5173 8010 8765 8010 9999 ];
 
 }
