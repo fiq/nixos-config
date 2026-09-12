@@ -83,6 +83,8 @@ in
     pkgs.wget 
   ] ++ lib.optionals (!isAarch64Darwin) [
     pkgs.gimp3
+  ] ++ lib.optionals (isDarwin) [
+    pkgs.rectangle
   ] ++ lib.optionals (isAsahi || isDarwin) [
     # asahi does not have my genai config enabled 
     pkgs.codex
