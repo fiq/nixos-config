@@ -92,6 +92,7 @@ in {
 
 
     environment.systemPackages = with pkgs; [
+      brightnessctl
       libdisplay-info
       rofi-bluetooth
       swaybg
