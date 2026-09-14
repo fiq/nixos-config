@@ -72,6 +72,7 @@ in
     pkgs.protobuf
     pkgs.ripgrep
     pkgs.rustup
+    pkgs.signal-desktop
     pkgs.silver-searcher-ng
     pkgs.slack
     pkgs.tmux

@@ -216,7 +216,6 @@
       python312Packages.virtualenv
       python312Packages.uv
       ripgrep
-      signal-desktop
       silver-searcher-ng
       slurp
       sops
