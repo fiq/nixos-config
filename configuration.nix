@@ -199,6 +199,8 @@
       kotlin
       lshw
       lynx 
+      man-pages
+      man-pages-posix
       minikube
       nix-index
       openssh
