@@ -11,7 +11,7 @@ in {
     hardware.rtl-sdr.enable = true;
     environment.systemPackages = with pkgs; [
 #      dump1090-fa 
-      gqrx
+#      gqrx
       gpredict
 #      gnuradio
       kstars
@@ -19,7 +19,7 @@ in {
       readsb
       rtl-sdr
       satdump
-      sdrpp
+#      sdrpp
     ];
   };
 }
