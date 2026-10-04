@@ -3,6 +3,7 @@ let
   claude = import ./claude.nix { inherit pkgs; };
   isAarch64Darwin = isArm && isDarwin;
   isAarch64Linux = isArm && !isDarwin;
+  omniwmPython = pkgs.python3.withPackages (ps: [ ps.tomli-w ]);
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -38,6 +39,24 @@ in
     };
   };
 
+  # OmniWM (macOS niri-style tiling WM). programs.omniwm.settings is left
+  # at its default ({}) so the module does not manage settings.toml itself
+  # -- the activation script below merges the committed base
+  # (dotfiles/omniwm-settings.toml) with an optional, untracked
+  # ~/.config/omniwm/settings-mutable.toml (same pattern as .zshrc-mutable)
+  # and writes the result. Per-machine or experimental tweaks go in
+  # settings-mutable.toml instead of touching this repo; see
+  # dotfiles/omniwm-merge-settings.py for the merge rules.
+  programs.omniwm.enable = isAarch64Darwin;
+  home.activation = lib.optionalAttrs isAarch64Darwin {
+    omniwmSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $DRY_RUN_CMD mkdir -p "$HOME/.config/omniwm"
+      $DRY_RUN_CMD ${omniwmPython}/bin/python3 ${./dotfiles/omniwm-merge-settings.py} \
+        ${./dotfiles/omniwm-settings.toml} \
+        "$HOME/.config/omniwm/settings-mutable.toml" \
+        "$HOME/.config/omniwm/settings.toml"
+    '';
+  };
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21;
   # This value determines the Home Manager release that your configuration is
@@ -187,6 +206,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export NIX_CONFIG="experimental-features = nix-command flakes"
+
 # prompt
 #source ''${ZDOTDIR:-~}/.p10k.zsh
 [ -s "$HOME/.zshrc-mutable" ] && \. "$HOME/.zshrc-mutable" # local overrides
@@ -256,4 +277,13 @@ return {
   # Darwin-only; the option itself asserts platform.
   targets.darwin.linkApps.enable = lib.mkIf isDarwin false;
   targets.darwin.copyApps.enable = lib.mkIf isDarwin true;
+
+  # The upstream pre-flight check touches .DS_Store inside every bundle; that
+  # fails on signed bundles (Chrome, OmniWM) without the App Management
+  # permission. It then shells out to `launchctl managername` and, for any
+  # answer but "Aqua", reports it as "running over SSH" and aborts -- which is
+  # what happens when the terminal emulator itself sits outside the Aqua
+  # launchd session (ours reports "Background"). The rsync below is a no-op
+  # for unchanged bundles, so skip the check.
+  targets.darwin.copyApps.enableChecks = lib.mkIf isDarwin false;
 }
