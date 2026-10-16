@@ -20,6 +20,7 @@
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
+      ./capabilities/x-audio.nix
       ./capabilities/x-authoring.nix
       ./capabilities/x-android-dev.nix
       ./capabilities/x-bt.nix
@@ -113,19 +114,22 @@
   # WirePlumber's saved default lands on the wrong monitor after a reboot.
   # node.nick comes from the display ELD and is stable, so pin the U2718Q as
   # default via a priority boost instead of the shuffling node name.
-  services.pipewire.wireplumber.extraConfig."10-hdmi-default-sink" = {
-    "monitor.alsa.rules" = [
+  # The old rule set node.priority.session, which WirePlumber ignores; the key
+  # that counts is priority.session (now set by x-audio). Pro Audio is forced
+  # here so every port exists whichever one the monitor ends up on.
+  services.x-audio = {
+    enable = true;
+    deviceProfiles."alsa_card.pci-0000_01_00.1" = "pro-audio";
+    nodePriorities = [
       {
-        matches = [
-          {
-            "node.name" = "~alsa_output\\.pci-0000_01_00\\.1\\.pro-output-.*";
-            "node.nick" = "DELL U2718Q";
-          }
-        ];
-        actions."update-props" = {
-          "node.priority.session" = 1500;
+        match = {
+          "node.name" = "~alsa_output\\.pci-0000_01_00\\.1\\.pro-output-.*";
+          "node.nick" = "DELL U2718Q";
         };
+        priority = 1500;
       }
+      # snd-aloop virtual device; must never win the default.
+      { match = { "node.name" = "~alsa_(input|output)\\.platform-snd_aloop.*"; }; priority = 1; }
     ];
   };
 

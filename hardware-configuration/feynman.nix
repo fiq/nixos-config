@@ -10,6 +10,7 @@
         rev =  "d6645c340ef7d821602fd2cd199e8d1eed10afbc";
        }}/dell/xps/13-9370"
        ./capabilities/x-android-dev.nix
+       ./capabilities/x-audio.nix
        ./capabilities/x-musician.nix
        ./capabilities/x-rtl-sdr.nix
        ./capabilities/x-tiling-desktop.nix
@@ -51,6 +52,9 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   boot.loader.grub.useOSProber = true;
+
+  # Predictable audio defaults (feynman has no host-specific device rules yet)
+  services.x-audio.enable = true;
 
   # Enable Guitar and midi Kit
   services.x-musician.enable = true;

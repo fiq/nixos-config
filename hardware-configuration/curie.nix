@@ -4,6 +4,7 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
+       ./capabilities/x-audio.nix
        ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
@@ -39,6 +40,12 @@
   services.upower.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
   networking.useDHCP = lib.mkDefault true;
+  # Pro Audio on the speaker card skips the Asahi speaker DSP and its volume
+  # lock (the rules only match HiFi), so pin HiFi instead of trusting saved state.
+  services.x-audio = {
+    enable = true;
+    deviceProfiles."~alsa_card\\.platform-(sound|audio\\..*)" = "HiFi";
+  };
   # Setup sway and niri
   services.x-tiling-desktop.enable = true;
   services.x-vrdesktop.enable = true;
