@@ -10,28 +10,28 @@
   ],
   "end": [
     {
-      "type": "sys_info",
-      "interval": { "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
-      "format": [
-        "🏋 {cpu_percent}%",
-        "🧠 {memory_percent}%",
-        "🌡️ {temp_c}°C"
+      "type": "custom",
+      "name": "audio-pick",
+      "bar": [
+        { "type": "button", "name": "audio-out-name", "label": "🔊▾", "on_click": "!/run/current-system/sw/bin/audio-ctl pick sink" },
+        { "type": "button", "name": "audio-mic-name", "label": "🎤▾", "on_click": "!/run/current-system/sw/bin/audio-ctl pick source" }
       ]
-    },
-    {
-      "type": "battery", 
-      "format": "🔋 {percentage}%"
     },
     {
       "type": "volume",
       "format": "{icon} {percentage}%",
-      "sink_slider_orientation": "vertical",
+      "popup_orientation": "vertical",
+      "sink_slider_orientation": "horizontal",
+      "source_slider_orientation": "horizontal",
+      "show_monitors": false,
       "max_volume": 100,
       "truncate": "end",
       "truncate_popup": "end",
       "icons": {
         "volume": "🔊",
-        "muted": "🔇"
+        "muted": "🔇",
+        "mic_volume": "🎤",
+        "mic_muted": "🚫"
       },
       "profiles": {
         "medium": {
@@ -47,6 +47,38 @@
           }
         }
       }
+    },
+    {
+      "type": "custom",
+      "name": "mic-live",
+      "show_if": "/run/current-system/sw/bin/audio-ctl live source",
+      "transition_type": "none",
+      "bar": [
+        { "type": "button", "class": "mic-live", "label": "🎤", "on_click": "!/run/current-system/sw/bin/audio-ctl mute source" }
+      ]
+    },
+    {
+      "type": "custom",
+      "name": "mic-muted",
+      "show_if": "/run/current-system/sw/bin/audio-ctl muted source",
+      "transition_type": "none",
+      "bar": [
+        { "type": "button", "class": "mic-muted", "label": "🚫", "on_click": "!/run/current-system/sw/bin/audio-ctl mute source" }
+      ]
+    },
+    {
+      "type": "sys_info",
+      "on_click_left": "/run/current-system/sw/bin/foot -e /run/current-system/sw/bin/btop",
+      "interval": { "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
+      "format": [
+        "🏋 {cpu_percent}%",
+        "🧠 {memory_percent}%",
+        "🌡️ {temp_c}°C"
+      ]
+    },
+    {
+      "type": "battery", 
+      "format": "🔋 {percentage}%"
     },
     { "type": "tray", "format": "📤", "icon": "📤" }
   ]

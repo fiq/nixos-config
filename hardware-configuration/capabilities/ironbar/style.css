@@ -1,4 +1,7 @@
-/* Dark bar, roughly matching the waybar theme this replaced. */
+/* Slate bar, soft text, dark green accent. Same palette as the volume popup.
+   No pure white anywhere (light-sensitive migraines).
+     slate #2b303b   raised #353c4a   text #d8dee9   quiet text #9aa5b4
+     green #1d4a31 -> #3d7f58, edge #6fb58a */
 
 * {
     font-family: "SauceCodePro Nerd Font Mono", "0xProto Nerd Font", monospace;
@@ -9,8 +12,8 @@
 }
 
 .background {
-    background-color: rgba(43, 48, 59, 0.95);
-    color: #ffffff;
+    background-color: rgba(43, 48, 59, 0.97);
+    color: #d8dee9;
 }
 
 .container {
@@ -19,38 +22,216 @@
 
 .widget {
     padding: 0 8px;
-    color: #ffffff;
+    color: #d8dee9;
 }
 
-/* Workspaces */
+/* Workspaces: quiet until focused, then the green from the slider fill. */
 .workspaces .item {
-    padding: 0 8px;
+    padding: 0 10px;
     background-color: transparent;
-    color: #ffffff;
+    color: #9aa5b4;
 }
 
 .workspaces .item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #353c4a;
+    color: #d8dee9;
 }
 
 .workspaces .item.focused {
-    background-color: #64727d;
-    box-shadow: inset 0 -3px #ffffff;
+    background-image: linear-gradient(to right, #1d4a31, #3d7f58);
+    color: #d8dee9;
+    box-shadow: inset 0 -3px #6fb58a;
 }
 
 /* Focused window title */
 .focused {
-    color: #ffffff;
+    color: #d8dee9;
 }
 
 .clock {
     font-weight: bold;
+    letter-spacing: 0.02em;
 }
 
-.sys-info .item {
-    padding: 0 6px;
+/* Status area: every item on the right is its own box with the same border,
+   corner, fill and gap: each load/memory/temperature reading, battery,
+   volume, and each audio button.
+   Battery and volume are GTK buttons (which bring their own background), so
+   the gradient is cleared. The sysinfo and custom holders are invisible
+   (no fill, border, padding or margin) so only the boxes inside show, and
+   the gap is always the boxes' own margin: 2px + 2px = 4px (plus a little spacing from the bar itself). */
+.sysinfo,
+.custom {
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sysinfo .item,
+.battery,
+.volume,
+.custom button {
+    color: #d8dee9;
+    background-color: #353c4a;
+    background-image: none;
+    border: 1px solid #3f4757;
+    border-radius: 5px;
+    margin: 4px 2px;
+    padding: 0 4px;
+    min-width: 0;
+    min-height: 0;
+}
+
+.sysinfo .item,
+.battery {
+    color: #9aa5b4;
+}
+
+/* ironbar puts ~11px of its own spacing between the items inside the sysinfo
+   group, which a margin can't remove, so the later items are pulled back
+   with a negative left margin until their gap matches the other boxes. */
+.sysinfo .item {
+    margin-left: -8px;
+}
+
+.sysinfo .item:first-child {
+    margin-left: 2px;
+}
+
+/* Mic state: dark wine when muted, dark green (the slider green) when live.
+   Both muted tones, nothing bright. The icon changes too, so colour is never
+   the only signal. */
+.custom button.mic-muted {
+    background-color: #5a2433;
+    border-color: #7a3346;
+    color: #e6d3d7;
+}
+
+.custom button.mic-muted:hover {
+    background-color: #6a2c3e;
+}
+
+.custom button.mic-live {
+    background-color: #1d4a31;
+    border-color: #2f6b4a;
+    color: #d8e6dc;
+}
+
+.custom button.mic-live:hover {
+    background-color: #265c3f;
+}
+
+/* Clickable boxes: a subtle highlight on hover. */
+.battery:hover,
+.volume:hover,
+.custom button:hover {
+    background-color: #434c5e;
 }
 
 .tray .item {
     padding: 0 4px;
+}
+
+.tray .item:hover {
+    background-color: #353c4a;
+}
+
+/* Volume popup.
+   Dark slate like the bar, soft text, no pure white (light-sensitive
+   migraines). The slider is the one element given contrast and definition. */
+.popup {
+    background-color: rgba(43, 48, 59, 0.98);
+    color: #d8dee9;
+    border: 1px solid #3b4252;
+    border-radius: 8px;
+}
+
+.popup-volume {
+    padding: 10px 12px;
+}
+
+.popup-volume label {
+    color: #d8dee9;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+}
+
+.popup-volume .device-box,
+.popup-volume .sink-box,
+.popup-volume .source-box {
+    padding: 6px 0;
+}
+
+/* Track: darker than the popup so the green fill stands out against it. */
+.popup-volume scale trough {
+    min-height: 10px;
+    border: 1px solid #4c566a;
+    border-radius: 6px;
+    background-image: linear-gradient(to bottom, #12151a, #232832);
+}
+
+/* Fill: dark green, with a lighter top edge so its end is easy to find. */
+.popup-volume scale highlight {
+    border-radius: 6px;
+    border-top: 1px solid #6fb58a;
+    background-image: linear-gradient(to right, #1d4a31, #3d7f58);
+}
+
+/* Knob: soft grey, bigger than the track, ringed so it reads as a handle. */
+.popup-volume scale slider {
+    min-width: 20px;
+    min-height: 20px;
+    margin: -6px 0;
+    border: 2px solid #1d4a31;
+    border-radius: 50%;
+    background-image: linear-gradient(to bottom, #b4bfcc, #8793a3);
+}
+
+.popup-volume scale slider:hover,
+.popup-volume scale slider:active {
+    border-color: #6fb58a;
+    background-image: linear-gradient(to bottom, #c4cdd8, #97a3b3);
+}
+
+.popup-volume scale:focus slider {
+    border-color: #6fb58a;
+}
+
+.popup-volume .sink-slider,
+.popup-volume .source-slider {
+    min-width: 200px;
+    min-height: 24px;
+    padding: 0;
+    margin: 0 8px;
+}
+
+/* Muted: dim the whole row as well as changing the icon. */
+.popup-volume scale:disabled,
+.popup-volume .muted {
+    opacity: 0.55;
+}
+
+/* Buttons and dropdowns: keep them dark so nothing flashes light. */
+.popup-volume button,
+.popup-volume combobox,
+.popup-volume combobox button {
+    color: #d8dee9;
+    background-image: none;
+    background-color: #353c4a;
+    border: 1px solid #4c566a;
+    border-radius: 6px;
+    padding: 2px 8px;
+    min-width: 0;
+}
+
+.popup-volume button:hover,
+.popup-volume combobox button:hover {
+    background-color: #434c5e;
+}
+
+.popup-volume button:focus,
+.popup-volume combobox button:focus {
+    border-color: #6fb58a;
 }
