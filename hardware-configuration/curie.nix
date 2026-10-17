@@ -6,6 +6,7 @@
       (modulesPath + "/installer/scan/not-detected.nix")
        ./capabilities/x-audio.nix
        ./capabilities/x-bt.nix
+       ./capabilities/x-displaylink.nix
        ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
@@ -43,6 +44,8 @@
   networking.useDHCP = lib.mkDefault true;
   # blueman tray icon and pairing window, same as hawking
   services.x-bt.enable = true;
+  # Targus DV2K dock (DisplayLink); dlm only does work while the dock is plugged in
+  services.x-displaylink.enable = true;
 
   # Pro Audio on the speaker card skips the Asahi speaker DSP and its volume
   # lock (the rules only match HiFi), so pin HiFi instead of trusting saved state.
