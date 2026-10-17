@@ -8,8 +8,8 @@ See [AGENTS.md](AGENTS.md) for full layout, conventions, and agent instructions.
 | Host | Role |
 |------|------|
 | `hawking` | Primary workstation — AMD/NVIDIA, CUDA, GenAI |
-| `feynman` | Laptop — Dell XPS 13 |
-| `ada` | Home server — Home Assistant, Kerberos, NAS |
+| `feynman` | Laptop — Dell XPS 13 (also hosts ada's Home Assistant, Kerberos, NAS) |
+| `ada` | **Deprecated** home server — services moved to feynman |
 
 ## Rebuild
 

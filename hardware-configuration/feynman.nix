@@ -1,6 +1,7 @@
 { config, lib, pkgs, unstable, inputs, musnix, modulesPath, ... }:
 
 {
+  nixpkgs.config.allowBroken = true;
   networking.hostName = "feynman";
   imports =
     [ 
@@ -11,6 +12,9 @@
        }}/dell/xps/13-9370"
        ./capabilities/x-android-dev.nix
        ./capabilities/x-audio.nix
+       ./capabilities/x-home-assistant.nix
+       ./capabilities/x-kerberos.nix
+       ./capabilities/x-network-storage.nix
        ./capabilities/x-musician.nix
        ./capabilities/x-rtl-sdr.nix
        ./capabilities/x-tiling-desktop.nix
@@ -36,6 +40,12 @@
     { device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
     };
+
+  # Media/backup folders are copied over from ada by hand into /mnt/backups
+  systemd.tmpfiles.rules = [
+    "d /mnt/backups 0755 root root -"
+    "L /home/minidlna/external - - - - /mnt/backups"
+  ];
 
   swapDevices = [ ];
   services.upower.enable = true;
@@ -70,6 +80,17 @@
 
   # Enable yubi module
   services.x-yubi.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    grafana
+    spotify
+    python3
+  ];
+
+  # Server services inherited from ada
+  services.x-home-assistant.enable = true;
+  services.x-network-storage.enable = true;
+  services.x-kerberos.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 22 9999 8765 8080 3000 5173 ];
 }

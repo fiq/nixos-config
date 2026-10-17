@@ -26,8 +26,8 @@ home-manager/
 | Host | Arch | Role | Notable capabilities |
 |------|------|------|----------------------|
 | `hawking` | x86_64 | Primary workstation | NVIDIA + CUDA, GenAI (Ollama, claude-code, llama-cpp), musician, tiling desktop, VR, android-dev, security-dev, genealogy, RTL-SDR, video, authoring, btrfs, printing, bt, yubi |
-| `feynman` | x86_64 | Laptop (XPS 13-9370) | Tiling desktop, yubi, musician (enabled), rtl-sdr + android-dev (imported but **disabled**) |
-| `ada` | x86_64 | Home server | Home Assistant (pinned nixpkgs-home-assistant overlay), Kerberos, network storage, yubi |
+| `feynman` | x86_64 | Laptop (XPS 13-9370) | Tiling desktop, yubi, musician (enabled), Home Assistant + Kerberos + network storage (from ada), rtl-sdr + android-dev (imported but **disabled**) |
+| `ada` | x86_64 | Home server (**deprecated**, services moved to feynman) | Home Assistant (pinned nixpkgs-home-assistant overlay), Kerberos, network storage, yubi |
 
 **Home Manager users:**
 - `raf` — x86_64-linux, `/home/raf`
@@ -49,7 +49,7 @@ Both users share `home.nix` / `claude.nix`; there is no per-host HM split yet.
 `flake.nix` defines several inputs (`nixpkgs`, `nixpkgs-stable`, `unstablepkgs`, `nixpkgs-home-assistant`). Their channel assignments **may change**. Do not assume which input is stable or unstable — read `flake.nix` first.
 
 - `unstable` is passed into NixOS modules via `specialArgs`; modules that need bleeding-edge packages use `unstable.*` instead of `pkgs.*`.
-- `ada` applies a local overlay to pin `home-assistant` from `nixpkgs-home-assistant` (currently 24.05).
+- `ada` (deprecated) and `feynman` apply a local overlay to pin `home-assistant` from `nixpkgs-home-assistant` (currently 24.05).
 
 ## Placement Decision Guide
 

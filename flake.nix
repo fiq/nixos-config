@@ -34,13 +34,24 @@
 
     nixosConfigurations."feynman" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
-      modules = [./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
+      modules = [
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [
+            (final: prev: {
+              home-assistant = inputs.nixpkgs-home-assistant.legacyPackages.${final.stdenv.hostPlatform.system}.home-assistant;
+            })
+          ];
+        })
+        ./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
     };
 
     nixosConfigurations."curie" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
       modules = [./configuration.nix ./hardware-configuration/curie.nix inputs.nixos-apple-silicon.nixosModules.default inputs.musnix.nixosModules.musnix];
     };
+
+
+    # DEPRECATED: ada is being retired; its services now live on feynman.
     nixosConfigurations."ada" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
       modules = [

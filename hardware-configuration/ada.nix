@@ -4,6 +4,8 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  # DEPRECATED: ada is being retired. Its config now also runs on feynman
+  # (x-home-assistant, x-network-storage, x-kerberos); keep this file for reference.
   nixpkgs.config.allowBroken = true;
   imports =
     [
