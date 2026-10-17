@@ -24,6 +24,13 @@ in {
     programs.niri.enable = true;
 
 
+    # style.css and wezterm both name these; without them GTK fell back to Hack
+    # for text and a different font for icons, so the bar popup looked mixed.
+    fonts.packages = with pkgs; [
+      nerd-fonts.sauce-code-pro
+      nerd-fonts._0xproto
+    ];
+
     # ironbar reads a single config file pointed at by IRONBAR_CONFIG and looks
     # for style.css alongside it, so both live in /etc/xdg/ironbar.
     environment.etc = {
@@ -93,6 +100,7 @@ in {
 
     environment.systemPackages = with pkgs; [
       brightnessctl
+      btop # opened by clicking the load/memory/temperature group in ironbar
       libdisplay-info
       rofi-bluetooth
       swaybg
