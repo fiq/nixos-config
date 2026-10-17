@@ -25,5 +25,9 @@ in {
       })
     ];
     services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+
+    # Closed root binary that sees the whole screen; it only needs USB and local
+    # sockets, so cut off all IP traffic (unix sockets and netlink still work).
+    systemd.services.dlm.serviceConfig.IPAddressDeny = "any";
   };
 }
