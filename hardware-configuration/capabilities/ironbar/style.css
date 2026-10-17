@@ -100,27 +100,41 @@
     margin-left: 2px;
 }
 
-/* Mic state: dark wine when muted, dark green (the slider green) when live.
-   Both muted tones, nothing bright. The icon changes too, so colour is never
-   the only signal. */
-.custom button.mic-muted {
-    background-color: #5a2433;
-    border-color: #7a3346;
-    color: #e6d3d7;
+/* Mute switches (speaker and mic): a pill with a knob. Live is the slider
+   green with the knob on the right, muted is dark wine red with the knob on the
+   left. The knob side changes too, so colour is never the only signal. */
+.custom button.mic-live,
+.custom button.spk-live,
+.custom button.mic-muted,
+.custom button.spk-muted {
+    border-radius: 14px;
+    padding: 0 10px;
+    border-width: 1px;
+    border-style: solid;
 }
 
-.custom button.mic-muted:hover {
-    background-color: #6a2c3e;
-}
-
-.custom button.mic-live {
+.custom button.mic-live,
+.custom button.spk-live {
     background-color: #1d4a31;
-    border-color: #2f6b4a;
+    border-color: #6fb58a;
     color: #d8e6dc;
 }
 
-.custom button.mic-live:hover {
+.custom button.mic-live:hover,
+.custom button.spk-live:hover {
     background-color: #265c3f;
+}
+
+.custom button.mic-muted,
+.custom button.spk-muted {
+    background-color: #5a2433;
+    border-color: #a8505f;
+    color: #e6d3d7;
+}
+
+.custom button.mic-muted:hover,
+.custom button.spk-muted:hover {
+    background-color: #6a2c3e;
 }
 
 /* Clickable boxes: a subtle highlight on hover. */

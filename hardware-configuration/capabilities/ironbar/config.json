@@ -50,11 +50,29 @@
     },
     {
       "type": "custom",
+      "name": "spk-live",
+      "show_if": "/run/current-system/sw/bin/audio-ctl live sink",
+      "transition_type": "none",
+      "bar": [
+        { "type": "button", "class": "spk-live", "label": "🔊 ●", "on_click": "!/run/current-system/sw/bin/audio-ctl mute sink" }
+      ]
+    },
+    {
+      "type": "custom",
+      "name": "spk-muted",
+      "show_if": "/run/current-system/sw/bin/audio-ctl muted sink",
+      "transition_type": "none",
+      "bar": [
+        { "type": "button", "class": "spk-muted", "label": "● 🔊", "on_click": "!/run/current-system/sw/bin/audio-ctl mute sink" }
+      ]
+    },
+    {
+      "type": "custom",
       "name": "mic-live",
       "show_if": "/run/current-system/sw/bin/audio-ctl live source",
       "transition_type": "none",
       "bar": [
-        { "type": "button", "class": "mic-live", "label": "🎤", "on_click": "!/run/current-system/sw/bin/audio-ctl mute source" }
+        { "type": "button", "class": "mic-live", "label": "🎤 ●", "on_click": "!/run/current-system/sw/bin/audio-ctl mute source" }
       ]
     },
     {
@@ -63,12 +81,12 @@
       "show_if": "/run/current-system/sw/bin/audio-ctl muted source",
       "transition_type": "none",
       "bar": [
-        { "type": "button", "class": "mic-muted", "label": "🚫", "on_click": "!/run/current-system/sw/bin/audio-ctl mute source" }
+        { "type": "button", "class": "mic-muted", "label": "● 🎤", "on_click": "!/run/current-system/sw/bin/audio-ctl mute source" }
       ]
     },
     {
       "type": "sys_info",
-      "on_click_left": "/run/current-system/sw/bin/foot -e /run/current-system/sw/bin/btop",
+      "on_click_left": "/run/current-system/sw/bin/pkill -f '^/run/current-system/sw/bin/foot --app-id btop ' || /run/current-system/sw/bin/foot --app-id btop --title btop -e /run/current-system/sw/bin/btop",
       "interval": { "cpu": 5, "memory": 30, "temps": 10, "disks": 300, "networks": 30 },
       "format": [
         "🏋 {cpu_percent}%",
