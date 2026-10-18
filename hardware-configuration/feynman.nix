@@ -42,8 +42,11 @@
     };
 
   # Media/backup folders are copied over from ada by hand into /mnt/backups
+  # minidlna group (setgid) gets write access so raf can manage the media
+  users.users.raf.extraGroups = [ "minidlna" ];
   systemd.tmpfiles.rules = [
-    "d /mnt/backups 0755 root root -"
+    "d /mnt/backups 2775 minidlna minidlna -"
+    "d /home/minidlna 2775 minidlna minidlna -"
     "L /home/minidlna/external - - - - /mnt/backups"
   ];
 
