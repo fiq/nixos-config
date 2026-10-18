@@ -17,6 +17,7 @@ in {
         "google"
         "google_assistant"
         "google_assistant_sdk"
+        "google_translate"
         "gree"
         "met"
         "radio_browser"

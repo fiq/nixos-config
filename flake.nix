@@ -2,7 +2,6 @@
   inputs = { 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # default to unstable
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-home-assistant.url = "github:NixOS/nixpkgs/nixos-24.05";
     unstablepkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # always pegged to unstable
     hyprland.url = "github:hyprwm/Hyprland";
     musnix.url = "github:musnix/musnix";    
@@ -35,13 +34,6 @@
     nixosConfigurations."feynman" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
       modules = [
-        ({ pkgs, ... }: {
-          nixpkgs.overlays = [
-            (final: prev: {
-              home-assistant = inputs.nixpkgs-home-assistant.legacyPackages.${final.stdenv.hostPlatform.system}.home-assistant;
-            })
-          ];
-        })
         ./configuration.nix ./hardware-configuration/feynman.nix inputs.musnix.nixosModules.musnix];
     };
 
@@ -55,13 +47,6 @@
     nixosConfigurations."ada" = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs unstable musnix;};
       modules = [
-        ({ pkgs, ... }: {
-          nixpkgs.overlays = [
-            (final: prev: {
-              home-assistant = inputs.nixpkgs-home-assistant.legacyPackages.${final.stdenv.hostPlatform.system}.home-assistant;
-            })
-          ];
-        })
         ./configuration.nix ./hardware-configuration/ada.nix];
     };
 
