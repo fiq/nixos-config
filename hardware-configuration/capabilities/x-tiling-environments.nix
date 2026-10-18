@@ -91,6 +91,21 @@ in {
           Restart = "on-failure";
         };
       };
+
+      # Blank the screens after 5 minutes idle; any input wakes them.
+      # swayidle honours idle-inhibit, so video and presentations keep them on.
+      swayidle = {
+        description = "Blank screens when idle (niri)";
+        partOf = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
+        unitConfig.ConditionEnvironment = "NIRI_SOCKET";
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = ''${pkgs.swayidle}/bin/swayidle -w timeout 300 "${config.programs.niri.package}/bin/niri msg action power-off-monitors" resume "${config.programs.niri.package}/bin/niri msg action power-on-monitors"'';
+          Restart = "on-failure";
+        };
+      };
     };
 
     environment.sessionVariables = {
