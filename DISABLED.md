@@ -36,6 +36,7 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 
 | Since      | Thing                              | Why                                                   | Commit  |
 |------------|------------------------------------|-------------------------------------------------------|---------|
+| 2026-10-18 | displaylink src overlay (curie) | x-displaylink.nix pins the driver zip URL + hash. nixpkgs moved to 6.3.0-48 and the old 6.2 zip broke the build; overlay now fetches the 6.3 zip. Re-enabled on curie 2026-10-18. After each `nix flake update`, compare URL + hash with nixpkgs pkgs/os-specific/linux/displaylink/default.nix, then build curie. | uncommitted |
 | 2026-04-25 | VS Code settings.json out-of-store symlink | home-manager workaround                        | 38f36a3 |
 | 2026-03-22 | "Unstable Fixes" block, configuration.nix | collected March 2026 unstable workarounds       | e091575 |
 | 2026-02-10 | android-tools via package (not programs.adb) | android tooling changed in unstable          | 8d1ee1c |
