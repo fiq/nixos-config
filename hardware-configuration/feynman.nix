@@ -90,7 +90,10 @@
 
   # Server services inherited from ada
   services.x-home-assistant.enable = true;
-  services.x-network-storage.enable = true;
+  services.x-network-storage = {
+    enable = true;
+    lanSubnets = [ "192.168.50.0/24" ];
+  };
   services.x-kerberos.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 22 9999 8765 8080 3000 5173 ];
