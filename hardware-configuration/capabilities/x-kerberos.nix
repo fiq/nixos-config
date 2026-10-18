@@ -98,7 +98,8 @@ in
           sleep 2
         done
         echo "Applying Kerberos manifests..."
-        kubectl apply -f /etc/k8s/kerberos --recursive
+        # Trailing slash: /etc/k8s/kerberos is a symlink chain and kubectl does not follow a symlinked root
+        kubectl apply -f /etc/k8s/kerberos/ --recursive
       '';
       wantedBy = [ "multi-user.target" ];
     };
