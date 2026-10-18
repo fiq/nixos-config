@@ -18,6 +18,8 @@
   services.x-desktop-base.enable = true;
   services.x-desktop-environments.enable = true;
   services.x-tiling-environments.enable = true;
+  # niri is the preferred session; GNOME/Plasma stay selectable in SDDM
+  services.displayManager.defaultSession = "niri";
   services.x-minecraft.enable = true;
   # FIXME - bump raf for tcpdump
   users.extraGroups.root.members = [ "raf" ];

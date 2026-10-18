@@ -10,7 +10,7 @@ in {
     # SDDM itself lives in x-desktop-base (it is the login screen for niri/sway too).
     services.desktopManager.gnome.enable = true;
     services.desktopManager.plasma6.enable = true;
-    services.displayManager.defaultSession = "plasma";
+    services.displayManager.defaultSession = lib.mkDefault "plasma";
     programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
   };
 }
