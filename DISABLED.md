@@ -19,7 +19,6 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 | 2026-05-02 | gnuradio                           | capabilities/x-rtl-sdr.nix                     | broke on upgrade                                 | fb8408f   |
 | 2026-02-10 | dump1090-fa                        | capabilities/x-rtl-sdr.nix                     | broken in unstable                               | b2c93b1   |
 | 2026-03-22 | documentation.doc                  | configuration.nix:10                           | pydoc issues in unstable (FIXME: reenable)       | e091575   |
-| 2025-10-26 | x-rtl-sdr on feynman               | hardware-configuration/feynman.nix:76          | SDR disabled with new XPS hardware rev           | 51fe595   |
 | 2025-08-31 | python virtualenv (3.10, 3.11)     | configuration.nix:215                          | asyncio issues in unstable                       | 2898aaa   |
 | 2025-08-31 | programs.ssh.startAgent            | configuration.nix:65                           | disabled, reason not recorded                    | c72913c   |
 | 2024-12-01 | x-android-dev on feynman           | hardware-configuration/feynman.nix:79          | Android Studio broke on 24.11 (hawking has it on)| 7e57ddc   |
@@ -47,6 +46,7 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 
 | Thing                    | Was disabled        | Now                                     |
 |--------------------------|---------------------|-----------------------------------------|
+| x-rtl-sdr on feynman     | 2025-10-26 (51fe595) | back on in feynman.nix (2026-10-18)    |
 | gpredict                 | 2025-08-31 (ffc4352) | back on in x-rtl-sdr.nix               |
 | carla                    | 2025-08-31 (c2b74d8) | back on in x-musician.nix              |
 | fronius (home-assistant) | 2025-04-27 (972bf57) | back on in x-home-assistant.nix        |

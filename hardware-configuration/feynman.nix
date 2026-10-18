@@ -74,7 +74,7 @@
   services.x-audio.enable = true;
 
   # RTL SDR custom module
-  services.x-rtl-sdr.enable = false;
+  services.x-rtl-sdr.enable = true;
 
   # Setup android dev
   services.x-android-dev.enable = false;
