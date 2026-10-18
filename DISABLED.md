@@ -29,7 +29,7 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 
 | Date       | Thing                                        | Where                                  | Why                                                                                   |
 |------------|----------------------------------------------|----------------------------------------|---------------------------------------------------------------------------------------|
-| 2026-10-18 | intel-compute-runtime-legacy1 24.35 (feynman)| hardware-configuration/feynman.nix     | Fails to build with GCC 16.2: `-Werror=sfinae-incomplete` (NEO::Buffer). It comes in via the nixos-hardware XPS 13 9370 profile. Fix: override `hardware.graphics.extraPackages` to drop it (keeps VA-API, loses Intel OpenCL). Re-test: remove the override and build. |
+| (none) | | | |
 
 ## Workarounds in place (not disabled, but fragile)
 
@@ -47,6 +47,7 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 | Thing                    | Was disabled        | Now                                     |
 |--------------------------|---------------------|-----------------------------------------|
 | x-rtl-sdr on feynman     | 2025-10-26 (51fe595) | back on in feynman.nix (2026-10-18)    |
+| intel-compute-runtime-legacy1 (feynman) | 2026-10-18, GCC 16 build failure | flake update 0c1b0ac. The current lock's output is on cache.nixos.org and in feynman's store, so it is fetched, not built. feynman builds without the stub (confirmed 2026-10-19), so the stub overlay was dropped before pushing. |
 | gpredict                 | 2025-08-31 (ffc4352) | back on in x-rtl-sdr.nix               |
 | carla                    | 2025-08-31 (c2b74d8) | back on in x-musician.nix              |
 | fronius (home-assistant) | 2025-04-27 (972bf57) | back on in x-home-assistant.nix        |
