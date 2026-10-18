@@ -5,7 +5,7 @@
   networking.hostName = "feynman";
   # Tiling only (sway/niri/hyprland), SDDM logs in to niri; no Plasma/GNOME, no Minecraft
   services.x-desktop-base.enable = true;
-  services.x-tiling-desktop.enable = true;
+  services.x-tiling-environments.enable = true;
   services.displayManager.defaultSession = "niri";
   imports =
     [ 
@@ -21,7 +21,7 @@
        ./capabilities/x-kerberos.nix
        ./capabilities/x-network-storage.nix
        ./capabilities/x-rtl-sdr.nix
-       ./capabilities/x-tiling-desktop.nix
+       ./capabilities/x-tiling-environments.nix
        ./capabilities/x-yubi.nix
     ];
 

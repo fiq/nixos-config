@@ -27,7 +27,7 @@ home-manager/
 NixOS hosts have no role. Each host file imports the desktop capabilities it
 wants and enables them explicitly:
 
-| Host | x-desktop-base | x-audio | x-plasma-gnome | x-tiling-desktop | x-minecraft |
+| Host | x-desktop-base | x-audio | x-desktop-environments | x-tiling-environments | x-minecraft |
 |------|----------------|---------|----------------|------------------|-------------|
 | `curie` | yes | yes | yes | yes | yes |
 | `hawking` | yes | yes | yes | yes | yes |

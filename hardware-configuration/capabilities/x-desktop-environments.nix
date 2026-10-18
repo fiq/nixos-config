@@ -1,8 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.services.x-plasma-gnome;
+let cfg = config.services.x-desktop-environments;
 in {
-  options.services.x-plasma-gnome = {
+  options.services.x-desktop-environments = {
     enable = mkEnableOption "full GNOME and KDE Plasma desktops (heavy; leave off headless/tiling-only hosts)";
   };
 

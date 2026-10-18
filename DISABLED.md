@@ -23,7 +23,7 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 | 2025-08-31 | python virtualenv (3.10, 3.11)     | configuration.nix:215                          | asyncio issues in unstable                       | 2898aaa   |
 | 2025-08-31 | programs.ssh.startAgent            | configuration.nix:65                           | disabled, reason not recorded                    | c72913c   |
 | 2024-12-01 | x-android-dev on feynman           | hardware-configuration/feynman.nix:79          | Android Studio broke on 24.11 (hawking has it on)| 7e57ddc   |
-| 2023-07-21 | gnome-keyring                      | capabilities/x-tiling-desktop.nix:13           | conflicts with Hyprland launcher (hyprwm #1376)  | 14db231   |
+| 2023-07-21 | gnome-keyring                      | capabilities/x-tiling-environments.nix:13           | conflicts with Hyprland launcher (hyprwm #1376)  | 14db231   |
 | 2026-07-13 | fzf nushell integration            | home-manager/home.nix:162                      | disabled, reason not recorded                    | 563176b   |
 
 ## Pending (decided, not applied yet)

@@ -18,7 +18,7 @@
 
   networking.hostName = "ada";
   # Headless: no X, no display manager, no desktop GUI apps, no audio.
-  # So no x-desktop-base, x-audio, x-plasma-gnome, x-tiling-desktop or x-minecraft.
+  # So no x-desktop-base, x-audio, x-desktop-environments, x-tiling-environments or x-minecraft.
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "sd_mod" "sr_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];

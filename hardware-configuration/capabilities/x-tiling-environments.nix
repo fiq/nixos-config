@@ -1,9 +1,9 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.services.x-tiling-desktop;
+let cfg = config.services.x-tiling-environments;
 in {
   # TODO: note to self - refactored in sept - remember to consolidate other configs
-  options.services.x-tiling-desktop = {
+  options.services.x-tiling-environments = {
     enable = mkEnableOption "custom tiling desktops setup";
   };
   

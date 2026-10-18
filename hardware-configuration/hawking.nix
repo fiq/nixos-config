@@ -16,8 +16,8 @@
   networking.hostName = "hawking";
   # Full desktop: X + SDDM + GUI apps, GNOME + Plasma, tiling (sway/niri/hyprland), Minecraft launchers
   services.x-desktop-base.enable = true;
-  services.x-plasma-gnome.enable = true;
-  services.x-tiling-desktop.enable = true;
+  services.x-desktop-environments.enable = true;
+  services.x-tiling-environments.enable = true;
   services.x-minecraft.enable = true;
   # FIXME - bump raf for tcpdump
   users.extraGroups.root.members = [ "raf" ];
@@ -35,11 +35,11 @@
       ./capabilities/x-genai.nix
       ./capabilities/x-minecraft.nix
       ./capabilities/x-musician.nix
-      ./capabilities/x-plasma-gnome.nix
+      ./capabilities/x-desktop-environments.nix
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-security-dev.nix
-      ./capabilities/x-tiling-desktop.nix
+      ./capabilities/x-tiling-environments.nix
       ./capabilities/x-video.nix
       ./capabilities/x-vrdesktop.nix
       ./capabilities/x-yubi.nix

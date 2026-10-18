@@ -10,16 +10,16 @@
        ./capabilities/x-displaylink.nix
        ./capabilities/x-genai.nix
        ./capabilities/x-minecraft.nix
-       ./capabilities/x-plasma-gnome.nix
-       ./capabilities/x-tiling-desktop.nix
+       ./capabilities/x-desktop-environments.nix
+       ./capabilities/x-tiling-environments.nix
        ./capabilities/x-vrdesktop.nix
     ];
 
   networking.hostName = "curie";
   # Full desktop: X + SDDM + GUI apps, GNOME + Plasma, tiling (sway/niri/hyprland), Minecraft launchers
   services.x-desktop-base.enable = true;
-  services.x-plasma-gnome.enable = true;
-  services.x-tiling-desktop.enable = true;
+  services.x-desktop-environments.enable = true;
+  services.x-tiling-environments.enable = true;
   services.x-minecraft.enable = true;
   hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./apple-silicon-firmware;

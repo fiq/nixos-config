@@ -3,8 +3,8 @@ with lib;
 let cfg = config.services.x-desktop-base;
 in {
   # The shared desktop layer: X, graphics, SDDM login screen, GUI apps,
-  # scanner, OpenRGB, dictionary. Sessions come from x-tiling-desktop
-  # (niri/sway/hyprland) and x-plasma-gnome (GNOME, Plasma).
+  # scanner, OpenRGB, dictionary. Sessions come from x-tiling-environments
+  # (niri/sway/hyprland) and x-desktop-environments (GNOME, Plasma).
   # Headless hosts (ada) leave this off.
   options.services.x-desktop-base = {
     enable = mkEnableOption "shared desktop base (X, SDDM, GUI apps, scanner, OpenRGB, dictd)";
