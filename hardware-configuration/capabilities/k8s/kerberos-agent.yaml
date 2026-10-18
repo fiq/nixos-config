@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
         - name: kerberos-agent
-          image: kerberos/agent:latest
+          image: kerberos/agent:v3.12.9
           ports:
             - containerPort: 80
           volumeMounts:
             - name: recordings
-              mountPath: /recordings
+              mountPath: /home/agent/data/recordings
       volumes:
         - name: recordings
           persistentVolumeClaim:

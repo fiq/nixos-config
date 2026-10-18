@@ -19,9 +19,6 @@ spec:
           image: kerberos/kerberos:latest
           ports:
             - containerPort: 80
-          env:
-            - name: SOME_ENV_VAR
-              value: "value"
 ---
 apiVersion: v1
 kind: Service

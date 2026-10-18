@@ -10,11 +10,11 @@ let
     name = "kinect-webcam";
     tag = "latest";
 
-    # Minimal Alpine + packages needed for webcams and Kinect
+    # Minimal userland + packages needed for webcams and Kinect
     copyToRoot = pkgs.buildEnv {
       name = "kinect-webcam-packages";
       paths = with pkgs; [
-        alpine
+        coreutils
         bash
         ffmpeg
         v4l-utils
@@ -23,9 +23,10 @@ let
       ];
     };
 
+    # Idle placeholder process; runs as a non-root numeric user (runAsNonRoot)
     config = {
-      Cmd = [ "/bin/bash" ];
-      Entrypoint = [ "/bin/bash" ];
+      Cmd = [ "/bin/sleep" "infinity" ];
+      User = "65534";
     };
   };
 in
@@ -60,36 +61,45 @@ in
       description = "Load local Kinect/Webcam images into k3s";
       after = [ "k3s.service" ];
       wants = [ "k3s.service" ];
+      restartTriggers = [ baseKinectImage ];
+      path = [ config.services.k3s.package ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = ''
-          ${pkgs.coreutils}/bin/echo "Importing Kinect/Webcam images into k3s..."
-          ${pkgs.containerd}/bin/ctr -n k8s.io images import ${baseKinectImage}
-        '';
       };
+      script = ''
+        echo "Waiting for k3s containerd to be ready..."
+        for _ in $(seq 1 30); do
+          k3s ctr version &>/dev/null && break
+          sleep 2
+        done
+        echo "Importing Kinect/Webcam images into k3s..."
+        k3s ctr -n k8s.io images import ${baseKinectImage}
+      '';
       wantedBy = [ "multi-user.target" ];
     };
 
     # Apply all Kerberos manifests to the cluster
     systemd.services."k8s-kerberos-apply" = {
       description = "Apply Kerberos manifests to local k3s cluster";
-      after = [ "k3s.service" ];
-      wants = [ "k3s.service" ];
+      after = [ "k3s.service" "k8s-kinect-images.service" ];
+      wants = [ "k3s.service" "k8s-kinect-images.service" ];
+      restartTriggers = [ cfg.manifestsPath ];
+      path = [ pkgs.kubectl ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
         Environment = "KUBECONFIG=/etc/rancher/k3s/k3s.yaml";
-        ExecStart = ''
-          ${pkgs.coreutils}/bin/echo "Waiting for K3s API to be ready..."
-          for i in $(seq 1 30); do
-            kubectl get nodes &>/dev/null && break
-            sleep 2
-          done
-          ${pkgs.coreutils}/bin/echo "Applying Kerberos manifests..."
-          kubectl apply -f /etc/k8s/kerberos --recursive
-        '';
       };
+      script = ''
+        echo "Waiting for K3s API to be ready..."
+        for _ in $(seq 1 30); do
+          kubectl get nodes &>/dev/null && break
+          sleep 2
+        done
+        echo "Applying Kerberos manifests..."
+        kubectl apply -f /etc/k8s/kerberos --recursive
+      '';
       wantedBy = [ "multi-user.target" ];
     };
   };
