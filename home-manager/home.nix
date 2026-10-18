@@ -1,9 +1,39 @@
-{ config, pkgs, lib, inputs, isArm, isDarwin, isAsahi, ... }:
+{ config, pkgs, lib, inputs, isArm, isDarwin, isAsahi, role, ... }:
 let
   claude = import ./claude.nix { inherit pkgs; };
   isAarch64Darwin = isArm && isDarwin;
   isAarch64Linux = isArm && !isDarwin;
   omniwmPython = pkgs.python3.withPackages (ps: [ ps.tomli-w ]);
+
+  # ---- ROLE: how much GUI this config gets ----------------------------------
+  # role is set per entry in home-manager/default.nix (free choice, not tied
+  # to a machine):
+  #   full-desktop  everything
+  #   tiling        everything except guiHeavyApps
+  #   server        CLI only: no guiHeavyApps, no guiApps, and no GUI programs
+  #                 (firefox, vscode, wezterm; see the `lib.mkIf guiAll` below)
+  guiAll = role != "server";
+  guiHeavy = role == "full-desktop";
+
+  # Big GUI apps: full-desktop only.
+  guiHeavyApps = [
+    pkgs.jetbrains.idea
+    pkgs.slack
+  ] ++ lib.optionals (!isAarch64Darwin) [
+    pkgs.gimp3
+  ];
+
+  # Other GUI apps: full-desktop and tiling, not server.
+  guiApps = [
+    pkgs.google-chrome
+    pkgs.keepassxc
+    pkgs.kitty
+    pkgs.signal-desktop
+    pkgs.warp-terminal
+  ] ++ lib.optionals (isDarwin) [
+    pkgs.rectangle
+  ];
+  # ---------------------------------------------------------------------------
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -28,7 +58,7 @@ in
   #
   # No profiles are declared, so home-manager does not manage profiles.ini and
   # existing profiles are left alone.
-  programs.firefox = {
+  programs.firefox = lib.mkIf guiAll {
     enable = true;
     configPath = ".mozilla/firefox";
     policies.Preferences = lib.optionalAttrs (!isDarwin) {
@@ -70,19 +100,16 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
+  # CLI tools for every role; GUI apps come from the ROLE block at the top.
   home.packages = claude.packages ++ [
     pkgs.cmake
     pkgs.emacs
     pkgs.git
     pkgs.gpt-cli
-    pkgs.google-chrome
     pkgs.ffmpeg
     pkgs.figlet
     pkgs.fzf
-    pkgs.jetbrains.idea
     pkgs.jq
-    pkgs.keepassxc
-    pkgs.kitty
     pkgs.libsndfile
     pkgs.mc
     pkgs.mecab
@@ -91,21 +118,16 @@ in
     pkgs.protobuf
     pkgs.ripgrep
     pkgs.rustup
-    pkgs.signal-desktop
     pkgs.silver-searcher-ng
-    pkgs.slack
     pkgs.tmux
     pkgs.tree
     pkgs.vim-full
     pkgs.vimPlugins.vim-colorschemes
-    pkgs.warp-terminal
     pkgs.watch
     pkgs.wget 
-  ] ++ lib.optionals (!isAarch64Darwin) [
-    pkgs.gimp3
-  ] ++ lib.optionals (isDarwin) [
-    pkgs.rectangle
-  ] ++ lib.optionals (isAsahi || isDarwin) [
+  ] ++ lib.optionals guiAll guiApps
+    ++ lib.optionals guiHeavy guiHeavyApps
+    ++ lib.optionals (isAsahi || isDarwin) [
     # asahi does not have my genai config enabled 
     pkgs.codex
   ]; 
@@ -216,7 +238,7 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 
 
   # vscode
-  programs.vscode = {
+  programs.vscode = lib.mkIf guiAll {
     enable = true;
     profiles.default = {
       extensions = (with pkgs.vscode-extensions; [
@@ -247,7 +269,7 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
   
 
   # wezterm
-  programs.wezterm = {
+  programs.wezterm = lib.mkIf guiAll {
     enable = true;
     extraConfig = ''
 

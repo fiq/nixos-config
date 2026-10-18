@@ -4,34 +4,10 @@
 
 { config, pkgs, lib, inputs, unstable, ... }:
 
-let
-  # host.role is declared in hardware-configuration/roles.nix.
-  # gui = any desktop role. The server role gets none of the desktop parts below.
-  gui = config.host.role != "server";
-
-  # Desktop apps from the package list below. Dropped on the server role.
-  # When you add a GUI app to that list, add it here too.
-  guiOnlyPackages = with pkgs; [
-    appimage-run
-    audacity
-    firefox
-    fuzzel
-    google-chrome
-    grim
-    kitty
-    keepassxc
-    pavucontrol
-    portaudio
-    slurp
-    vlc
-    wireshark
-    wl-clipboard
-    xdg-desktop-portal
-    xdg-desktop-portal-wlr
-  ];
-in
 {
-  imports = [ ./hardware-configuration/roles.nix ];
+  # Shared by every host. Desktop parts (X, SDDM, GUI apps, scanner, OpenRGB,
+  # dictd, AppImage) live in capabilities/x-desktop-base.nix; PipeWire lives in
+  # capabilities/x-audio.nix. Hosts import and enable those explicitly.
 
   # Unstable Fixes
   # FIXME - reenable later: March 2026 - pydoc issues in unstable.
@@ -72,18 +48,6 @@ in
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-  # pipewire setup
-  services.pipewire = lib.mkIf gui {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    jack.enable = true;
-    alsa.support32Bit = true;
-  };
-  users.extraGroups.audio.members = lib.mkIf gui [ "raf" ];
-  users.extraGroups.realtime.members = lib.mkIf gui [ "raf" ];
-  users.extraGroups.jackaudio.members = lib.mkIf gui [ "raf" ];
-
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
 
@@ -104,15 +68,6 @@ in
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-  # SANE - Scanner
-  hardware.sane = lib.mkIf gui {
-    enable = true;
-    brscan4.netDevices.home = {
-      model = "MFC-7350N";
-      ip = "192.168.50.251";
-    };
-  };
-
   # Docker
   virtualisation.docker.rootless = {
     enable = true;
@@ -123,22 +78,9 @@ in
   virtualisation.containers.enable = true;
   users.extraGroups.docker.members = [ "raf" ];
   
-  # OpenRGB
-  services.hardware.openrgb.enable = lib.mkIf gui true;
+  # OpenRGB (enabled by x-desktop-base)
   services.hardware.openrgb.motherboard = "amd";
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = lib.mkIf gui true;
-
-  hardware.graphics.enable = lib.mkIf gui true;
-
-  # Login screen. Sessions come from x-tiling-desktop (niri/sway/hyprland) and
-  # x-plasma-gnome (GNOME, Plasma).
-  services.displayManager.sddm.enable = lib.mkIf gui true;
-  programs.dconf.enable = lib.mkIf gui true;
-
-  # start sddm in Wayland
-  services.displayManager.sddm.wayland.enable = lib.mkIf gui true;
   security.polkit.enable = true;
 
   # Locate DB 
@@ -171,52 +113,38 @@ in
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "docker" "mlocate" "plugdev" "wheel" ] ++ lib.optionals gui [ "scanner" ] ++ [ "lp" ]; # Enable ‘sudo’ print and scan
+    extraGroups = [ "docker" "mlocate" "plugdev" "wheel" "lp" ]; # Enable ‘sudo’ and print ("scanner" comes from x-desktop-base)
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       
     ];
   };
 
-  # dictionary
-  services.dictd.enable = lib.mkIf gui true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  # GUI apps live in capabilities/x-desktop-base.nix.
   environment = {
 
-    # Required for vscode (home manager managed) wayland issues
-    # See: https://github.com/NixOS/nixpkgs/issues/241337
-    sessionVariables.NIXOS_OZONE_WL = lib.mkIf gui "1";
     #etc."dict.conf".text = "server dict.org";
 
-    # Server role: guiOnlyPackages (see top of file) are filtered out.
-    systemPackages = lib.filter (p: gui || !(lib.elem p guiOnlyPackages)) (with pkgs; [
+    systemPackages = with pkgs; [
       age
-      appimage-run
-      audacity
       curl
       dig
       distrobox
       docker-compose
       #docker
       beamPackages.elixir
-      firefox
-      fuzzel
       gcc
       gdb
       gh
       git
       gnupg
       gnumake
-      google-chrome
-      grim
       helix
       home-manager
       inetutils
       jdk21
-      kitty
-      keepassxc
       kotlin
       lshw
       lynx 
@@ -225,10 +153,8 @@ in
       minikube
       nix-index
       openssh
-      pavucontrol
       pciutils
       podman
-      portaudio
       psmisc
 #      python310
       python311
@@ -240,7 +166,6 @@ in
       python312Packages.uv
       ripgrep
       silver-searcher-ng
-      slurp
       sops
       spring-boot-cli
       sshfs
@@ -250,13 +175,8 @@ in
       tree
       usbutils # avoids using the busy box lsusb etc
       vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-      vlc
       wget
-      wireshark
-      wl-clipboard
-      xdg-desktop-portal
-      xdg-desktop-portal-wlr
-    ]);
+    ];
   };
   # No host has a swap partition, so the kernel has nothing to reclaim to and
   # goes straight from pressure to the OOM killer. zram gives it compressed
@@ -322,14 +242,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
-  # Enable AppImage exec via appimage-run
-  boot.binfmt.registrations.appimage = lib.mkIf gui {
-	wrapInterpreterInShell = false;
-	interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-	recognitionType = "magic";
-	offset = 0;
-	mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-	magicOrExtension = ''\x7fELF....AI\x02'';
-  };
 }

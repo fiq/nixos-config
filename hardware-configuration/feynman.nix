@@ -3,8 +3,10 @@
 {
   nixpkgs.config.allowBroken = true;
   networking.hostName = "feynman";
-  # Tiling only (sway/niri/hyprland), SDDM logs in to niri; no Plasma/GNOME. See roles.nix
-  host.role = "tiling";
+  # Tiling only (sway/niri/hyprland), SDDM logs in to niri; no Plasma/GNOME, no Minecraft
+  services.x-desktop-base.enable = true;
+  services.x-tiling-desktop.enable = true;
+  services.displayManager.defaultSession = "niri";
   imports =
     [ 
       "${builtins.fetchGit {
@@ -14,10 +16,12 @@
        }}/dell/xps/13-9370"
        ./capabilities/x-android-dev.nix
        ./capabilities/x-audio.nix
+       ./capabilities/x-desktop-base.nix
        ./capabilities/x-home-assistant.nix
        ./capabilities/x-kerberos.nix
        ./capabilities/x-network-storage.nix
        ./capabilities/x-rtl-sdr.nix
+       ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-yubi.nix
     ];
 

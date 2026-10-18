@@ -7,7 +7,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # SDDM itself stays in the shared base (it is the login screen for niri/sway too).
+    # SDDM itself lives in x-desktop-base (it is the login screen for niri/sway too).
     services.desktopManager.gnome.enable = true;
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasma";

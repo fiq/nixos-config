@@ -6,6 +6,9 @@ let
   makeHomeManagerConfig = name: value:
     let
       system = value.system;
+      # Desktop weight for this config; see the role block at the top of home.nix.
+      # Free choice per entry, not tied to a machine or to any NixOS option.
+      role = value.role or "full-desktop";
       # Correctly instantiate pkgs for the targeted system with your overlay
       pkgs = import nixpkgs {
         inherit system;
@@ -26,6 +29,8 @@ let
       isAsahi = system == "aarch64-linux";
 
     in
+    assert nixpkgs.lib.assertMsg (builtins.elem role [ "full-desktop" "tiling" "server" ])
+      "home-manager config ${name}: role must be full-desktop, tiling or server (got ${role})";
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
@@ -36,14 +41,20 @@ let
         }
       ];
       # Pass inputs and system-specific unstable pkgs down to modules
-      extraSpecialArgs = { inherit inputs unstable isArm isDarwin isAsahi; };
+      extraSpecialArgs = { inherit inputs unstable isArm isDarwin isAsahi role; };
     };
 
 in
+# One line per config. role is optional: "full-desktop" (default) | "tiling" | "server".
+# The name is just a label: any machine can switch to any entry, e.g.
+#   home-manager switch --flake .#raf@feynman   (tiling)
+#   home-manager switch --flake .#raf            (full-desktop)
 builtins.mapAttrs makeHomeManagerConfig {
   "raf" = { user = "raf"; homePath = "/home"; system = "x86_64-linux"; };
 #  "raf@curie" = { user = "raf"; homePath = "/Users"; system = "aarch64-darwin"; };
   "raf@curie.mac" = { user = "raf"; homePath = "/Users"; system = "aarch64-darwin"; };
   "raf@curie.linux" = { user = "raf"; homePath = "/home"; system = "aarch64-linux"; };
+  "raf@feynman" = { user = "raf"; homePath = "/home"; system = "x86_64-linux"; role = "tiling"; };
+  "raf@ada" = { user = "raf"; homePath = "/home"; system = "x86_64-linux"; role = "server"; };
 }
 

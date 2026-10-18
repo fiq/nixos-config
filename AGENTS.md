@@ -6,10 +6,9 @@ Flake-based NixOS config for three hosts plus Home Manager.
 
 ```
 flake.nix                            # inputs, nixosConfigurations, homeConfigurations
-configuration.nix                    # shared base — all hosts inherit this; desktop parts gated on host.role
+configuration.nix                    # shared base — all hosts inherit this (no desktop parts)
 hardware-configuration/
-  roles.nix                          # host.role option (full-desktop | tiling | server); imports and
-                                     # enables x-plasma-gnome, x-minecraft, x-tiling-desktop by role
+  curie.nix                          # Apple Silicon laptop (Asahi)
   hawking.nix                        # primary workstation (AMD CPU + NVIDIA GPU, CUDA)
   feynman.nix                        # Dell XPS 13-9370 laptop (nixos-hardware via fetchGit)
   ada.nix                            # home server (Home Assistant, Kerberos, NAS, YubiKey)
@@ -17,7 +16,7 @@ hardware-configuration/
     x-*.nix                          # reusable opt-in modules (services.x-<name> namespace)
     k8s/                             # Kubernetes YAML manifests for ada
 home-manager/
-  default.nix                        # homeConfigurations factory (raf, innovation)
+  default.nix                        # homeConfigurations factory; one line per config, each with a role
   home.nix                           # main HM config, imports claude.nix
   claude.nix                         # Claude Code packages, aliases, ignoreText, VSCode ext
   dotfiles/                          # p10k.zsh, tmux.conf, etc.
@@ -25,35 +24,51 @@ home-manager/
 
 ## Host Inventory
 
-Each host sets `host.role` (default `full-desktop`):
+NixOS hosts have no role. Each host file imports the desktop capabilities it
+wants and enables them explicitly:
 
-| `host.role` | X + SDDM + audio + GUI apps | Plasma + GNOME | Tiling (niri/sway/hyprland) | Minecraft |
-|-------------|-----------------------------|----------------|-----------------------------|-----------|
-| `full-desktop` | yes | yes | yes | yes |
-| `tiling` | yes | no | yes (SDDM default session `niri`) | no |
-| `server` | no | no | no | no |
+| Host | x-desktop-base | x-audio | x-plasma-gnome | x-tiling-desktop | x-minecraft |
+|------|----------------|---------|----------------|------------------|-------------|
+| `curie` | yes | yes | yes | yes | yes |
+| `hawking` | yes | yes | yes | yes | yes |
+| `feynman` | yes | yes | no | yes (`defaultSession = "niri"` in feynman.nix) | no |
+| `ada` | no | no | no | no | no |
 
-Role enables are `mkDefault`, so a host can still override one capability.
+`x-desktop-base` = X, SDDM, GUI apps, SANE, OpenRGB, dictd, AppImage binfmt.
+`x-audio` = PipeWire + audio/realtime/jackaudio groups + WirePlumber defaults.
 
-| Host | Arch | Role (`host.role`) | Notable capabilities |
+| Host | Arch | Kind | Notable capabilities |
 |------|------|------|----------------------|
-| `curie` | aarch64 (Asahi) | Laptop (`full-desktop`) | Asahi, audio, bt, DisplayLink, GenAI (Ollama), VR |
-| `hawking` | x86_64 | Primary workstation (`full-desktop`) | NVIDIA + CUDA, GenAI (Ollama, claude-code, llama-cpp), musician, tiling desktop, VR, android-dev, security-dev, genealogy, RTL-SDR, video, authoring, btrfs, printing, bt, yubi |
-| `feynman` | x86_64 | Laptop (XPS 13-9370) (`tiling`) | Tiling desktop, yubi, Home Assistant + Kerberos + network storage (from ada), rtl-sdr + android-dev (imported but **disabled**) |
-| `ada` | x86_64 | Home server (`server`, headless; **deprecated**, services moved to feynman) | Home Assistant (pinned nixpkgs-home-assistant overlay), Kerberos, network storage, yubi |
+| `curie` | aarch64 (Asahi) | Laptop (full desktop) | Asahi, audio, bt, DisplayLink, GenAI (Ollama), VR |
+| `hawking` | x86_64 | Primary workstation (full desktop) | NVIDIA + CUDA, GenAI (Ollama, claude-code, llama-cpp), musician, tiling desktop, VR, android-dev, security-dev, genealogy, RTL-SDR, video, authoring, btrfs, printing, bt, yubi |
+| `feynman` | x86_64 | Laptop (XPS 13-9370) (tiling desktop) | Tiling desktop, yubi, Home Assistant + Kerberos + network storage (from ada), rtl-sdr + android-dev (imported but **disabled**) |
+| `ada` | x86_64 | Home server (headless; **deprecated**, services moved to feynman) | Home Assistant (pinned nixpkgs-home-assistant overlay), Kerberos, network storage, yubi |
 
-**Home Manager users:**
-- `raf` — x86_64-linux, `/home/raf`
-- `innovation` — aarch64-darwin, `/Users/innovation`
+**Home Manager configs** (all share `home.nix` / `claude.nix`):
 
-Both users share `home.nix` / `claude.nix`; there is no per-host HM split yet.
+The role (`full-desktop` | `tiling` | `server`) exists **only** in Home Manager.
+It is a free choice per config, not tied to a machine or to any NixOS option;
+the same machine can switch to any config. `home.nix` gates GUI packages and GUI
+programs on it in one ROLE block at the top.
+
+| Config | System | Role |
+|--------|--------|------|
+| `raf` | x86_64-linux | `full-desktop` |
+| `raf@curie.linux` | aarch64-linux | `full-desktop` |
+| `raf@curie.mac` | aarch64-darwin | `full-desktop` |
+| `raf@feynman` | x86_64-linux | `tiling` (drops idea, gimp, slack) |
+| `raf@ada` | x86_64-linux | `server` (CLI only) |
+
+To add a config with another role, add one line in `home-manager/default.nix`:
+`"raf@x" = { user = "raf"; homePath = "/home"; system = "x86_64-linux"; role = "tiling"; };`
+(`role` defaults to `full-desktop`).
 
 ## Capability Module Conventions
 
 - All capability modules live in `hardware-configuration/capabilities/x-*.nix`.
 - Each defines `options.services.x-<name>.enable` (and sub-options where needed) and gates all config under `mkIf cfg.enable`.
 - A host file **imports** the module file, then **sets** `services.x-<name>.enable = true/false`.
-- Exception: `x-plasma-gnome`, `x-minecraft`, `x-tiling-desktop` are imported by `roles.nix` and enabled from `host.role`; host files do not import them.
+- No capability reads a host role; every enable is set explicitly in the host file.
 - `x-genai` has sub-options: `cuda.enable` and `ollama.enable`.
 - Preserve the `services.x-*` naming convention.
 - `home-manager/capabilities/` exists but is currently empty.
@@ -149,7 +164,7 @@ home-manager build --flake .#innovation
 - `claude.nix` is a plain Nix function (takes `{ pkgs }`, returns an attrset), not a HM module. `home.nix` calls it with `import ./claude.nix { inherit pkgs; }` and splices the result in manually.
 - `home.nix` writes `~/.claudeignore` from `claude.ignoreText` and sets the VSCode wrapper path via `userSettings`.
 - `x-genai.nix` installs `claude-code`, `claude-agent-acp`, `claude-code-router`, `claude-monitor`, `llama-cpp` at the system level (hawking only, via CUDA enable flag).
-- `configuration.nix` holds the shared base. Its desktop parts (X, SDDM, dconf, PipeWire, SANE, OpenRGB, dictd, GUI packages in `guiOnlyPackages`, AppImage binfmt) are gated off when `host.role = "server"`. Server-specific concerns belong in host files or capability modules.
+- `configuration.nix` holds the shared base for every host. Desktop parts (X, SDDM, dconf, SANE, OpenRGB, dictd, GUI packages, AppImage binfmt) live in `x-desktop-base`; PipeWire lives in `x-audio`. Server-specific concerns belong in host files or capability modules.
 
 ## Prompt Injection — Trust Boundary
 

@@ -135,6 +135,18 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # pipewire setup
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+      jack.enable = true;
+      alsa.support32Bit = true;
+    };
+    users.extraGroups.audio.members = [ "raf" ];
+    users.extraGroups.realtime.members = [ "raf" ];
+    users.extraGroups.jackaudio.members = [ "raf" ];
+
     environment.systemPackages = [ audioCtl ];
 
     services.pipewire.wireplumber.extraConfig = {

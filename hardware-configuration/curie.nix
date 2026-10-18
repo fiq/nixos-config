@@ -6,14 +6,21 @@
       (modulesPath + "/installer/scan/not-detected.nix")
        ./capabilities/x-audio.nix
        ./capabilities/x-bt.nix
+       ./capabilities/x-desktop-base.nix
        ./capabilities/x-displaylink.nix
        ./capabilities/x-genai.nix
+       ./capabilities/x-minecraft.nix
+       ./capabilities/x-plasma-gnome.nix
+       ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
 
   networking.hostName = "curie";
-  # GNOME + Plasma + tiling (sway/niri/hyprland) + Minecraft launchers; see roles.nix
-  host.role = "full-desktop";
+  # Full desktop: X + SDDM + GUI apps, GNOME + Plasma, tiling (sway/niri/hyprland), Minecraft launchers
+  services.x-desktop-base.enable = true;
+  services.x-plasma-gnome.enable = true;
+  services.x-tiling-desktop.enable = true;
+  services.x-minecraft.enable = true;
   hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./apple-silicon-firmware;
 

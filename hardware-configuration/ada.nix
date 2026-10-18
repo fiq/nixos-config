@@ -17,8 +17,8 @@
     ];
 
   networking.hostName = "ada";
-  # Headless: no X, no display manager, no desktop GUI apps. See roles.nix
-  host.role = "server";
+  # Headless: no X, no display manager, no desktop GUI apps, no audio.
+  # So no x-desktop-base, x-audio, x-plasma-gnome, x-tiling-desktop or x-minecraft.
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "sd_mod" "sr_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
