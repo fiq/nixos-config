@@ -7,6 +7,7 @@
        ./capabilities/x-audio.nix
        ./capabilities/x-bt.nix
        ./capabilities/x-displaylink.nix
+       ./capabilities/x-genai.nix
        ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
@@ -47,7 +48,14 @@
   # Targus DV2K dock (DisplayLink); dlm only does work while the dock is plugged in
   services.x-displaylink.enable = true;
 
-  # Pro Audio on the speaker card skips the Asahi speaker DSP and its volume
+  services.x-genai = {
+    enable = true;
+    enableCuda = false;
+    enableOllama = true;
+    enableLlamaCpp = false;
+  };
+
+# Pro Audio on the speaker card skips the Asahi speaker DSP and its volume
   # lock (the rules only match HiFi), so pin HiFi instead of trusting saved state.
   services.x-audio = {
     enable = true;

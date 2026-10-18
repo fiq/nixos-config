@@ -5,14 +5,30 @@ let
 in {
   options.services.x-genai = {
     enable = mkEnableOption "custom GenAI system setup";
-    cuda.enable = mkEnableOption "CUDA-backed local GenAI tooling";
-    ollama.enable = mkEnableOption "Ollama service";
+    enableCuda = mkOption {
+      description = "CUDA-backed local GenAI tooling";
+      type = types.bool;
+      default = false;
+    };
+    enableOllama = mkOption {
+      description = "Ollama service";
+      type = types.bool;
+      default = false;
+    };
+
+    enableLlamaCpp= mkOption {
+      description = "LlamaCpp enabled";
+      type = types.bool;
+      default = false;
+    };
+ 
+  
   };
 
   config = mkIf cfg.enable {
-    services.ollama = mkIf cfg.ollama.enable {
+    services.ollama = mkIf cfg.enableOllama {
       enable = true;
-      package = if cfg.cuda.enable then pkgs.ollama-cuda else pkgs.ollama;
+      package = if cfg.enableCuda then pkgs.ollama-cuda else pkgs.ollama;
     };
 
     environment.systemPackages =
@@ -25,9 +41,11 @@ in {
         claude-agent-acp
         claude-code-router
         claude-monitor
+      ])
+      ++ optionals cfg.enableLlamaCpp(with pkgs; [
         llama-cpp
       ])
-      ++ optionals cfg.cuda.enable (with pkgs; [
+      ++ optionals cfg.enableCuda (with pkgs; [
         cudaPackages.cudatoolkit
       ]);
   };

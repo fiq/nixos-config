@@ -238,8 +238,9 @@
   # Local GenAI tooling
   services.x-genai = {
     enable = true;
-    cuda.enable = true;
-    ollama.enable = true;
+    enableCuda = true;
+    enableOllama = true;
+    enableLlamaCpp= true;
   };
 
   # Enable pulse audio custom module
