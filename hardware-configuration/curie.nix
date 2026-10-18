@@ -8,6 +8,7 @@
        ./capabilities/x-bt.nix
        ./capabilities/x-displaylink.nix
        ./capabilities/x-genai.nix
+       ./capabilities/x-minecraft.nix
        ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
@@ -64,6 +65,9 @@
   # Setup sway and niri
   services.x-tiling-desktop.enable = true;
   services.x-vrdesktop.enable = true;
+
+  # Minecraft launchers (Fjord, Prism)
+  services.x-minecraft.enable = true;
   services.x-vrdesktop.enableCuda = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

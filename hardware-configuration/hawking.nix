@@ -27,6 +27,7 @@
       ./capabilities/x-btrfs.nix
       ./capabilities/x-geneology.nix
       ./capabilities/x-genai.nix
+      ./capabilities/x-minecraft.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
@@ -265,5 +266,8 @@
 
   # Setup android and godot dev tools
   services.x-security-dev.enable = true;
+
+  # Minecraft launchers (Fjord, Prism)
+  services.x-minecraft.enable = true;
 
 }

@@ -178,7 +178,6 @@
       docker-compose
       #docker
       beamPackages.elixir
-      inputs.fjordlauncher.packages.${stdenv.hostPlatform.system}.fjordlauncher
       firefox
       fuzzel
       gcc
@@ -192,7 +191,6 @@
       helix
       home-manager
       inetutils
-      prismlauncher
       jdk21
       kitty
       keepassxc
