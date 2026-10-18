@@ -14,6 +14,8 @@ in {
     services.minidlna = {
        enable = true;
        settings.media_dir = [ cfg.media_dir "/mnt/backups" ];
+       # Watch the media folders so new files show up without a restart.
+       settings.inotify = "yes";
     };
     services.samba = {
        enable = true;
