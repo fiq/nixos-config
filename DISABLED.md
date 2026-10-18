@@ -14,6 +14,7 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 
 | Since      | Thing                              | Where                                          | Why                                              | Commit    |
 |------------|------------------------------------|------------------------------------------------|--------------------------------------------------|-----------|
+| 2026-10-18 | sidequest                        | hardware-configuration/hawking.nix:193                     | CVE on unstable ("temporary")          | afc14e1   |
 | 2026-10-04 | gqrx, sdrpp                        | capabilities/x-rtl-sdr.nix                     | issues on unstable ("temporary")                 | 169e009   |
 | 2026-05-02 | gnuradio                           | capabilities/x-rtl-sdr.nix                     | broke on upgrade                                 | fb8408f   |
 | 2026-02-10 | dump1090-fa                        | capabilities/x-rtl-sdr.nix                     | broken in unstable                               | b2c93b1   |
