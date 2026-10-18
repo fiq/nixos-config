@@ -4,15 +4,12 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  # DEPRECATED: ada is being retired. Its config now also runs on feynman
-  # (x-home-assistant, x-network-storage, x-kerberos); keep this file for reference.
+  # DEPRECATED: ada is retired to ssh only. Home Assistant, Kerberos and network
+  # storage (minidlna, samba) now run on feynman; this file stays for reference.
   nixpkgs.config.allowBroken = true;
   imports =
     [
        (modulesPath + "/installer/scan/not-detected.nix")
-       ./capabilities/x-home-assistant.nix
-       ./capabilities/x-kerberos.nix
-       ./capabilities/x-network-storage.nix
        ./capabilities/x-yubi.nix
     ];
 
@@ -47,10 +44,6 @@
 
   swapDevices = [ ];
 
-  systemd.tmpfiles.rules = [
-    "L /home/minidlna/external - - - - /mnt/backups"
-  ];
-
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -62,15 +55,5 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  environment.systemPackages = with pkgs; [
-     grafana
-     # spotify dropped: GUI app, ada is a headless server
-     python3 
-  ];
-
-
-  services.x-home-assistant.enable = true;
-  services.x-network-storage.enable = true;
-  services.x-kerberos.enable = true;
   services.x-yubi.enable = true;
 }
