@@ -190,7 +190,7 @@
     mumble
     nvidia-container-toolkit
     nvidia-docker
-    sidequest
+#    sidequest
     wine
   ];
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
