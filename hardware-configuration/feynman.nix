@@ -3,6 +3,8 @@
 {
   nixpkgs.config.allowBroken = true;
   networking.hostName = "feynman";
+  # Tiling only (sway/niri/hyprland), SDDM logs in to niri; no Plasma/GNOME. See roles.nix
+  host.role = "tiling";
   imports =
     [ 
       "${builtins.fetchGit {
@@ -16,7 +18,6 @@
        ./capabilities/x-kerberos.nix
        ./capabilities/x-network-storage.nix
        ./capabilities/x-rtl-sdr.nix
-       ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-yubi.nix
     ];
 
@@ -73,12 +74,6 @@
 
   # Setup android dev
   services.x-android-dev.enable = false;
-
-  # Setup sway and niri
-  services.x-tiling-desktop.enable = true;
-
-  # No Plasma/GNOME here; log in straight to niri
-  services.displayManager.defaultSession = "niri";
 
   # Enable yubi module
   services.x-yubi.enable = true;

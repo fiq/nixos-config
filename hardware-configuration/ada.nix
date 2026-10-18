@@ -12,13 +12,13 @@
        (modulesPath + "/installer/scan/not-detected.nix")
        ./capabilities/x-home-assistant.nix
        ./capabilities/x-kerberos.nix
-       ./capabilities/x-minecraft.nix
-       ./capabilities/x-plasma-gnome.nix
        ./capabilities/x-network-storage.nix
        ./capabilities/x-yubi.nix
     ];
 
   networking.hostName = "ada";
+  # Headless: no X, no display manager, no desktop GUI apps. See roles.nix
+  host.role = "server";
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "sd_mod" "sr_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -64,7 +64,7 @@
 
   environment.systemPackages = with pkgs; [
      grafana
-     spotify
+     # spotify dropped: GUI app, ada is a headless server
      python3 
   ];
 
@@ -73,10 +73,4 @@
   services.x-network-storage.enable = true;
   services.x-kerberos.enable = true;
   services.x-yubi.enable = true;
-
-  # Minecraft launchers (Fjord, Prism)
-  services.x-minecraft.enable = true;
-
-  # Full GNOME and Plasma desktops
-  services.x-plasma-gnome.enable = true;
 }

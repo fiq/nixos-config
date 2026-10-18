@@ -4,7 +4,35 @@
 
 { config, pkgs, lib, inputs, unstable, ... }:
 
+let
+  # host.role is declared in hardware-configuration/roles.nix.
+  # gui = any desktop role. The server role gets none of the desktop parts below.
+  gui = config.host.role != "server";
+
+  # Desktop apps from the package list below. Dropped on the server role.
+  # When you add a GUI app to that list, add it here too.
+  guiOnlyPackages = with pkgs; [
+    appimage-run
+    audacity
+    firefox
+    fuzzel
+    google-chrome
+    grim
+    kitty
+    keepassxc
+    pavucontrol
+    portaudio
+    slurp
+    vlc
+    wireshark
+    wl-clipboard
+    xdg-desktop-portal
+    xdg-desktop-portal-wlr
+  ];
+in
 {
+  imports = [ ./hardware-configuration/roles.nix ];
+
   # Unstable Fixes
   # FIXME - reenable later: March 2026 - pydoc issues in unstable.
   documentation.doc.enable = false;
@@ -45,16 +73,16 @@
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # pipewire setup
-  services.pipewire = {
+  services.pipewire = lib.mkIf gui {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
     jack.enable = true;
     alsa.support32Bit = true;
   };
-  users.extraGroups.audio.members = [ "raf" ];
-  users.extraGroups.realtime.members = [ "raf" ];
-  users.extraGroups.jackaudio.members = [ "raf" ];
+  users.extraGroups.audio.members = lib.mkIf gui [ "raf" ];
+  users.extraGroups.realtime.members = lib.mkIf gui [ "raf" ];
+  users.extraGroups.jackaudio.members = lib.mkIf gui [ "raf" ];
 
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
@@ -77,7 +105,7 @@
   # };
 
   # SANE - Scanner
-  hardware.sane = {
+  hardware.sane = lib.mkIf gui {
     enable = true;
     brscan4.netDevices.home = {
       model = "MFC-7350N";
@@ -96,21 +124,21 @@
   users.extraGroups.docker.members = [ "raf" ];
   
   # OpenRGB
-  services.hardware.openrgb.enable = true;
+  services.hardware.openrgb.enable = lib.mkIf gui true;
   services.hardware.openrgb.motherboard = "amd";
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = lib.mkIf gui true;
 
-  hardware.graphics.enable = true;
+  hardware.graphics.enable = lib.mkIf gui true;
 
   # Login screen. Sessions come from x-tiling-desktop (niri/sway/hyprland) and
   # x-plasma-gnome (GNOME, Plasma).
-  services.displayManager.sddm.enable = true;
-  programs.dconf.enable = true;
+  services.displayManager.sddm.enable = lib.mkIf gui true;
+  programs.dconf.enable = lib.mkIf gui true;
 
   # start sddm in Wayland
-  services.displayManager.sddm.wayland.enable = true; 
+  services.displayManager.sddm.wayland.enable = lib.mkIf gui true;
   security.polkit.enable = true;
 
   # Locate DB 
@@ -143,7 +171,7 @@
   users.users.raf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "docker" "mlocate" "plugdev" "wheel" "scanner" "lp" ]; # Enable ‘sudo’ print and scan
+    extraGroups = [ "docker" "mlocate" "plugdev" "wheel" ] ++ lib.optionals gui [ "scanner" ] ++ [ "lp" ]; # Enable ‘sudo’ print and scan
     initialHashedPassword = "resetme";
     packages = with pkgs; [
       
@@ -151,7 +179,7 @@
   };
 
   # dictionary
-  services.dictd.enable = true;
+  services.dictd.enable = lib.mkIf gui true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -159,10 +187,11 @@
 
     # Required for vscode (home manager managed) wayland issues
     # See: https://github.com/NixOS/nixpkgs/issues/241337
-    sessionVariables.NIXOS_OZONE_WL = "1";
+    sessionVariables.NIXOS_OZONE_WL = lib.mkIf gui "1";
     #etc."dict.conf".text = "server dict.org";
 
-    systemPackages = with pkgs; [
+    # Server role: guiOnlyPackages (see top of file) are filtered out.
+    systemPackages = lib.filter (p: gui || !(lib.elem p guiOnlyPackages)) (with pkgs; [
       age
       appimage-run
       audacity
@@ -227,7 +256,7 @@
       wl-clipboard
       xdg-desktop-portal
       xdg-desktop-portal-wlr
-    ];
+    ]);
   };
   # No host has a swap partition, so the kernel has nothing to reclaim to and
   # goes straight from pressure to the OOM killer. zram gives it compressed
@@ -295,7 +324,7 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Enable AppImage exec via appimage-run
-  boot.binfmt.registrations.appimage = {
+  boot.binfmt.registrations.appimage = lib.mkIf gui {
 	wrapInterpreterInShell = false;
 	interpreter = "${pkgs.appimage-run}/bin/appimage-run";
 	recognitionType = "magic";

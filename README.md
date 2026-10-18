@@ -5,11 +5,16 @@ See [AGENTS.md](AGENTS.md) for full layout, conventions, and agent instructions.
 
 ## Hosts
 
-| Host | Role |
-|------|------|
-| `hawking` | Primary workstation — AMD/NVIDIA, CUDA, GenAI |
-| `feynman` | Laptop — Dell XPS 13 (also hosts ada's Home Assistant, Kerberos, NAS) |
-| `ada` | **Deprecated** home server — services moved to feynman |
+| Host | Role | `host.role` |
+|------|------|-------------|
+| `hawking` | Primary workstation — AMD/NVIDIA, CUDA, GenAI | `full-desktop` |
+| `curie` | Apple Silicon laptop (Asahi, aarch64) | `full-desktop` |
+| `feynman` | Laptop — Dell XPS 13 (also hosts ada's Home Assistant, Kerberos, NAS) | `tiling` |
+| `ada` | **Deprecated** home server — services moved to feynman | `server` |
+
+`host.role` (see `hardware-configuration/roles.nix`) sets the desktop weight:
+`full-desktop` = GNOME + Plasma + tiling + Minecraft; `tiling` = niri/sway/hyprland only;
+`server` = headless (no X, no display manager, no audio, no GUI apps).
 
 ## Rebuild
 

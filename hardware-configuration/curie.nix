@@ -8,13 +8,12 @@
        ./capabilities/x-bt.nix
        ./capabilities/x-displaylink.nix
        ./capabilities/x-genai.nix
-       ./capabilities/x-minecraft.nix
-       ./capabilities/x-plasma-gnome.nix
-       ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
 
   networking.hostName = "curie";
+  # GNOME + Plasma + tiling (sway/niri/hyprland) + Minecraft launchers; see roles.nix
+  host.role = "full-desktop";
   hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./apple-silicon-firmware;
 
@@ -63,15 +62,7 @@
     enable = true;
     deviceProfiles."~alsa_card\\.platform-(sound|audio\\..*)" = "HiFi";
   };
-  # Setup sway and niri
-  services.x-tiling-desktop.enable = true;
   services.x-vrdesktop.enable = true;
-
-  # Minecraft launchers (Fjord, Prism)
-  services.x-minecraft.enable = true;
-
-  # Full GNOME and Plasma desktops
-  services.x-plasma-gnome.enable = true;
   services.x-vrdesktop.enableCuda = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

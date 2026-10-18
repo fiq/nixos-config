@@ -14,6 +14,8 @@
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
   networking.hostName = "hawking";
+  # GNOME + Plasma + tiling (sway/niri/hyprland) + Minecraft launchers; see roles.nix
+  host.role = "full-desktop";
   # FIXME - bump raf for tcpdump
   users.extraGroups.root.members = [ "raf" ];
   users.extraGroups.docker.members = [ "raf" ];
@@ -27,13 +29,10 @@
       ./capabilities/x-btrfs.nix
       ./capabilities/x-geneology.nix
       ./capabilities/x-genai.nix
-      ./capabilities/x-minecraft.nix
-      ./capabilities/x-plasma-gnome.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
       ./capabilities/x-security-dev.nix
-      ./capabilities/x-tiling-desktop.nix
       ./capabilities/x-video.nix
       ./capabilities/x-vrdesktop.nix
       ./capabilities/x-yubi.nix
@@ -255,9 +254,6 @@
   services.x-vrdesktop.enable = true;
   services.x-vrdesktop.enableCuda= true;
 
-  # Setup sway and niri
-  services.x-tiling-desktop.enable = true;
-
   # Video Editing
   services.x-video.enable = true;
 
@@ -267,11 +263,5 @@
 
   # Setup android and godot dev tools
   services.x-security-dev.enable = true;
-
-  # Minecraft launchers (Fjord, Prism)
-  services.x-minecraft.enable = true;
-
-  # Full GNOME and Plasma desktops
-  services.x-plasma-gnome.enable = true;
 
 }
