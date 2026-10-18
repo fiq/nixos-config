@@ -102,18 +102,12 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
   hardware.graphics.enable = true;
 
-  # Plasma
+  # Login screen. Sessions come from x-tiling-desktop (niri/sway/hyprland) and
+  # x-plasma-gnome (GNOME, Plasma).
   services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.defaultSession = "plasma";
   programs.dconf.enable = true;
-  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
 
   # start sddm in Wayland
   services.displayManager.sddm.wayland.enable = true; 

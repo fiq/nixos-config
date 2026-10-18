@@ -9,6 +9,7 @@
        ./capabilities/x-displaylink.nix
        ./capabilities/x-genai.nix
        ./capabilities/x-minecraft.nix
+       ./capabilities/x-plasma-gnome.nix
        ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-vrdesktop.nix
     ];
@@ -68,6 +69,9 @@
 
   # Minecraft launchers (Fjord, Prism)
   services.x-minecraft.enable = true;
+
+  # Full GNOME and Plasma desktops
+  services.x-plasma-gnome.enable = true;
   services.x-vrdesktop.enableCuda = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

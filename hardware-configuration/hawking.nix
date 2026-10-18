@@ -28,6 +28,7 @@
       ./capabilities/x-geneology.nix
       ./capabilities/x-genai.nix
       ./capabilities/x-minecraft.nix
+      ./capabilities/x-plasma-gnome.nix
       ./capabilities/x-musician.nix
       ./capabilities/x-printing.nix
       ./capabilities/x-rtl-sdr.nix
@@ -269,5 +270,8 @@
 
   # Minecraft launchers (Fjord, Prism)
   services.x-minecraft.enable = true;
+
+  # Full GNOME and Plasma desktops
+  services.x-plasma-gnome.enable = true;
 
 }

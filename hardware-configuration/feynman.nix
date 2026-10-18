@@ -15,7 +15,6 @@
        ./capabilities/x-home-assistant.nix
        ./capabilities/x-kerberos.nix
        ./capabilities/x-network-storage.nix
-       ./capabilities/x-musician.nix
        ./capabilities/x-rtl-sdr.nix
        ./capabilities/x-tiling-desktop.nix
        ./capabilities/x-yubi.nix
@@ -69,9 +68,6 @@
   # Predictable audio defaults (feynman has no host-specific device rules yet)
   services.x-audio.enable = true;
 
-  # Enable Guitar and midi Kit
-  services.x-musician.enable = true;
-
   # RTL SDR custom module
   services.x-rtl-sdr.enable = false;
 
@@ -80,6 +76,9 @@
 
   # Setup sway and niri
   services.x-tiling-desktop.enable = true;
+
+  # No Plasma/GNOME here; log in straight to niri
+  services.displayManager.defaultSession = "niri";
 
   # Enable yubi module
   services.x-yubi.enable = true;

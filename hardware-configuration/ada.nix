@@ -13,6 +13,7 @@
        ./capabilities/x-home-assistant.nix
        ./capabilities/x-kerberos.nix
        ./capabilities/x-minecraft.nix
+       ./capabilities/x-plasma-gnome.nix
        ./capabilities/x-network-storage.nix
        ./capabilities/x-yubi.nix
     ];
@@ -75,4 +76,7 @@
 
   # Minecraft launchers (Fjord, Prism)
   services.x-minecraft.enable = true;
+
+  # Full GNOME and Plasma desktops
+  services.x-plasma-gnome.enable = true;
 }
