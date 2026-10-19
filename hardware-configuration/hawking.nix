@@ -69,7 +69,6 @@
 
   # tailscale - TODO: move into capability
   services.tailscale.enable = true;
-  networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
     interfaces."${config.services.tailscale.interfaceName}".allowedTCPPorts = [ 4444 23469 ];

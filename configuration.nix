@@ -39,9 +39,21 @@
 
   # ivpn
   services.ivpn.enable = true;
-  networking.firewall.extraInputRules = ''
-    iifname "wgivpn" drop
-  '';
+  # One firewall backend everywhere: extraInputRules and the capability firewall
+  # rules are nftables syntax and are ignored under iptables.
+  networking.nftables.enable = true;
+  # Nothing may open a new connection in over the ivpn WireGuard interface. This
+  # has to be its own early table: in nixos-fw the allowed ports (ssh, 8123, ...)
+  # are accepted before extraInputRules, so a drop there would never be reached.
+  networking.nftables.tables.vpn-guard = {
+    family = "inet";
+    content = ''
+      chain input {
+        type filter hook input priority filter - 5; policy accept;
+        iifname "wgivpn" ct state { new, untracked } drop
+      }
+    '';
+  };
   networking.firewall.filterForward = false;
 
 # Pick only one of the below networking options.
