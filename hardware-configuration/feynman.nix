@@ -52,6 +52,9 @@
     "d /mnt/backups 2775 minidlna minidlna -"
     "d /home/minidlna 2775 minidlna minidlna -"
     "L /home/minidlna/external - - - - /mnt/backups"
+    # default ACL: new files and folders are group-writable for minidlna whatever the creator's umask
+    "A+ /mnt/backups - - - - d:g:minidlna:rwx"
+    "A+ /home/minidlna - - - - d:g:minidlna:rwx"
   ];
 
   swapDevices = [ ];
