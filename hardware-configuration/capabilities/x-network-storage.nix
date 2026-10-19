@@ -22,6 +22,24 @@ in {
        # Watch the media folders so new files show up without a restart.
        settings.inotify = "yes";
     };
+    # minidlna reuses files.db on restart and never rescans, and its inotify is
+    # blind in the sandbox (/proc/sys hidden), so media copied in later is missed.
+    # Drop the index on every start (it rebuilds) and restart nightly.
+    systemd.services.minidlna.serviceConfig.ExecStartPre = "+${pkgs.coreutils}/bin/rm -f /var/cache/minidlna/files.db";
+    systemd.services.minidlna-rescan = {
+      description = "Restart minidlna so it rebuilds its media index";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${config.systemd.package}/bin/systemctl restart minidlna.service";
+      };
+    };
+    systemd.timers.minidlna-rescan = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 04:00:00";
+        Persistent = true;
+      };
+    };
     # SMB 445, DLNA 8200 + SSDP 1900, only from the LAN subnets. The firewall
     # backend differs per host: nftables hosts take extraInputRules, iptables
     # hosts (feynman) ignore it and need extraCommands.
