@@ -51,6 +51,11 @@
   swapDevices = [ ];
 
   services.upower.enable = true;
+  # VLC finds feynman's minidlna by SSDP; the unicast replies come from feynman,
+  # which this iptables firewall would otherwise drop.
+  networking.firewall.extraCommands = ''
+    iptables -A nixos-fw -s 192.168.50.129 -p udp -j nixos-fw-accept
+  '';
   networking.networkmanager.wifi.backend = "iwd";
   networking.useDHCP = lib.mkDefault true;
   # blueman tray icon and pairing window, same as hawking
