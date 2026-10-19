@@ -8,6 +8,7 @@
        ./capabilities/x-bt.nix
        ./capabilities/x-desktop-base.nix
        ./capabilities/x-displaylink.nix
+       ./capabilities/x-dlna-client.nix
        ./capabilities/x-genai.nix
        ./capabilities/x-minecraft.nix
        ./capabilities/x-desktop-environments.nix
@@ -51,15 +52,15 @@
   swapDevices = [ ];
 
   services.upower.enable = true;
-  # VLC finds feynman's minidlna by SSDP; the unicast replies come from feynman,
-  # which this iptables firewall would otherwise drop.
-  networking.firewall.extraCommands = ''
-    iptables -A nixos-fw -s 192.168.50.129 -p udp -j nixos-fw-accept
-  '';
   networking.networkmanager.wifi.backend = "iwd";
   networking.useDHCP = lib.mkDefault true;
   # blueman tray icon and pairing window, same as hawking
   services.x-bt.enable = true;
+  # VLC discovery of feynman's minidlna
+  services.x-dlna-client = {
+    enable = true;
+    servers = [ "192.168.50.129" ];
+  };
   # Targus DV2K dock (DisplayLink); dlm only does work while the dock is plugged in
   services.x-displaylink.enable = true;
 

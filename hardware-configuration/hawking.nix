@@ -33,6 +33,7 @@
       ./capabilities/x-bt.nix
       ./capabilities/x-btrfs.nix
       ./capabilities/x-desktop-base.nix
+      ./capabilities/x-dlna-client.nix
       ./capabilities/x-geneology.nix
       ./capabilities/x-genai.nix
       ./capabilities/x-minecraft.nix
@@ -231,6 +232,11 @@
 
   # Enable btrfs tools
   services.x-btrfs.enable = true;
+  # VLC discovery of feynman's minidlna
+  services.x-dlna-client = {
+    enable = true;
+    servers = [ "192.168.50.129" ];
+  };
 
 
   # Enable Guitar and midi Kit
