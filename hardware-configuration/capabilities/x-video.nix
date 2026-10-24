@@ -7,6 +7,21 @@ in {
   };
 
   config = mkIf cfg.x-video.enable {
+    # kbuild's modules_install runs depmod and leaves modules.* index files in
+    # v4l2loopback's $out, which collide with the kernel's own in the modules
+    # buildEnv. Patched in the package set so obs-studio/droidcam pick it up too.
+    # Fixed upstream in NixOS/nixpkgs#575861; drop once it reaches nixos-unstable.
+    nixpkgs.overlays = [
+      (final: prev: {
+        linuxPackages = prev.linuxPackages.extend (lpFinal: lpPrev: {
+          v4l2loopback = lpPrev.v4l2loopback.overrideAttrs (old: {
+            postInstall = (old.postInstall or "") + ''
+              rm -f $out/lib/modules/*/modules.*
+            '';
+          });
+        });
+      })
+    ];
     programs.droidcam.enable = true;
     programs.obs-studio.enableVirtualCamera = true;
     boot = {
