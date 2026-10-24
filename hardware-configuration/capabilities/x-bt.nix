@@ -37,7 +37,7 @@ in {
     };
     # avahi required for service discovery (pipewire RAOP/AirPlay)
     services.avahi.enable = true;
-    services.avahi.allowInterfaces =
+    services.avahi.settings.server.allow-interfaces =
       if cfg.avahiInterfaces == [ ] then null else cfg.avahiInterfaces;
     services.pipewire = {
         # opens UDP ports 6001-6002
