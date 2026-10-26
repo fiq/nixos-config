@@ -177,6 +177,12 @@ in
   # Enable helix
   programs.helix.enable = true;
 
+  # Enable nushell (installed only; login shell stays zsh)
+  programs.nushell = {
+    enable = true;
+    loadSessionVariables = true;
+  };
+
   # setup fzf
   programs.fzf = {
     enable = true;
