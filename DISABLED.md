@@ -14,16 +14,13 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 
 | Since      | Thing                              | Where                                          | Why                                              | Commit    |
 |------------|------------------------------------|------------------------------------------------|--------------------------------------------------|-----------|
+| 2026-10-24 | iaito                              | capabilities/x-security-dev.nix:15             | Qt 6.12 uic rejects "AddressableItemList<>" in .ui files (radare2 CLI still on) | uncommitted |
 | 2026-10-18 | sidequest                        | hardware-configuration/hawking.nix:193                     | CVE on unstable ("temporary")          | afc14e1   |
-| 2026-10-04 | gqrx, sdrpp                        | capabilities/x-rtl-sdr.nix                     | issues on unstable ("temporary")                 | 169e009   |
-| 2026-05-02 | gnuradio                           | capabilities/x-rtl-sdr.nix                     | broke on upgrade                                 | fb8408f   |
-| 2026-02-10 | dump1090-fa                        | capabilities/x-rtl-sdr.nix                     | broken in unstable                               | b2c93b1   |
-| 2026-03-22 | documentation.doc                  | configuration.nix:10                           | pydoc issues in unstable (FIXME: reenable)       | e091575   |
-| 2025-08-31 | python virtualenv (3.10, 3.11)     | configuration.nix:215                          | asyncio issues in unstable                       | 2898aaa   |
+| 2026-10-04 | sdrpp                              | capabilities/x-rtl-sdr.nix                     | issues on unstable ("temporary"). Builds again (cached, 2026-10-26); nixpkgs #340299 OPEN "does not start under Wayland". Re-enable and launch once to check. | 169e009   |
+| 2026-03-22 | documentation.doc                  | configuration.nix:14                           | pydoc issues in unstable (FIXME: reenable). Re-tested 2026-10-26: still broken, python 3.11/3.12 -doc fail in Sphinx with a TypeError in docutils 0.23 `parse_enumerator` | e091575   |
 | 2025-08-31 | programs.ssh.startAgent            | configuration.nix:65                           | disabled, reason not recorded                    | c72913c   |
 | 2024-12-01 | x-android-dev on feynman           | hardware-configuration/feynman.nix:79          | Android Studio broke on 24.11 (hawking has it on)| 7e57ddc   |
 | 2023-07-21 | gnome-keyring                      | capabilities/x-tiling-environments.nix:13           | conflicts with Hyprland launcher (hyprwm #1376)  | 14db231   |
-| 2026-07-13 | fzf nushell integration            | home-manager/home.nix:162                      | disabled, reason not recorded                    | 563176b   |
 
 ## Pending (decided, not applied yet)
 
@@ -46,6 +43,9 @@ Scraped from `git log` on 2026-10-18. Status was checked against the current tre
 
 | Thing                    | Was disabled        | Now                                     |
 |--------------------------|---------------------|-----------------------------------------|
+| dump1090-fa, gqrx, gnuradio | 2026-02-10 (b2c93b1), 2026-10-04 (169e009), 2026-05-02 (fb8408f) | back on in x-rtl-sdr.nix (2026-10-26); all three on cache.nixos.org for the current lock |
+| python311Packages.virtualenv | 2025-08-31 (2898aaa) | back on in configuration.nix (2026-10-26), built locally. python310Packages.virtualenv is gone from nixpkgs, so its line was removed |
+| fzf nushell integration  | 2026-07-13 (563176b) | back on in home.nix (2026-10-26); `raf` HM config builds. Reason for the disable was never recorded: open `nu` once to check |
 | x-rtl-sdr on feynman     | 2025-10-26 (51fe595) | back on in feynman.nix (2026-10-18)    |
 | intel-compute-runtime-legacy1 (feynman) | 2026-10-18, GCC 16 build failure | flake update 0c1b0ac. The current lock's output is on cache.nixos.org and in feynman's store, so it is fetched, not built. feynman builds without the stub (confirmed 2026-10-19), so the stub overlay was dropped before pushing. |
 | gpredict                 | 2025-08-31 (ffc4352) | back on in x-rtl-sdr.nix               |
@@ -68,6 +68,7 @@ our pinned nixpkgs. Re-test by building. "No issue found" means the search found
 | Thing                         | Finding                                                                                             |
 |-------------------------------|-----------------------------------------------------------------------------------------------------|
 | intel-compute-runtime-legacy1 | Same bug class as intel/compute-runtime #908 "FTBFS with gcc 16" (CLOSED 2026-04-13). Intel posted a patch to `opencl/source/mem_obj/image.h` and fixed it in the CURRENT release line (26.x). legacy1 24.35 is a frozen branch, so an upstream fix there is unlikely. No nixpkgs issue found. Options: carry a small nixpkgs patch, or drop the package on feynman. |
+| iaito                         | nixpkgs #576576 OPEN "Build failure: cutter" (iaito fails the same way, Hydra 349674298). Caused by Qt 6.11 -> 6.12; Qt fixed uic in qtbase 7368673. Upstream iaito workaround is commit d85739b5aa (radareorg/iaito #317), due in iaito 6.2.6. Re-enable once nixpkgs has iaito > 6.2.4. Checked 2026-10-24: fetchpatch of d85739b5aa with `relative = "src"` builds 6.2.4 on hawking, if we want it sooner. |
 | dump1090-fa                   | nixpkgs #488592 "Build failure" CLOSED 2026-02-09. We disabled it 2026-02-10. Worth a re-test now.   |
 | gqrx                          | nixpkgs #425469 "Build failure" CLOSED 2025-07-15 (older than our 2026-10-04 disable, so probably a different problem). No open issue found. Re-test. |
 | sdrpp                         | nixpkgs #340299 OPEN "does not start under Wayland". #450446 (cmake) and #467610 (core dump) CLOSED. Our disable may be the Wayland issue. |

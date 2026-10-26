@@ -171,8 +171,7 @@
 #      python310
       python311
       python312
-  #    python310Packages.virtualenv
-  #    python311Packages.virtualenv
+      python311Packages.virtualenv
       python311Packages.uv
       python312Packages.virtualenv
       python312Packages.uv

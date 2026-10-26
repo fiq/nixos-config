@@ -12,7 +12,7 @@ in {
       armitage
       burpsuite 
       ghidra
-      iaito   
+      # iaito   # DISABLED: see DISABLED.md
       metasploit
       nmap
       radare2 
