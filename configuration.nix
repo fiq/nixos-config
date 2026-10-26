@@ -217,7 +217,7 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "-d";
+    options = "--delete-older-than 8d";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
