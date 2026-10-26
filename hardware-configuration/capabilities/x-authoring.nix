@@ -13,7 +13,7 @@ in {
       mdp
       texmacs 
       texinfo
-      texliveFull
+      texliveSmall  # was texliveFull (6.3G); add packages via texliveSmall.withPackages if needed
     ];
   };
 }
