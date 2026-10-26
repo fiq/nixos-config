@@ -143,6 +143,18 @@
     ];
   };
 
+  # Disk space: / (nvme0n1p2, 353G) holds the nix store; /home (nvme1n1, 1.8T)
+  # has room. Keep build scratch off /, and GC before the store fills mid-build.
+  nix.settings = {
+    build-dir = "/home/nix-build";
+    min-free = 20 * 1024 * 1024 * 1024;
+    max-free = 60 * 1024 * 1024 * 1024;
+  };
+  systemd.tmpfiles.rules = [
+    "d /home/nix-build 0755 root root -"
+  ];
+  services.journald.settings.Journal.SystemMaxUse = "1G";
+
   # Docker and nvidia container support
   virtualisation.docker = {
     enable = true;
