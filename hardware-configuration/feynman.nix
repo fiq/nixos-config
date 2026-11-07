@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, inputs, musnix, modulesPath, ... }:
+{ config, lib, pkgs, inputs, musnix, modulesPath, ... }:
 
 {
   nixpkgs.config.allowBroken = true;

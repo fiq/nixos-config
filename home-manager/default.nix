@@ -18,12 +18,6 @@ let
         ];
       };
 
-      # Optional: If you use the unstable channel inside home.nix
-      unstable = import inputs.unstablepkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
       isArm = nixpkgs.lib.hasPrefix "aarch64-" system;
       isDarwin = nixpkgs.lib.hasSuffix "-darwin" system;
       isAsahi = system == "aarch64-linux";
@@ -40,8 +34,8 @@ let
           home.homeDirectory = "${value.homePath}/${value.user}";
         }
       ];
-      # Pass inputs and system-specific unstable pkgs down to modules
-      extraSpecialArgs = { inherit inputs unstable isArm isDarwin isAsahi role; };
+      # Pass inputs and system-specific pkgs down to modules
+      extraSpecialArgs = { inherit inputs isArm isDarwin isAsahi role; };
     };
 
 in

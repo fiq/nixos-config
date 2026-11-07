@@ -2,16 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, lib, inputs, unstable, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Shared by every host. Desktop parts (X, SDDM, GUI apps, scanner, OpenRGB,
   # dictd, AppImage) live in capabilities/x-desktop-base.nix; PipeWire lives in
   # capabilities/x-audio.nix. Hosts import and enable those explicitly.
-
-  # Unstable Fixes
-  # FIXME - reenable later: March 2026 - pydoc issues in unstable.
-  documentation.doc.enable = false;
+  documentation.doc.enable = true;
   documentation.man.enable = true;
   documentation.info.enable = true;
 

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, inputs, musnix, modulesPath, ... }:
+{ config, lib, pkgs, inputs, musnix, modulesPath, ... }:
 
 {
   #boot.kernelPackages = pkgs.linuxPackages_6_8;
