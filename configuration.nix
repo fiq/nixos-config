@@ -129,6 +129,14 @@
     ];
   };
 
+  users.users.earthwise = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    extraGroups = [ "docker" "mlocate" "wheel" "lp" ];
+    initialHashedPassword = "earthwise";
+  };
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # GUI apps live in capabilities/x-desktop-base.nix.
