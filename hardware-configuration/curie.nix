@@ -62,7 +62,7 @@
     servers = [ "192.168.50.129" ];
   };
   # Targus DV2K dock (DisplayLink); dlm only does work while the dock is plugged in
-  services.x-displaylink.enable = true;
+  services.x-displaylink.enable = false;
 
   services.x-genai = {
     enable = true;

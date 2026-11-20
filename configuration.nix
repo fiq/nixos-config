@@ -165,13 +165,9 @@
       pciutils
       podman
       psmisc
-#      python310
-      python311
-      python312
-      python311Packages.virtualenv
-      python311Packages.uv
-      python312Packages.virtualenv
-      python312Packages.uv
+      python314
+      python314Packages.virtualenv
+      python314Packages.uv
       ripgrep
       silver-searcher-ng
       sops
