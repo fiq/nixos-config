@@ -24,6 +24,7 @@
   # FIXME - bump raf for tcpdump
   users.extraGroups.root.members = [ "raf" ];
   users.extraGroups.docker.members = [ "raf" ];
+  users.extraGroups.dialout.members = [ "raf" ];
  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
